@@ -38,7 +38,7 @@ interactive and dynamic capabilities
 4) student can chat with each other to communicate
 5) student and admin can make a post to pass along a message without the need of a meetup with all students
 6) like, comment, delete, share retweet are actions that can be made on a post
-7) recover password via an email code verifications
+7) recover password via an email or phone verification code 
 8) payment is made in testing mode using Braintree payment server
 9) using Twillio platform to receive code message
 with an unpaid and free account that enables only the registered number to receive text message unless an upgraded account is created 
