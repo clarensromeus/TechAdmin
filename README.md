@@ -31,7 +31,7 @@ interactive and dynamic capabilities
 - Braintree Server
 - Joi for form validation on the server
 
-### Tech feature
+## Tech feature
 1) authentication with Google, Github and Facebook
 2) only an administrator that can create edit delete 
 3) referesh expired token using react jwt
