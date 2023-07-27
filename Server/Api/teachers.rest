@@ -1,0 +1,38 @@
+GET http://localhost:4000/home/teachers
+
+###
+POST http://localhost:4000/home/teachers/create
+Content-Type: application/json
+
+{
+    "Firstname": "Adriana",
+    "Lastname": "Buckridge",
+    "Email": "Marilyne_Sporer@hotmail.com",
+    "PhoneNumber": 3983958521098,
+    "Image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1218.jpg",
+    "HoursPerWeek":"9am-6pm"
+}
+
+
+###
+PUT http://localhost:4000/home/teacher/edit
+Content-Type: application/json
+
+{
+    "_id": "6453116925e717a41ef4849a",
+    "Firstname": "romeus",
+    "Lastname": "clarens",
+    "Email": "romeusclarens10@gmail.com",
+    "Image": "",
+    "PhoneNumber":"54648228328",
+    "HoursPerWeek": "7am-5pm"
+}
+
+###
+GET http://localhost:4000/test
+
+###
+DELETE http://localhost:4000/home/teachers/delete/643dc0ba90caf62fdd9042fc/rom58716ens
+
+###
+GET http://localhost:4000/home/admin/gethistories

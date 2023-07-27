@@ -1,0 +1,7 @@
+// In order to create or send Email with the nodemailer library
+// fused with nodejs framework, there are really some steep and cautious steps to follow
+// 1) when entering credential names while sending a real email Notification
+// make sure first you navigate to like typing on MY ACCOUNT on google or visit
+// https://myaccount.google.com/apppasswords to create password for accepting login from
+// outer apps then copy it as the password of the nodemailer user
+//2) once being done with that step you can then start sending real Email

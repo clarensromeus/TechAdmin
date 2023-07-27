@@ -1,0 +1,28 @@
+
+###
+Get http://localhost:4000/home/posts/?limit=3&cursor
+
+###
+Get http://localhost:4000/home/profile/userposts/645ff4239c35d8ae1ed4b03a
+
+###
+Get http://localhost:4000/home/students/suggestion
+
+### 
+GET http://localhost:4000/home/profile/studentstats/645ff4239c35d8ae1ed4b03a
+
+###
+Get http://localhost:4000/home/students/646b71113ba13292ecf70bf3
+
+###
+PATCH http://localhost:4000/home/profile/changePicture
+Content-Type: application/json
+
+{
+    "_id": "645be8f4c9e3c03087a29705",
+    "Firstname": "Prophete"
+}
+
+### 
+GET  http://localhost:4000/home/profile/user/posts/64907e94a18d36a8f0248c69
+

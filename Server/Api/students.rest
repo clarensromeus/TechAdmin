@@ -1,0 +1,119 @@
+
+Get http://localhost:4000/getToken
+Authorization: Bearer eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpc09ubGluZSI6ZmFsc2UsIlBlcnNvblN0YXR1cyI6IlN0dWRlbnQiLCJfaWQiOiI2NDViZThmNGM5ZTNjMDMwODdhMjk3MDUiLCJfSURfVXNlciI6InBybzY5MTEwaWNoIiwiRmlyc3RuYW1lIjoiUHJvcGhldGUiLCJMYXN0bmFtZSI6ImFsbHJpY2giLCJFbWFpbCI6InByb3BoZXRlYWxscmljaDEwQGdtYWlsLmNvbSIsIlBhc3N3b3JkIjoiJDJhJDEwJHdJeHM5VzRtNGF0UDZmbE1KbWkvdy5BTGwvZ1BZWTJCRGVqcWhhYjB4V3JzNkVMcnRuQ0FpIiwiQ29uZmlybVBhc3N3b3JkIjoiJDJhJDEwJHdJeHM5VzRtNGF0UDZmbE1KbWkvdy5BTGwvZ1BZWTJCRGVqcWhhYjB4V3JzNkVMcnRuQ0FpIiwiSW1hZ2UiOiJodHRwOi8vbG9jYWxob3N0OjQwMDAvcHVibGljL0ltYWdlcy8xNjg4NTYzODgwMjk1LmpwZWciLCJDbGFzcyI6IjN0aCBncmFkZSIsIkNsYXNzTmFtZSI6IkJhcmFjayBPYmFtYSIsIlNjaG9vbExldmVsIjoicHJpbWFyeSIsIk5vdGVMZXZlbCI6Ny4xLCJfX3YiOjAsImlhdCI6MTY4OTQ1MjMwMSwiZXhwIjoxNjk0ODA5MTAxLCJpc3MiOiJ1bmRlZmluZWQiLCJzdWIiOiJwZXJzb25hbCB0b2tlbiJ9.0oy_ULXrOSk1WiQL8OEiOkmz85G5eq_JGHRKzwzchj7iRPqZchgwgn1Womdyi6Vw
+
+
+
+###
+POST http://localhost:4000/register/student
+Content-Type: application/json
+
+{    
+  "Firstname": "Anthony",
+  "Lastname": "Abbott",
+  "Email": "Aracely_Russel@yahoo.com",
+  "Password": "Anthony(+-1998)",
+  "ConfirmPassword": "Anthony(+-1998)",
+  "PromoCode": "Admin124",
+  "Class": "1th grade",
+  "ClassName": "Curtis Corwin",
+  "NoteLevel": "5.2",
+  "Image": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1182.jpg",
+  "SchoolLevel": "kindergaten"
+}
+
+###
+POST http://localhost:4000/login/student
+Content-Type: application/json
+
+{
+  "email": "propheteallrich10@gmail.com",
+  "password": "Allrich(+-1998)"
+}
+
+
+###
+POST http://localhost:4000/sendmail
+Content-Type: application/json
+
+{
+  "DESTINATION": "testingclarens@gmail.com",
+  "SUBJECT": "confirmation code",
+  "HTMLBODY": "<strong>Code</strong>: TA34535633",
+  "MESSAGE": "HELLO TECH ADMIN GREET YOU"
+}
+
+
+###
+POST http://localhost:4000/home/student/create
+Content-Type: application/json
+
+{
+  "Firstname": "Clervil",
+  "Lastname": "Woodlet",
+  "Email": "Clervilwoodlet12@gmail.com",
+  "Password": "Clervil(+-1998)",
+  "ConfirmPassword": "Clervil(+-1998)",
+  "Class": "6th grade",
+  "Image": "",
+  "ClassName": "Ghon Leman",
+  "SchoolLevel": "secondary"
+}
+
+###
+Put http://localhost:4000/home/administrators/edit
+Content-Type: application/json
+
+{
+  "_id": "64516288ccad7a8b80ba2a66",
+  "Firstname": "bikendy",
+  "Lastname": "woodguerby",
+  "Email": "propheteallrich10@gmail.com",
+  "Password": "Clarns(+-1998)",
+  "ConfirmPassword": "Clarns(+-1998)",
+  "Image": "",
+  "StatusLevel": "Adjoint",
+  "PromoCode": "admin127"
+  
+}
+
+
+###
+PATCH http://localhost:4000/recoverpassword
+Content-Type: application/json
+
+{
+  "Email": "propheteallrich10@gmail.com",
+  "Password": "Allrich(+-1998)"
+}
+
+
+
+
+
+###
+GET http://localhost:4000/sendphone
+
+### 
+GET http://localhost:4000/home/dashboard
+
+###
+GET http://localhost:4000/home/dashboard/notelevel
+
+###
+DELETE http://localhost:4000/home/admin/delete/644ff87c1e52a38759292b18/pro52699ich
+
+###
+GET http://localhost:4000/home/students/suggestion
+
+###
+GET http://localhost:4000/home/studentoradmin/getinfo/645be8f4c9e3c03087a29705/Student
+
+###
+GET http://localhost:4000/home/profile/Admin/644c6a40c752b4ef445b836b
+
+###
+GET http://localhost:4000/home/profile/645be8f4c9e3c03087a29705
+
+###
+GET http://localhost:4000/home/info/Student/645be8f4c9e3c03087a29705

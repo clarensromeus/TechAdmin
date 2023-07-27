@@ -1,0 +1,31 @@
+GET http://localhost:4000/home/calendar
+
+###
+POST http://localhost:4000/home/calendar/create
+Content-Type: application/json
+
+{
+    "Class": "5th grade",
+    "Day": "thursday",
+    "ClassName": "Promeus Danaud",
+    "TeacherNumber": "+157467585",
+    "HoursPerWeek": "8am-3pm",
+    "Teacher": "Attilot Romeus"
+}
+
+###
+PUT http://locolhost:4000/home/calendar/edit 
+Content-Type: application/json
+
+{
+  "Class": "5th grade",
+  "Day": "thursday",
+  "ClassName": "Promeus Danaud",
+  "TeacherNumber": "+157467585",
+  "HoursPerWeek": "8am-3pm",
+  "Teacher": "Attilot Romeus"  
+}
+
+###
+
+Delete  http://localhost:4000/home/calendar/delete/643dc7ad85cf135209c748be
