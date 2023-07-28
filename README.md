@@ -14,6 +14,8 @@ interactive and dynamic capabilities
 
 ![Screen Shot 2023-07-28 at 5 13 40 PM](https://github.com/koolkishan/chat-app-react-nodejs/assets/108362048/de2160b2-51c7-447f-a2e0-848d2293d5da)
 
+![Screen Shot 2023-07-28 at 5 17 27 PM](https://github.com/koolkishan/chat-app-react-nodejs/assets/108362048/2e076ba2-88a5-4da8-bcb7-f7a4278d566e)
+
 ## 🚀 Tech Stack
 
 #### Client
