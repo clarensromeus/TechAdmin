@@ -3,6 +3,8 @@
 
 a full-stack web app for school management with 
 interactive and dynamic capabilities
+![Uploading dahsboard1.png…]()
+
 
 ## 🚀 Tech Stack
 
