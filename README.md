@@ -3,7 +3,8 @@
 
 a full-stack web app for school management with 
 interactive and dynamic capabilities
-![Uploading dahsboard1.png…]()
+ ## Preview Screenshots
+ ![dahsboard1](https://github.com/Rajatm544/MERN-Blog-App/assets/108362048/5091a6f4-44f7-4de0-8b09-ec7b5730467b)
 
 
 ## 🚀 Tech Stack
