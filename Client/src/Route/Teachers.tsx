@@ -1,51 +1,51 @@
 // external imports of ressources
-import * as React from 'react';
-import { Box, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import TableHead from '@mui/material/TableHead';
-import orange from '@mui/material/colors/orange';
-import Avatar from '@mui/material/Avatar';
-import grey from '@mui/material/colors/grey';
-import green from '@mui/material/colors/green';
-import blue from '@mui/material/colors/blue';
-import red from '@mui/material/colors/red';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import SearchIcon from '@mui/icons-material/Search';
-import Stack from '@mui/material/Stack';
-import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
-import Alert from '@mui/material/Alert';
-import axios from 'axios';
-import GroupsIcon from '@mui/icons-material/Groups';
+import * as React from "react";
+import { Box, Typography } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import TableHead from "@mui/material/TableHead";
+import orange from "@mui/material/colors/orange";
+import Avatar from "@mui/material/Avatar";
+import grey from "@mui/material/colors/grey";
+import green from "@mui/material/colors/green";
+import blue from "@mui/material/colors/blue";
+import red from "@mui/material/colors/red";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import SearchIcon from "@mui/icons-material/Search";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
+import axios from "axios";
+import GroupsIcon from "@mui/icons-material/Groups";
 import {
   useQuery,
   UseQueryResult,
   UseMutationResult,
   useMutation,
   useQueryClient,
-} from '@tanstack/react-query';
-import { nanoid } from 'nanoid';
-import __ from 'lodash';
-import { useRecoilValue } from 'recoil';
+} from "@tanstack/react-query";
+import { nanoid } from "nanoid";
+import __ from "lodash";
+import { useRecoilValue } from "recoil";
 // internal crafted imports of ressources
-import { StyledTableCell, StyledTableRow } from '../MuiStyles/table';
-import TeachersForm from '../components/Home/teachersForm';
-import { IdeleteResponse, Idelete, Idata } from '../Interface/teacher';
-import { TextFieldTable } from '../MuiStyles/Nav';
-import { Iteachers } from '../Interface/teacher';
-import useWindowSize from '../hooks/useWindowSize';
-import { IWindow } from '../Interface/student';
-import { IHistory } from '../Interface/History';
-import useHistory from '../hooks/useHistory';
-import { IAuthState } from '../Interface/GlobalState';
-import Context from '../Store/ContextApi';
+import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
+import TeachersForm from "../components/Home/teachersForm";
+import { IdeleteResponse, Idelete, Idata } from "../Interface/teacher";
+import { TextFieldTable } from "../MuiStyles/Nav";
+import { Iteachers } from "../Interface/teacher";
+import useWindowSize from "../hooks/useWindowSize";
+import { IWindow } from "../Interface/student";
+import { IHistory } from "../Interface/History";
+import useHistory from "../hooks/useHistory";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
 
 interface IState {
   open: boolean;
@@ -57,14 +57,14 @@ const Students: React.FC = () => {
   const [page, setPage] = React.useState<number>(0);
 
   const [editData, setEditData] = React.useState<Idata>({
-    _id: '',
-    _ID_User: '',
-    Firstname: '',
-    Lastname: '',
-    Email: '',
-    Image: '',
-    HoursPerWeek: '',
-    PhoneNumber: '',
+    _id: "",
+    _ID_User: "",
+    Firstname: "",
+    Lastname: "",
+    Email: "",
+    Image: "",
+    HoursPerWeek: "",
+    PhoneNumber: "",
   });
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
@@ -72,20 +72,20 @@ const Students: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [state, setState] = React.useState<IState>({
     open: false,
-    message: '',
+    message: "",
   });
 
   const { open } = state;
   const { CreateHistory } = useHistory();
 
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     // clickaway event won't close the snackbar
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -113,10 +113,10 @@ const Students: React.FC = () => {
     Iteachers<string>,
     Error
   >({
-    queryKey: ['teachers'],
+    queryKey: ["teachers"],
     queryFn: async () => {
       // declare the url
-      const Url: string = 'http://localhost:4000/home/teachers';
+      const Url: string = "http://localhost:4000/home/teachers";
       const res = await axios.get<Iteachers<string>>(Url);
       return res.data;
     },
@@ -146,7 +146,7 @@ const Students: React.FC = () => {
         setState({ ...state, open: true, message: newData.message });
         // invalidate and refetch the query to get fresh data
         queryClient.invalidateQueries({
-          queryKey: ['teachers'],
+          queryKey: ["teachers"],
           exact: true,
         });
       },
@@ -164,41 +164,41 @@ const Students: React.FC = () => {
   return (
     <>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         color="success"
-        sx={{ color: '#fafafa' }}
+        sx={{ color: "#fafafa" }}
         action={
           <React.Fragment>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ color: '#fafafa' }} />
+              <CloseIcon sx={{ color: "#fafafa" }} />
             </IconButton>
           </React.Fragment>
         }
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           {state.message}
         </Alert>
       </Snackbar>
       <Box
         pt={1}
-        sx={{ width: '100%', px: { md: 1, lg: 1 }, boxSizing: 'border-box' }}
+        sx={{ width: "100%", px: { md: 1, lg: 1 }, boxSizing: "border-box" }}
       >
         <Box
           sx={{
-            alignSelf: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: 'inherit',
+            alignSelf: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "inherit",
             bgcolor: orange[100],
             py: 2,
           }}
         >
           <Box pl={2}>
-            <IconButton sx={{ bgcolor: '#ffffff' }} disableRipple>
+            <IconButton sx={{ bgcolor: "#ffffff" }} disableRipple>
               <GroupsIcon sx={{ fontSize: 56, color: green[700] }} />
             </IconButton>
           </Box>
@@ -213,7 +213,7 @@ const Students: React.FC = () => {
                 variant="body2"
                 fontSize="1.2em"
                 fontWeight="bold"
-                sx={{ fontVariant: 'small-caps' }}
+                sx={{ fontVariant: "small-caps" }}
               >
                 Teachers
               </Typography>
@@ -240,20 +240,20 @@ const Students: React.FC = () => {
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
+            display: "flex",
+            justifyContent: "center",
             gap: 2,
-            flexDirection: 'column',
-            width: '100%',
-            overflow: 'auto',
-            borderBox: 'box-sizing',
+            flexDirection: "column",
+            width: "100%",
+            overflow: "auto",
+            borderBox: "box-sizing",
           }}
         >
           <Box
             sx={{
-              display: 'table',
-              width: 'inherit',
-              tableLayout: 'fixed',
+              display: "table",
+              width: "inherit",
+              tableLayout: "fixed",
               borderTopWidth: 0,
             }}
           >
@@ -275,8 +275,8 @@ const Students: React.FC = () => {
             </Box>
             <TableContainer
               sx={{
-                '&.MuiTableContainer-root': {
-                  boxShadow: 'none',
+                "&.MuiTableContainer-root": {
+                  boxShadow: "none",
                   borderTopWidth: 0,
                   borderBottomRightRadius: 0,
                   borderBottomLeftRadius: 0,
@@ -286,7 +286,7 @@ const Students: React.FC = () => {
               <Table
                 aria-label="simple table"
                 sx={{
-                  '&.MuiTable-root': {
+                  "&.MuiTable-root": {
                     borderTop: `7px solid ${grey[100]}`,
                     borderLeft: `7px solid ${grey[100]}`,
                   },
@@ -324,18 +324,20 @@ const Students: React.FC = () => {
                         PhoneNumber
                       </Typography>
                     </StyledTableCell>
-                    <StyledTableCell align="left">
-                      <Typography fontWeight="bold" sx={{ color: grey[800] }}>
-                        Status
-                      </Typography>
-                    </StyledTableCell>
+                    {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
+                      <StyledTableCell align="left">
+                        <Typography fontWeight="bold" sx={{ color: grey[800] }}>
+                          Action
+                        </Typography>
+                      </StyledTableCell>
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {data?.doc
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .filter((teacher) =>
-                      search.toLowerCase() === ''
+                      search.toLowerCase() === ""
                         ? teacher
                         : teacher.Firstname.toLowerCase().includes(search)
                     )
@@ -343,7 +345,7 @@ const Students: React.FC = () => {
                       <StyledTableRow key={row.Firstname}>
                         <StyledTableCell component="th" scope="row">
                           <Avatar alt="teacher image" src={row.Image}>
-                            {__.isEqual(row.Image, '') && (
+                            {__.isEqual(row.Image, "") && (
                               <Typography>
                                 {row.Firstname.toUpperCase().charAt(0)}
                                 {row.Lastname.toUpperCase().charAt(0)}
@@ -376,57 +378,62 @@ const Students: React.FC = () => {
                             {row.PhoneNumber}
                           </Typography>
                         </StyledTableCell>
-                        <StyledTableCell align="left">
-                          <Stack direction="row" spacing={1}>
-                            <IconButton
-                              sx={{ bgcolor: red[100] }}
-                              onClick={(e: React.MouseEvent) => {
-                                e.preventDefault();
-                                deleteAdmin.mutate({
-                                  _id: row._id,
-                                  _ID_User: row._ID_User,
-                                });
+                        {__.isEqual(
+                          AuthInfo.Payload?.PersonStatus,
+                          "Admin"
+                        ) && (
+                          <StyledTableCell align="left">
+                            <Stack direction="row" spacing={1}>
+                              <IconButton
+                                sx={{ bgcolor: red[100] }}
+                                onClick={(e: React.MouseEvent) => {
+                                  e.preventDefault();
+                                  deleteAdmin.mutate({
+                                    _id: row._id,
+                                    _ID_User: row._ID_User,
+                                  });
 
-                                // data for creating histories
-                                const HistoryData: IHistory<string> = {
-                                  ActionPerformer: `${AuthInfo.Payload?._id}`,
-                                  NotiId: `${nanoid()}`,
-                                  ActionCreator: {
-                                    Status: 'teacher',
+                                  // data for creating histories
+                                  const HistoryData: IHistory<string> = {
+                                    ActionPerformer: `${AuthInfo.Payload?._id}`,
+                                    NotiId: `${nanoid()}`,
+                                    ActionCreator: {
+                                      Status: "teacher",
+                                      Firstname: row.Firstname,
+                                      Lastname: row.Lastname,
+                                      Image: row.Image,
+                                    },
+                                    NotiReference: "delete",
+                                    AlertText: "a is deleted by ",
+                                    User: "64bb0a381e5ce1722e328401", // the platform administrator id
+                                  };
+                                  CreateHistory(HistoryData);
+                                }}
+                              >
+                                <DeleteIcon sx={{ color: red[800] }} />
+                              </IconButton>
+                              <IconButton
+                                onClick={(e: React.MouseEvent) => {
+                                  e.preventDefault();
+                                  const newData: Idata = {
+                                    _id: row._id,
+                                    _ID_User: row._ID_User,
                                     Firstname: row.Firstname,
                                     Lastname: row.Lastname,
-                                    Image: row.Image,
-                                  },
-                                  NotiReference: 'delete',
-                                  AlertText: 'a is deleted by ',
-                                  User: '64bb0a381e5ce1722e328401', // the platform administrator id
-                                };
-                                CreateHistory(HistoryData);
-                              }}
-                            >
-                              <DeleteIcon sx={{ color: red[800] }} />
-                            </IconButton>
-                            <IconButton
-                              onClick={(e: React.MouseEvent) => {
-                                e.preventDefault();
-                                const newData: Idata = {
-                                  _id: row._id,
-                                  _ID_User: row._ID_User,
-                                  Firstname: row.Firstname,
-                                  Lastname: row.Lastname,
-                                  Email: row.Email,
-                                  Image: '',
-                                  HoursPerWeek: row.HoursPerWeek,
-                                  PhoneNumber: row.PhoneNumber,
-                                };
-                                setEditData(newData);
-                              }}
-                              sx={{ bgcolor: blue[100] }}
-                            >
-                              <RemoveRedEyeIcon sx={{ color: blue[800] }} />
-                            </IconButton>
-                          </Stack>
-                        </StyledTableCell>
+                                    Email: row.Email,
+                                    Image: "",
+                                    HoursPerWeek: row.HoursPerWeek,
+                                    PhoneNumber: row.PhoneNumber,
+                                  };
+                                  setEditData(newData);
+                                }}
+                                sx={{ bgcolor: blue[100] }}
+                              >
+                                <RemoveRedEyeIcon sx={{ color: blue[800] }} />
+                              </IconButton>
+                            </Stack>
+                          </StyledTableCell>
+                        )}
                       </StyledTableRow>
                     ))}
                 </TableBody>
@@ -434,7 +441,7 @@ const Students: React.FC = () => {
             </TableContainer>
             <TablePagination
               sx={{
-                '.MuiTablePagination-toolbar': {
+                ".MuiTablePagination-toolbar": {
                   border: `1px solid ${grey[200]}`,
                 },
               }}
@@ -449,12 +456,12 @@ const Students: React.FC = () => {
           </Box>
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              texAlign: 'center',
-              width: width && width < 800 ? '100%' : 400,
+              alignSelf: "flex-end",
+              texAlign: "center",
+              width: width && width < 800 ? "100%" : 400,
             }}
           >
-            {__.isEqual(AuthInfo.Payload?.PersonStatus, 'Admin') && (
+            {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
               <TeachersForm {...editData} />
             )}
           </Box>

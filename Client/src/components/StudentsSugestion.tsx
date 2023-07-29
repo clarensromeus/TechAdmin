@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import * as React from "react";
+import { Box, Typography } from "@mui/material";
 import {
   useQuery,
   UseQueryResult,
@@ -7,27 +7,27 @@ import {
   useQueryClient,
   useMutation,
   QueryClient,
-} from '@tanstack/react-query';
-import Avatar from '@mui/material/Avatar';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import blueGrey from '@mui/material/colors/blueGrey';
-import SearchIcon from '@mui/icons-material/Search';
-import PersonIcon from '@mui/icons-material/Person';
-import __ from 'lodash';
-import InputAdornment from '@mui/material/InputAdornment';
-import grey from '@mui/material/colors/grey';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import { useRecoilValue } from 'recoil';
+} from "@tanstack/react-query";
+import Avatar from "@mui/material/Avatar";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import blueGrey from "@mui/material/colors/blueGrey";
+import SearchIcon from "@mui/icons-material/Search";
+import PersonIcon from "@mui/icons-material/Person";
+import __ from "lodash";
+import InputAdornment from "@mui/material/InputAdornment";
+import grey from "@mui/material/colors/grey";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import { useRecoilValue } from "recoil";
 // external crafted imports of ressources
-import { CommentTextField } from '../MuiStyles/Auth';
-import { IFriend } from '../Interface/Posts';
-import { IAuthState } from '../Interface/GlobalState';
-import Context from '../Store/ContextApi';
-import useNotification from '../hooks/useNotifications';
-import { Iunfollow, IunfollowResponse } from '../Interface/student';
-import useWindowSize from '../hooks/useWindowSize';
+import { CommentTextField } from "../MuiStyles/Auth";
+import { IFriend } from "../Interface/Posts";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
+import useNotification from "../hooks/useNotifications";
+import { Iunfollow, IunfollowResponse } from "../Interface/student";
+import useWindowSize from "../hooks/useWindowSize";
 
 interface User {
   _id: string;
@@ -51,7 +51,7 @@ interface IstudentData<T> {
 const StudentsSugestion: React.FC = () => {
   const ContextData = React.useContext(Context);
 
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
@@ -65,10 +65,10 @@ const StudentsSugestion: React.FC = () => {
     IstudentData<string>,
     Error
   >({
-    queryKey: ['StudentsSuggestion'],
+    queryKey: ["StudentsSuggestion"],
     queryFn: async () => {
       // declare the url
-      const Url: string = 'http://localhost:4000/home/students/suggestion';
+      const Url: string = "http://localhost:4000/home/students/suggestion";
       const response = await axios.get<IstudentData<string>>(Url);
       return response.data;
     },
@@ -85,7 +85,7 @@ const StudentsSugestion: React.FC = () => {
   >({
     mutationFn: async (Friends: IFriend) => {
       const res = await axios.post(
-        'http://localhost:4000/home/students/friends',
+        "http://localhost:4000/home/students/friends",
         Friends
       );
 
@@ -93,7 +93,7 @@ const StudentsSugestion: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['StudentsSuggestion'],
+        queryKey: ["StudentsSuggestion"],
       });
     },
   });
@@ -112,7 +112,7 @@ const StudentsSugestion: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['StudentsSuggestion'],
+        queryKey: ["StudentsSuggestion"],
       });
     },
   });
@@ -137,10 +137,10 @@ const StudentsSugestion: React.FC = () => {
   });
 
   return (
-    <div>
+    <>
       <Box
         sx={{
-          width: width && width < 900 ? '100%' : 'max(65%, 30%)',
+          width: width && width < 900 ? "100%" : "max(65%, 30%)",
         }}
       >
         <Box>
@@ -153,7 +153,7 @@ const StudentsSugestion: React.FC = () => {
           </Typography>
         </Box>
         <Box pt={1} />
-        <Paper sx={{}}>
+        <Box sx={{ borderRadius: 5, border: `1px solid ${grey[200]}` }}>
           <Box p={1} sx={{ width: 140 }}>
             <CommentTextField
               fullWidth
@@ -170,10 +170,10 @@ const StudentsSugestion: React.FC = () => {
             />
           </Box>
           <Box sx={{ maxHeight: 265, minHeight: 86 }}>
-            <Box sx={{ maxHeight: 250, overflowY: 'hidden' }}>
+            <Box sx={{ maxHeight: 250, overflowY: "hidden" }}>
               {data?.doc
                 .filter((student) =>
-                  search.toLowerCase() === ''
+                  search.toLowerCase() === ""
                     ? student
                     : student.Firstname.toLowerCase().includes(search)
                 )
@@ -186,14 +186,15 @@ const StudentsSugestion: React.FC = () => {
                       key={student._id}
                       sx={{
                         p: 2,
-                        width: 'inherit',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        bgcolor: (theme) => theme.palette.background.default,
+                        // bgcolor: "red",
+                        width: "inherit",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        borderRadius: 5,
                       }}
                     >
-                      <Box sx={{ display: 'flex' }}>
+                      <Box sx={{ display: "flex" }}>
                         <Avatar alt="Photo" src={student.Image}>
                           <PersonIcon sx={{ color: blueGrey[200] }} />
                         </Avatar>
@@ -215,7 +216,7 @@ const StudentsSugestion: React.FC = () => {
                           sx={{
                             bgcolor: isFollowed ? grey[100] : null,
                           }}
-                          variant={isFollowed ? 'text' : 'outlined'}
+                          variant={isFollowed ? "text" : "outlined"}
                           onClick={async () => {
                             try {
                               isFollowed
@@ -224,7 +225,7 @@ const StudentsSugestion: React.FC = () => {
                                     User: `${AuthInfo.Payload?._id}`,
                                   })
                                 : await Mutation.mutate({
-                                    status: 'student',
+                                    status: "student",
                                     FriendId: `${nanoid()}`,
                                     Identifier: student._id,
                                     User: `${AuthInfo.Payload?._id}`,
@@ -234,10 +235,10 @@ const StudentsSugestion: React.FC = () => {
                                 ReceiverId: student._id,
                                 NotiId: `${nanoid()}`,
                                 NotiReference: isFollowed
-                                  ? 'unfollow'
-                                  : 'follow',
+                                  ? "unfollow"
+                                  : "follow",
                                 Sender: `${AuthInfo.Payload?._id}`,
-                                AlertText: isFollowed ? 'unfollow' : 'follow',
+                                AlertText: isFollowed ? "unfollow" : "follow",
                                 SendingStatus: false,
                                 User: `${AuthInfo.Payload?._id}`,
                               });
@@ -246,7 +247,7 @@ const StudentsSugestion: React.FC = () => {
                             }
                           }}
                         >
-                          {isFollowed ? 'unfollow' : 'follow'}
+                          {isFollowed ? "unfollow" : "follow"}
                         </Button>
                       </Box>
                     </Box>
@@ -254,10 +255,10 @@ const StudentsSugestion: React.FC = () => {
                 })}
             </Box>
           </Box>
-        </Paper>
+        </Box>
         <Box pt={{ xs: 7, sm: 3, md: 1, lg: 1 }} />
       </Box>
-    </div>
+    </>
   );
 };
 

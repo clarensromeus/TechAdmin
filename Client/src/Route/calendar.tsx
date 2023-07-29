@@ -1,21 +1,21 @@
 // external imports of ressources
-import * as React from 'react';
-import { Box, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import IconButton from '@mui/material/IconButton';
-import TableHead from '@mui/material/TableHead';
-import red from '@mui/material/colors/red';
-import DeleteIcon from '@mui/icons-material/Delete';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import Stack from '@mui/material/Stack';
-import { blue, grey, orange } from '@mui/material/colors';
-import Avatar from '@mui/material/Avatar';
+import * as React from "react";
+import { Box, Typography } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import IconButton from "@mui/material/IconButton";
+import TableHead from "@mui/material/TableHead";
+import red from "@mui/material/colors/red";
+import DeleteIcon from "@mui/icons-material/Delete";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
+import Stack from "@mui/material/Stack";
+import { blue, grey, orange } from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 import {
   useQuery,
   UseQueryResult,
@@ -23,24 +23,27 @@ import {
   UseMutationResult,
   useQueryClient,
   QueryClient,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import __ from 'lodash';
-import { enqueueSnackbar } from 'notistack';
-import { FadeLoader } from 'react-spinners';
+} from "@tanstack/react-query";
+import axios from "axios";
+import __ from "lodash";
+import { enqueueSnackbar } from "notistack";
+import { FadeLoader } from "react-spinners";
+import { useRecoilValue } from "recoil";
 // internal crafted imports of ressources
-import { StyledTableCell, StyledTableRow } from '../MuiStyles/table';
-import CalendarForm from '../components/Home/CalendarForm';
+import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
+import CalendarForm from "../components/Home/CalendarForm";
 import {
   ICalendar,
   Idelete,
   IdeleteResponse,
   Idata,
-} from '../Interface/Calendar';
-import CalendarICon from '../images/static/coursesCalendar.png';
-import useWindowSize from '../hooks/useWindowSize';
-import { IWindow } from '../Interface/student';
-import { TextFieldTable } from '../MuiStyles/Nav';
+} from "../Interface/Calendar";
+import CalendarICon from "../images/static/coursesCalendar.png";
+import useWindowSize from "../hooks/useWindowSize";
+import { IWindow } from "../Interface/student";
+import { TextFieldTable } from "../MuiStyles/Nav";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
 
 interface IResponse {
   message: string;
@@ -48,6 +51,7 @@ interface IResponse {
 }
 
 const Calendar: React.FC = () => {
+  const ContextData = React.useContext(Context);
   const [page, setPage] = React.useState<number>(0);
 
   const queryClient: QueryClient = useQueryClient();
@@ -55,6 +59,8 @@ const Calendar: React.FC = () => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
+
+  const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
   // rows of teachers per page
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
@@ -67,16 +73,16 @@ const Calendar: React.FC = () => {
     setPage(0);
   };
 
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const [editData, setEditData] = React.useState<Idata<string>>({
-    _id: '',
-    Class: '',
-    Teacher: '',
-    TeacherNumber: '',
-    ClassName: '',
-    HoursPerWeek: '',
-    Day: '',
+    _id: "",
+    Class: "",
+    Teacher: "",
+    TeacherNumber: "",
+    ClassName: "",
+    HoursPerWeek: "",
+    Day: "",
   });
 
   const {
@@ -86,7 +92,7 @@ const Calendar: React.FC = () => {
     ICalendar<string>,
     Error
   >({
-    queryKey: ['calendar'],
+    queryKey: ["calendar"],
     queryFn: async () => {
       try {
         // declare the url
@@ -113,20 +119,20 @@ const Calendar: React.FC = () => {
       },
       onSuccess: (newData: IResponse) => {
         queryClient.invalidateQueries({
-          queryKey: ['calendar'],
+          queryKey: ["calendar"],
           exact: true,
         });
 
         enqueueSnackbar(
-          <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+          <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
             {newData.message}
           </Typography>,
           {
             anchorOrigin: {
-              vertical: 'top',
-              horizontal: 'center',
+              vertical: "top",
+              horizontal: "center",
             },
-            variant: 'success',
+            variant: "success",
             preventDuplicate: true, // prevent noti with the same message to display multiple times
           }
         );
@@ -157,16 +163,16 @@ const Calendar: React.FC = () => {
     <>
       <Box
         pt={1}
-        sx={{ width: '100%', boxSizing: 'border-box', px: { md: 1, lg: 1 } }}
+        sx={{ width: "100%", boxSizing: "border-box", px: { md: 1, lg: 1 } }}
       >
         <Box
           pt={2}
           sx={{
-            alignSelf: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
+            alignSelf: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
             bgcolor: orange[100],
             py: 2,
           }}
@@ -189,7 +195,7 @@ const Calendar: React.FC = () => {
                 variant="body2"
                 fontSize="1.2em"
                 fontWeight="bold"
-                sx={{ fontVariant: 'small-caps' }}
+                sx={{ fontVariant: "small-caps" }}
               >
                 Courses per Week
               </Typography>
@@ -216,21 +222,21 @@ const Calendar: React.FC = () => {
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            width: '100%',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            width: "100%",
             gap: 2,
-            overflow: 'auto',
-            borderBox: 'box-sizing',
+            overflow: "auto",
+            borderBox: "box-sizing",
           }}
         >
           <Box
             sx={{
-              display: 'table',
-              width: 'inherit',
-              tableLayout: 'fixed',
-              border: 'none',
+              display: "table",
+              width: "inherit",
+              tableLayout: "fixed",
+              border: "none",
             }}
           >
             <Box>
@@ -260,20 +266,20 @@ const Calendar: React.FC = () => {
             ) : (
               <TableContainer
                 sx={{
-                  '&.MuiTableContainer-root': {
-                    boxShadow: 'none',
+                  "&.MuiTableContainer-root": {
+                    boxShadow: "none",
                     borderBottomRightRadius: 0,
                     borderBottomLeftRadius: 0,
-                    borderBottom: 'none',
+                    borderBottom: "none",
                   },
                 }}
               >
                 <Table
                   sx={{
-                    '&.MuiTable-root': {
+                    "&.MuiTable-root": {
                       borderTop: `7px solid ${grey[100]}`,
                       borderLeft: `7px solid ${grey[100]}`,
-                      '&:last-child td': {
+                      "&:last-child td": {
                         borderBottom: 0,
                       },
                     },
@@ -311,11 +317,16 @@ const Calendar: React.FC = () => {
                           Teacher
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Typography fontWeight="bold" sx={{ color: grey[800] }}>
-                          Action
-                        </Typography>
-                      </StyledTableCell>
+                      {__.isEqual(AuthInfo.Payload, "Admin") && (
+                        <StyledTableCell align="left">
+                          <Typography
+                            fontWeight="bold"
+                            sx={{ color: grey[800] }}
+                          >
+                            Action
+                          </Typography>
+                        </StyledTableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -324,7 +335,7 @@ const Calendar: React.FC = () => {
                       page * rowsPerPage + rowsPerPage
                     )
                       .filter((courses) =>
-                        search.toLowerCase() === ''
+                        search.toLowerCase() === ""
                           ? courses
                           : courses.ClassName.toLowerCase().includes(
                               search.toLowerCase()
@@ -360,39 +371,44 @@ const Calendar: React.FC = () => {
                               {row.Teacher}
                             </Typography>
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            <Stack direction="row" spacing={2}>
-                              <IconButton
-                                sx={{ bgcolor: red[100] }}
-                                onClick={(e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  deleteAdmin.mutate({
-                                    _id: row._id,
-                                  });
-                                }}
-                              >
-                                <DeleteIcon sx={{ color: red[800] }} />
-                              </IconButton>
-                              <IconButton
-                                sx={{ bgcolor: blue[100] }}
-                                onClick={(e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  const CourseData: Idata<string> = {
-                                    _id: row._id,
-                                    Class: row.Class,
-                                    ClassName: row.ClassName,
-                                    TeacherNumber: row.TeacherNumber,
-                                    Day: row.Day,
-                                    HoursPerWeek: row.HoursPerWeek,
-                                    Teacher: row.Teacher,
-                                  };
-                                  setEditData(CourseData);
-                                }}
-                              >
-                                <RemoveRedEyeIcon sx={{ color: blue[800] }} />
-                              </IconButton>
-                            </Stack>
-                          </StyledTableCell>
+                          {__.isEqual(
+                            AuthInfo.Payload?.PersonStatus,
+                            "Admin"
+                          ) && (
+                            <StyledTableCell align="left">
+                              <Stack direction="row" spacing={2}>
+                                <IconButton
+                                  sx={{ bgcolor: red[100] }}
+                                  onClick={(e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    deleteAdmin.mutate({
+                                      _id: row._id,
+                                    });
+                                  }}
+                                >
+                                  <DeleteIcon sx={{ color: red[800] }} />
+                                </IconButton>
+                                <IconButton
+                                  sx={{ bgcolor: blue[100] }}
+                                  onClick={(e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    const CourseData: Idata<string> = {
+                                      _id: row._id,
+                                      Class: row.Class,
+                                      ClassName: row.ClassName,
+                                      TeacherNumber: row.TeacherNumber,
+                                      Day: row.Day,
+                                      HoursPerWeek: row.HoursPerWeek,
+                                      Teacher: row.Teacher,
+                                    };
+                                    setEditData(CourseData);
+                                  }}
+                                >
+                                  <RemoveRedEyeIcon sx={{ color: blue[800] }} />
+                                </IconButton>
+                              </Stack>
+                            </StyledTableCell>
+                          )}
                         </StyledTableRow>
                       ))}
                   </TableBody>
@@ -401,7 +417,7 @@ const Calendar: React.FC = () => {
             )}
             <TablePagination
               sx={{
-                '.MuiTablePagination-toolbar': {
+                ".MuiTablePagination-toolbar": {
                   border: `1px solid ${grey[200]}`,
                 },
               }}
@@ -416,9 +432,9 @@ const Calendar: React.FC = () => {
           </Box>
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              texAlign: 'center',
-              width: width && width < 800 ? '100%' : 400,
+              alignSelf: "flex-end",
+              texAlign: "center",
+              width: width && width < 800 ? "100%" : 400,
             }}
           >
             <CalendarForm {...editData} />

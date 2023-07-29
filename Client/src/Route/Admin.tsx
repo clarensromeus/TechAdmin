@@ -1,49 +1,49 @@
 // external imports of ressources
-import * as React from 'react';
-import { Box, TablePagination, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import TableHead from '@mui/material/TableHead';
-import orange from '@mui/material/colors/orange';
-import Avatar from '@mui/material/Avatar';
-import grey from '@mui/material/colors/grey';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import __ from 'lodash';
+import * as React from "react";
+import { Box, TablePagination, Typography } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import IconButton from "@mui/material/IconButton";
+import TableHead from "@mui/material/TableHead";
+import orange from "@mui/material/colors/orange";
+import Avatar from "@mui/material/Avatar";
+import grey from "@mui/material/colors/grey";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import __ from "lodash/";
 import {
   useQuery,
   useMutation,
   useQueryClient,
   UseMutationResult,
   UseQueryResult,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import InputAdornment from '@mui/material/InputAdornment';
-import red from '@mui/material/colors/red';
-import blue from '@mui/material/colors/blue';
-import { FadeLoader } from 'react-spinners';
-import Stack from '@mui/material/Stack';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import { useRecoilValue } from 'recoil';
-import { nanoid } from 'nanoid';
+} from "@tanstack/react-query";
+import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import InputAdornment from "@mui/material/InputAdornment";
+import red from "@mui/material/colors/red";
+import blue from "@mui/material/colors/blue";
+import { FadeLoader } from "react-spinners";
+import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import { useRecoilValue } from "recoil";
+import { nanoid } from "nanoid";
 // internal crafted imports of ressources
-import { StyledTableCell, StyledTableRow } from '../MuiStyles/table';
-import AdminForm from '../components/Home/adminForm';
-import { Idata, Idelete, IdeleteResponse, Iadmin } from '../Interface/admin';
-import useWindowSize from '../hooks/useWindowSize';
-import { TextFieldTable } from '../MuiStyles/Nav';
-import { IWindow } from '../Interface/student';
-import { IHistory } from '../Interface/History';
-import useHistory from '../hooks/useHistory';
-import Context from '../Store/ContextApi';
-import { IAuthState } from '../Interface/GlobalState';
-import Administrator from '../images/static/administrator.png';
+import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
+import AdminForm from "../components/Home/adminForm";
+import { Idata, Idelete, IdeleteResponse, Iadmin } from "../Interface/admin";
+import useWindowSize from "../hooks/useWindowSize";
+import { TextFieldTable } from "../MuiStyles/Nav";
+import { IWindow } from "../Interface/student";
+import { IHistory } from "../Interface/History";
+import useHistory from "../hooks/useHistory";
+import Context from "../Store/ContextApi";
+import { IAuthState } from "../Interface/GlobalState";
+import Administrator from "../images/static/administrator.png";
 
 interface IState {
   open: boolean;
@@ -53,35 +53,35 @@ interface IState {
 const Admin: React.FC = () => {
   const ContextData = React.useContext(Context);
   // state to hold admin data
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState<number>(0);
   // rows of administrator per page
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
   const [editData, setEditData] = React.useState<Idata>({
-    _id: '',
-    _ID_User: '',
-    Firstname: '',
-    Lastname: '',
-    Password: '',
-    ConfirmPassword: '',
-    Email: '',
-    StatusLevel: '',
-    PromoCode: '',
+    _id: "",
+    _ID_User: "",
+    Firstname: "",
+    Lastname: "",
+    Password: "",
+    ConfirmPassword: "",
+    Email: "",
+    StatusLevel: "",
+    PromoCode: "",
   });
 
   const [state, setState] = React.useState<IState>({
     open: false,
-    message: '',
+    message: "",
   });
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     // clickaway event won't close the snackbar
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -111,7 +111,7 @@ const Admin: React.FC = () => {
     Error,
     Iadmin<string>
   >({
-    queryKey: ['administrators'],
+    queryKey: ["administrators"],
     queryFn: async () => {
       // declare the url
       const Url: string = `http://localhost:4000/home/administrators/${9}`;
@@ -150,7 +150,7 @@ const Admin: React.FC = () => {
         });
         // invalidate and refetch the query to get fresh data
         queryClient.invalidateQueries({
-          queryKey: ['administrators'],
+          queryKey: ["administrators"],
           exact: true,
         });
       },
@@ -166,36 +166,36 @@ const Admin: React.FC = () => {
   return (
     <>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={state.open}
         autoHideDuration={6000}
         onClose={handleClose}
         color="success"
-        sx={{ color: '#fafafa' }}
+        sx={{ color: "#fafafa" }}
         action={
           <React.Fragment>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ color: '#fafafa' }} />
+              <CloseIcon sx={{ color: "#fafafa" }} />
             </IconButton>
           </React.Fragment>
         }
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           {state.message}
         </Alert>
       </Snackbar>
       <Box
         pt={1}
-        sx={{ width: '100%', boxSizing: 'border-box', px: { md: 1, lg: 1 } }}
+        sx={{ width: "100%", boxSizing: "border-box", px: { md: 1, lg: 1 } }}
       >
         <Box
           pt={2}
           sx={{
-            alignSelf: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
+            alignSelf: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
             bgcolor: orange[100],
             py: 2,
           }}
@@ -215,7 +215,7 @@ const Admin: React.FC = () => {
                 color="text.secondary"
                 fontSize="1.2em"
                 fontWeight="bold"
-                sx={{ fontVariant: 'small-caps' }}
+                sx={{ fontVariant: "small-caps" }}
               >
                 Administrators
               </Typography>
@@ -242,21 +242,21 @@ const Admin: React.FC = () => {
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            width: '100%',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            width: "100%",
             gap: 2,
-            overflow: 'auto',
-            borderBox: 'box-sizing',
+            overflow: "auto",
+            borderBox: "box-sizing",
           }}
         >
           <Box
             sx={{
-              display: 'table',
-              width: 'inherit',
-              tableLayout: 'fixed',
-              border: 'none',
+              display: "table",
+              width: "inherit",
+              tableLayout: "fixed",
+              border: "none",
             }}
           >
             <Box>
@@ -286,20 +286,20 @@ const Admin: React.FC = () => {
             ) : (
               <TableContainer
                 sx={{
-                  '&.MuiTableContainer-root': {
-                    boxShadow: 'none',
+                  "&.MuiTableContainer-root": {
+                    boxShadow: "none",
                     borderBottomRightRadius: 0,
                     borderBottomLeftRadius: 0,
-                    borderBottom: 'none',
+                    borderBottom: "none",
                   },
                 }}
               >
                 <Table
                   sx={{
-                    '&.MuiTable-root': {
+                    "&.MuiTable-root": {
                       borderTop: `7px solid ${grey[100]}`,
                       borderLeft: `7px solid ${grey[100]}`,
-                      '&:last-child td': {
+                      "&:last-child td": {
                         borderBottom: 0,
                       },
                     },
@@ -337,11 +337,16 @@ const Admin: React.FC = () => {
                           PromoCode
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Typography fontWeight="bold" sx={{ color: grey[800] }}>
-                          Action
-                        </Typography>
-                      </StyledTableCell>
+                      {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
+                        <StyledTableCell align="left">
+                          <Typography
+                            fontWeight="bold"
+                            sx={{ color: grey[800] }}
+                          >
+                            Action
+                          </Typography>
+                        </StyledTableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -351,7 +356,7 @@ const Admin: React.FC = () => {
                         page * rowsPerPage + rowsPerPage
                       )
                       .filter((admin) =>
-                        search.toLowerCase() === ''
+                        search.toLowerCase() === ""
                           ? admin
                           : admin.Firstname.toLowerCase().includes(
                               search.toLowerCase()
@@ -361,7 +366,7 @@ const Admin: React.FC = () => {
                         <StyledTableRow key={row.Firstname}>
                           <StyledTableCell component="th" scope="row">
                             <Avatar alt="admin image" src={row.Image}>
-                              {__.isEqual(row.Image, '') && (
+                              {__.isEqual(row.Image, "") && (
                                 <Typography>
                                   {row.Firstname.toUpperCase().charAt(0)}
                                   {row.Lastname.toUpperCase().charAt(0)}
@@ -394,58 +399,63 @@ const Admin: React.FC = () => {
                               {row.PromoCode}
                             </Typography>
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            <Stack direction="row" spacing={2}>
-                              <IconButton
-                                onClick={(e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  deleteAdmin.mutate({
-                                    _id: row._id,
-                                    _ID_User: row._ID_User,
-                                  });
+                          {__.isEqual(
+                            AuthInfo.Payload?.PersonStatus,
+                            "Admin"
+                          ) && (
+                            <StyledTableCell align="left">
+                              <Stack direction="row" spacing={2}>
+                                <IconButton
+                                  onClick={(e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    deleteAdmin.mutate({
+                                      _id: row._id,
+                                      _ID_User: row._ID_User,
+                                    });
 
-                                  // data for creating histories
-                                  const HistoryData: IHistory<string> = {
-                                    ActionPerformer: `${AuthInfo.Payload?._id}`,
-                                    NotiId: `${nanoid()}`,
-                                    ActionCreator: {
-                                      Status: 'administrator',
+                                    // data for creating histories
+                                    const HistoryData: IHistory<string> = {
+                                      ActionPerformer: `${AuthInfo.Payload?._id}`,
+                                      NotiId: `${nanoid()}`,
+                                      ActionCreator: {
+                                        Status: "administrator",
+                                        Firstname: row.Firstname,
+                                        Lastname: row.Lastname,
+                                        Image: row.Image || "",
+                                      },
+                                      NotiReference: "delete",
+                                      AlertText: "a is deleted by ",
+                                      User: "64bb0a381e5ce1722e328401", // the platform administrator id
+                                    };
+                                    CreateHistory(HistoryData);
+                                  }}
+                                  sx={{ bgcolor: red[100] }}
+                                >
+                                  <DeleteIcon sx={{ color: red[800] }} />
+                                </IconButton>
+                                <IconButton
+                                  onClick={(e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    const Data: Idata = {
+                                      _id: row._id,
+                                      _ID_User: row._ID_User,
                                       Firstname: row.Firstname,
                                       Lastname: row.Lastname,
-                                      Image: row.Image || '',
-                                    },
-                                    NotiReference: 'delete',
-                                    AlertText: 'a is deleted by ',
-                                    User: '64bb0a381e5ce1722e328401', // the platform administrator id
-                                  };
-                                  CreateHistory(HistoryData);
-                                }}
-                                sx={{ bgcolor: red[100] }}
-                              >
-                                <DeleteIcon sx={{ color: red[800] }} />
-                              </IconButton>
-                              <IconButton
-                                onClick={(e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  const Data: Idata = {
-                                    _id: row._id,
-                                    _ID_User: row._ID_User,
-                                    Firstname: row.Firstname,
-                                    Lastname: row.Lastname,
-                                    Password: row.Password,
-                                    ConfirmPassword: row.ConfirmPassword,
-                                    Email: row.Email,
-                                    StatusLevel: row.StatusLevel,
-                                    PromoCode: row.PromoCode,
-                                  };
-                                  setEditData(Data);
-                                }}
-                                sx={{ bgcolor: blue[100] }}
-                              >
-                                <RemoveRedEyeIcon sx={{ color: blue[800] }} />
-                              </IconButton>
-                            </Stack>
-                          </StyledTableCell>
+                                      Password: row.Password,
+                                      ConfirmPassword: row.ConfirmPassword,
+                                      Email: row.Email,
+                                      StatusLevel: row.StatusLevel,
+                                      PromoCode: row.PromoCode,
+                                    };
+                                    setEditData(Data);
+                                  }}
+                                  sx={{ bgcolor: blue[100] }}
+                                >
+                                  <RemoveRedEyeIcon sx={{ color: blue[800] }} />
+                                </IconButton>
+                              </Stack>
+                            </StyledTableCell>
+                          )}
                         </StyledTableRow>
                       ))}
                   </TableBody>
@@ -454,7 +464,7 @@ const Admin: React.FC = () => {
             )}
             <TablePagination
               sx={{
-                '.MuiTablePagination-toolbar': {
+                ".MuiTablePagination-toolbar": {
                   border: `1px solid ${grey[200]}`,
                 },
               }}
@@ -469,12 +479,12 @@ const Admin: React.FC = () => {
           </Box>
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              texAlign: 'center',
-              width: width && width < 800 ? '100%' : 400,
+              alignSelf: "flex-end",
+              texAlign: "center",
+              width: width && width < 800 ? "100%" : 400,
             }}
           >
-            {__.isEqual(AuthInfo.Payload?.PersonStatus, 'Admin') && (
+            {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
               <AdminForm {...editData} />
             )}
           </Box>

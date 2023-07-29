@@ -1,25 +1,25 @@
 // external imports of ressources
-import * as React from 'react';
-import { Box, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import TableHead from '@mui/material/TableHead';
-import red from '@mui/material/colors/red';
-import DeleteIcon from '@mui/icons-material/Delete';
-import InputAdornment from '@mui/material/InputAdornment';
-import TablePagination from '@mui/material/TablePagination';
-import blue from '@mui/material/colors/blue';
-import SearchIcon from '@mui/icons-material/Search';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import Stack from '@mui/material/Stack';
-import { orange, grey } from '@mui/material/colors';
-import Avatar from '@mui/material/Avatar';
-import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
-import Alert from '@mui/material/Alert';
+import * as React from "react";
+import { Box, Typography } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import IconButton from "@mui/material/IconButton";
+import TableHead from "@mui/material/TableHead";
+import red from "@mui/material/colors/red";
+import DeleteIcon from "@mui/icons-material/Delete";
+import InputAdornment from "@mui/material/InputAdornment";
+import TablePagination from "@mui/material/TablePagination";
+import blue from "@mui/material/colors/blue";
+import SearchIcon from "@mui/icons-material/Search";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Stack from "@mui/material/Stack";
+import { orange, grey } from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
+import Snackbar from "@mui/material/Snackbar";
+import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
 import {
   useQuery,
   UseQueryResult,
@@ -27,26 +27,26 @@ import {
   UseMutationResult,
   useQueryClient,
   QueryClient,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import __ from 'lodash';
-import { FadeLoader } from 'react-spinners';
-import { useRecoilValue } from 'recoil';
+} from "@tanstack/react-query";
+import axios from "axios";
+import __ from "lodash";
+import { FadeLoader } from "react-spinners";
+import { useRecoilValue } from "recoil";
 // internally crafted imports of ressources
-import { StyledTableCell, StyledTableRow } from '../MuiStyles/table';
-import PaymentForm from '../components/Home/PaymentForm';
-import { TextFieldTable } from '../MuiStyles/Nav';
+import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
+import PaymentForm from "../components/Home/PaymentForm";
+import { TextFieldTable } from "../MuiStyles/Nav";
 import {
   IPayResponse,
   IGetPayment,
   IDelete,
   IPayment,
-} from '../Interface/payment';
-import Context from '../Store/ContextApi';
-import braintreeImage from '../images/static/braintreePayment.png';
-import useWindowSize from '../hooks/useWindowSize';
-import { IWindow } from '../Interface/student';
-import { IAuthState } from '../Interface/GlobalState';
+} from "../Interface/payment";
+import Context from "../Store/ContextApi";
+import braintreeImage from "../images/static/braintreePayment.png";
+import useWindowSize from "../hooks/useWindowSize";
+import { IWindow } from "../Interface/student";
+import { IAuthState } from "../Interface/GlobalState";
 
 interface IState {
   open: boolean;
@@ -56,10 +56,10 @@ interface IState {
 const Payment: React.FC = () => {
   const ContextData = React.useContext(Context);
 
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
   const [EditData, setEditData] = React.useState<
-    Omit<IPayment, 'payment_method_nonce' | 'Amount'>
-  >({} as Omit<IPayment, 'payment_method_nonce' | 'Amount'>);
+    Omit<IPayment, "payment_method_nonce" | "Amount">
+  >({} as Omit<IPayment, "payment_method_nonce" | "Amount">);
 
   // state to hold payment data
   const [page, setPage] = React.useState<number>(0);
@@ -69,7 +69,7 @@ const Payment: React.FC = () => {
 
   const [state, setState] = React.useState<IState>({
     open: false,
-    message: '',
+    message: "",
   });
 
   const { open } = state;
@@ -95,7 +95,7 @@ const Payment: React.FC = () => {
     reason?: string
   ) => {
     // clickaway event won't close the snackbar
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -107,11 +107,11 @@ const Payment: React.FC = () => {
     IGetPayment,
     Error
   >({
-    queryKey: ['payments'],
+    queryKey: ["payments"],
     queryFn: async () => {
       try {
         const payment = await axios.get(
-          'http://localhost:4000/home/payment/paid'
+          "http://localhost:4000/home/payment/paid"
         );
         return payment.data;
       } catch (error) {
@@ -136,11 +136,11 @@ const Payment: React.FC = () => {
         setState({
           ...state,
           open: true,
-          message: 'student Deleted with success',
+          message: "student Deleted with success",
         });
         // invalidate and refetch the query to get fresh data
         queryClient.invalidateQueries({
-          queryKey: ['students'],
+          queryKey: ["students"],
           exact: true,
         });
       },
@@ -168,36 +168,36 @@ const Payment: React.FC = () => {
   return (
     <>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         color="success"
-        sx={{ color: '#fafafa' }}
+        sx={{ color: "#fafafa" }}
         action={
           <React.Fragment>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ color: '#fafafa' }} />
+              <CloseIcon sx={{ color: "#fafafa" }} />
             </IconButton>
           </React.Fragment>
         }
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           {state.message}
         </Alert>
       </Snackbar>
       <Box
         pt={1}
-        sx={{ width: '100%', boxSizing: 'border-box', px: { md: 1, lg: 1 } }}
+        sx={{ width: "100%", boxSizing: "border-box", px: { md: 1, lg: 1 } }}
       >
         <Box
           pt={2}
           sx={{
-            alignSelf: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
+            alignSelf: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
             bgcolor: orange[100],
             py: 2,
           }}
@@ -220,7 +220,7 @@ const Payment: React.FC = () => {
                 variant="body2"
                 fontSize="1.2em"
                 fontWeight="bold"
-                sx={{ fontVariant: 'small-caps' }}
+                sx={{ fontVariant: "small-caps" }}
               >
                 Paid students
               </Typography>
@@ -247,21 +247,21 @@ const Payment: React.FC = () => {
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            width: '100%',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            width: "100%",
             gap: 2,
-            overflow: 'auto',
-            borderBox: 'box-sizing',
+            overflow: "auto",
+            borderBox: "box-sizing",
           }}
         >
           <Box
             sx={{
-              display: 'table',
-              width: 'inherit',
-              tableLayout: 'fixed',
-              border: 'none',
+              display: "table",
+              width: "inherit",
+              tableLayout: "fixed",
+              border: "none",
             }}
           >
             <Box>
@@ -291,20 +291,20 @@ const Payment: React.FC = () => {
             ) : (
               <TableContainer
                 sx={{
-                  '&.MuiTableContainer-root': {
-                    boxShadow: 'none',
+                  "&.MuiTableContainer-root": {
+                    boxShadow: "none",
                     borderBottomRightRadius: 0,
                     borderBottomLeftRadius: 0,
-                    borderBottom: 'none',
+                    borderBottom: "none",
                   },
                 }}
               >
                 <Table
                   sx={{
-                    '&.MuiTable-root': {
+                    "&.MuiTable-root": {
                       borderTop: `7px solid ${grey[100]}`,
                       borderLeft: `7px solid ${grey[100]}`,
-                      '&:last-child td': {
+                      "&:last-child td": {
                         borderBottom: 0,
                       },
                     },
@@ -342,6 +342,16 @@ const Payment: React.FC = () => {
                           Fee
                         </Typography>
                       </StyledTableCell>
+                      {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
+                        <StyledTableCell align="left">
+                          <Typography
+                            fontWeight="bold"
+                            sx={{ color: grey[800] }}
+                          >
+                            Action
+                          </Typography>
+                        </StyledTableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -351,7 +361,7 @@ const Payment: React.FC = () => {
                         page * rowsPerPage + rowsPerPage
                       )
                       .filter((student) =>
-                        search.toLowerCase() === ''
+                        search.toLowerCase() === ""
                           ? student
                           : student.Firstname.toLowerCase().includes(
                               search.toLowerCase()
@@ -389,47 +399,52 @@ const Payment: React.FC = () => {
                               {row.Fee}
                             </Typography>
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            <Stack direction="row" spacing={2}>
-                              <IconButton
-                                sx={{ bgcolor: red[100] }}
-                                onClick={async (e: React.MouseEvent) => {
-                                  try {
+                          {__.isEqual(
+                            AuthInfo.Payload?.PersonStatus,
+                            "Admin"
+                          ) && (
+                            <StyledTableCell align="left">
+                              <Stack direction="row" spacing={2}>
+                                <IconButton
+                                  sx={{ bgcolor: red[100] }}
+                                  onClick={async (e: React.MouseEvent) => {
+                                    try {
+                                      e.preventDefault();
+                                      await deleteStudent.mutate({
+                                        _id: `${row._id}`,
+                                        ID: row.ID,
+                                      });
+                                    } catch (error) {
+                                      throw new Error(`${error}`);
+                                    }
+                                  }}
+                                >
+                                  <DeleteIcon sx={{ color: red[800] }} />
+                                </IconButton>
+                                <IconButton
+                                  sx={{ bgcolor: blue[100] }}
+                                  onClick={(e: React.MouseEvent) => {
                                     e.preventDefault();
-                                    await deleteStudent.mutate({
-                                      _id: `${row._id}`,
+                                    const Data: Omit<
+                                      IPayment,
+                                      "payment_method_nonce" | "Amount"
+                                    > = {
+                                      _id: row._id,
                                       ID: row.ID,
-                                    });
-                                  } catch (error) {
-                                    throw new Error(`${error}`);
-                                  }
-                                }}
-                              >
-                                <DeleteIcon sx={{ color: red[800] }} />
-                              </IconButton>
-                              <IconButton
-                                sx={{ bgcolor: blue[100] }}
-                                onClick={(e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  const Data: Omit<
-                                    IPayment,
-                                    'payment_method_nonce' | 'Amount'
-                                  > = {
-                                    _id: row._id,
-                                    ID: row.ID,
-                                    Firstname: row.Firstname,
-                                    Lastname: row.Lastname,
-                                    Fee: row.Fee,
-                                    Class: row.Class,
-                                    ClassName: row.ClassName,
-                                  };
-                                  setEditData(Data);
-                                }}
-                              >
-                                <RemoveRedEyeIcon sx={{ color: blue[800] }} />
-                              </IconButton>
-                            </Stack>
-                          </StyledTableCell>
+                                      Firstname: row.Firstname,
+                                      Lastname: row.Lastname,
+                                      Fee: row.Fee,
+                                      Class: row.Class,
+                                      ClassName: row.ClassName,
+                                    };
+                                    setEditData(Data);
+                                  }}
+                                >
+                                  <RemoveRedEyeIcon sx={{ color: blue[800] }} />
+                                </IconButton>
+                              </Stack>
+                            </StyledTableCell>
+                          )}
                         </StyledTableRow>
                       ))}
                   </TableBody>
@@ -438,7 +453,7 @@ const Payment: React.FC = () => {
             )}
             <TablePagination
               sx={{
-                '.MuiTablePagination-toolbar': {
+                ".MuiTablePagination-toolbar": {
                   border: `1px solid ${grey[200]}`,
                 },
               }}
@@ -453,12 +468,12 @@ const Payment: React.FC = () => {
           </Box>
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              texAlign: 'center',
-              width: width && width < 800 ? '100%' : 400,
+              alignSelf: "flex-end",
+              texAlign: "center",
+              width: width && width < 800 ? "100%" : 400,
             }}
           >
-            {__.isEqual(AuthInfo.Payload?.PersonStatus, 'Admin') && (
+            {__.isEqual(AuthInfo.Payload?.PersonStatus, "Admin") && (
               <PaymentForm {...EditData} />
             )}
           </Box>

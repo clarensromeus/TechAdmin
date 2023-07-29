@@ -1,9 +1,9 @@
-import { createTheme } from '@mui/material/styles';
-import { TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import grey from '@mui/material/colors/grey';
+import { createTheme } from "@mui/material/styles";
+import { TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import grey from "@mui/material/colors/grey";
 
-const bgColor_val: string = '#fafafa';
+const bgColor_val: string = "#fafafa";
 
 const ThemeStyled = createTheme({
   components: {
@@ -22,80 +22,81 @@ const ThemeStyled = createTheme({
 });
 
 const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: grey.A400,
-    borderWidth: '1px',
+  "& label.Mui-focused": {
+    color: grey.A200,
+    borderWidth: "1px",
   },
-  '& .MuiOutlinedInput-root': {
+  "& .MuiOutlinedInput-root": {
     borderRadius: 50,
-    '&.Mui-focused fieldset': {
-      borderColor: grey.A400,
-      borderWidth: '1px',
+    "&.Mui-focused fieldset": {
+      borderColor: grey.A200,
+      borderWidth: "1px",
       borderRadius: 50,
     },
   },
 });
 
 const ChatTextField = styled(TextField)({
-  '& label.Mui-focused': {
+  "& label.Mui-focused": {
     color: grey.A400,
-    borderWidth: '1px',
+    borderWidth: "1px",
   },
-  '& .MuiOutlinedInput-root': {
+  "& .MuiOutlinedInput-root": {
     borderRadius: 60,
-    backgroundColor: '#E8F0FE',
-    '&:hover fieldset': {
+    backgroundColor: "#E8F0FE",
+    "&:hover fieldset": {
       borderColor: grey.A400,
     },
-    '&.Mui-focused fieldset': {
+    "&.Mui-focused fieldset": {
       borderColor: grey.A400,
-      borderWidth: '1px',
+      borderWidth: "1px",
       borderRadius: 60,
     },
   },
 });
 
 const CommentTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
+  "& .MuiOutlinedInput-root": {
+    borderColor: grey[100],
     borderRadius: 100,
-    '&.Mui-focused fieldset': {
+    "&.Mui-focused fieldset": {
       borderColor: grey[200],
-      borderWidth: '1px',
+      borderWidth: "1px",
       borderRadius: 100,
     },
   },
 });
 
 const SugestionTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused fieldset': {
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
       borderColor: grey[200],
-      borderWidth: '1px',
+      borderWidth: "1px",
     },
   },
 });
 
 const SearchTextField = styled(TextField)({
   borderColor: grey[100],
-  '& .MuiOutlinedInput-root': {
-    borderColor: 'red',
-    borderWidth: '1px',
-    '&:hover fieldset': {
+  "& .MuiOutlinedInput-root": {
+    borderColor: "red",
+    borderWidth: "1px",
+    "&:hover fieldset": {
       borderColor: grey[200],
     },
-    '&.Mui-focused fieldset': {
+    "&.Mui-focused fieldset": {
       borderColor: grey[200],
-      borderWidth: '1px',
+      borderWidth: "1px",
     },
   },
 });
 
 const PostTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
+  "& .MuiOutlinedInput-root": {
     borderRadius: 50,
-    border: 'none',
-    '&.Mui-focused fieldset': {
-      border: 'none',
+    border: "none",
+    "&.Mui-focused fieldset": {
+      border: "none",
     },
   },
 });

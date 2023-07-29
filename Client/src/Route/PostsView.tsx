@@ -1,21 +1,21 @@
-import * as React from 'react';
+import * as React from "react";
 // external imports  of ressources
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { useRecoilValue } from 'recoil';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import { useRecoilValue } from "recoil";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 // internally crafted imports of ressources
-import Postcard from '../components/Home/PostCard';
-import StudentsSugestion from '../components/StudentsSugestion';
-import { IAuthState } from '../Interface/GlobalState';
-import Context from '../Store/ContextApi';
-import useWindowSize from '../hooks/useWindowSize';
-import { PostTextField } from '../MuiStyles/Auth';
-import { IPostCard } from '../Interface/Posts';
+import Postcard from "../components/Home/PostCard";
+import StudentsSugestion from "../components/StudentsSugestion";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
+import useWindowSize from "../hooks/useWindowSize";
+import { PostTextField } from "../MuiStyles/Auth";
+import { IPostCard } from "../Interface/Posts";
 
 const PostsView: React.FC = () => {
   const ContextData = React.useContext(Context);
@@ -39,15 +39,15 @@ const PostsView: React.FC = () => {
       </Box>
       {width && width <= 700 && (
         <>
-          <Paper sx={{ width: '100%' }}>
+          <Paper sx={{ width: "100%" }}>
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
+                display: "flex",
+                justifyContent: "space-between",
                 mx: 2,
                 py: 2,
                 gap: 1,
-                width: '95%',
+                width: "95%",
               }}
             >
               <Box>
@@ -56,7 +56,7 @@ const PostsView: React.FC = () => {
                   src={`${AuthInfo.Payload?.Image}`}
                 />
               </Box>
-              <Box sx={{ width: 'inherit' }}>
+              <Box sx={{ width: "inherit" }}>
                 <PostTextField
                   size="small"
                   variant="outlined"
@@ -75,15 +75,15 @@ const PostsView: React.FC = () => {
       )}
       <Grid container spacing={{ xs: 2, sm: 2, md: 6, lg: 6 }}>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Box pl={{ md: 5, lg: 5, bgcolor: 'blue' }}>
+          <Box pl={{ md: 5, lg: 5, bgcolor: "blue" }}>
             <Postcard {...state} />
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Box
             sx={{
-              position: 'sticky',
-              top: '30px',
+              position: "sticky",
+              top: "80px",
             }}
           >
             <StudentsSugestion />

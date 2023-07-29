@@ -68,6 +68,7 @@ interface IComment {
 
 interface IDelete {
   _id: Types.ObjectId;
+  PostId: string;
   Image: string;
 }
 

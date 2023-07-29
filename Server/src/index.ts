@@ -144,7 +144,7 @@ Server.get("/home/profile/:_id", UserStats);
 Server.get("/home/posts", GetPosts);
 Server.get("/home/students/:id", GetStudentInfo);
 Server.get("/home/chat/messages/:_id", GetFriends);
-Server.get("/home/dashboard/stats", DashboardStats);
+Server.get("/home/dashboard/stats/total", DashboardStats);
 Server.get("/home/payment/paid", GetPaidStudent);
 Server.get("/home/payment/token", GetPaymentToken);
 Server.get("/home/info/:status/:_id", GetUserInfo);

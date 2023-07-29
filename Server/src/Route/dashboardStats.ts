@@ -16,9 +16,9 @@ const DashboardStats = async (
     const docTeacher = await RegisterModelTeacher.find();
 
     res.status(200).json({
-      student: docStudent.length, // number of students
-      admin: docAdmin.length, // number of administrator
-      teacher: docTeacher.length, // number of teacher
+      students: docStudent.length, // number of students
+      admins: docAdmin.length, // number of administrator
+      teachers: docTeacher.length, // number of teacher
     });
   } catch (error) {
     throw new Error(`${error}`);

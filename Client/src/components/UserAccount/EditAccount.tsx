@@ -1,28 +1,28 @@
-import * as React from 'react';
-import { Box, Typography, TextField } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import FormLabel from '@mui/material/FormLabel';
-import grey from '@mui/material/colors/grey';
-import { useFormik, FormikHelpers } from 'formik';
-import { useRecoilValue } from 'recoil';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import EditIcon from '@mui/icons-material/Edit';
-import Button from '@mui/material/Button';
-import orange from '@mui/material/colors/orange';
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import axios from 'axios';
+import * as React from "react";
+import { Box, Typography, TextField } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import FormLabel from "@mui/material/FormLabel";
+import grey from "@mui/material/colors/grey";
+import { useFormik, FormikHelpers } from "formik";
+import { useRecoilValue } from "recoil";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/material/Button";
+import orange from "@mui/material/colors/orange";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
 // internal crafted imports of ressources
-import { IAuthState } from '../../Interface/GlobalState';
-import Context from '../../Store/ContextApi';
-import { Validate_EditForm } from '../../utils/validationSchema';
-import { IDataInfo, IResponse } from '../../Interface/profile';
+import { IAuthState } from "../../Interface/GlobalState";
+import Context from "../../Store/ContextApi";
+import { Validate_EditForm } from "../../utils/validationSchema";
+import { IDataInfo, IResponse } from "../../Interface/profile";
 
 const EditAccount: React.FC = () => {
   // for generating unique id both on client and server side
   const ID = React.useId();
 
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
   const ContextData = React.useContext(Context);
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
@@ -41,10 +41,10 @@ const EditAccount: React.FC = () => {
         Firstname: `${AuthInfo.Payload?.Firstname}`,
         Lastname: `${AuthInfo.Payload?.Lastname}`,
         Email: `${AuthInfo.Payload?.Email}`,
-        Password: 'Clarens(+-1998)',
+        Password: "Clarens(+-1998)",
         Username: `${AuthInfo.Payload?.Firstname?.toLowerCase()}${AuthInfo.Payload?.Lastname?.toLowerCase()}`,
         StatusLevel: `${AuthInfo.status}`,
-        DOB: '29/01/1998',
+        DOB: "29/01/1998",
       },
     },
     validationSchema: Validate_EditForm,
@@ -61,10 +61,10 @@ const EditAccount: React.FC = () => {
   const mutation = useMutation<
     IResponse,
     Error,
-    IDataInfo<string>['AdminEdit']
+    IDataInfo<string>["AdminEdit"]
   >({
-    mutationFn: (data: IDataInfo<string>['AdminEdit']) => {
-      return axios.patch('http://localhost:4000/home/profile/editAcount', data);
+    mutationFn: (data: IDataInfo<string>["AdminEdit"]) => {
+      return axios.patch("http://localhost:4000/home/profile/editAcount", data);
     },
   });
 
@@ -89,18 +89,12 @@ const EditAccount: React.FC = () => {
             }
           }}
         >
-          <Grid
-            container
-            xs={12}
-            display="flex"
-            flexDirection="column"
-            spacing={2}
-          >
+          <Grid container display="flex" flexDirection="column" spacing={2}>
             <Grid container item xs={12} spacing={2}>
               <Grid item xs={6}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <FormLabel
-                    sx={{ textTransform: 'uppercase', color: grey[800] }}
+                    sx={{ textTransform: "uppercase", color: grey[800] }}
                   >
                     firstname
                   </FormLabel>
@@ -115,11 +109,11 @@ const EditAccount: React.FC = () => {
                       onChange={Formik.handleChange}
                       fullWidth
                       sx={{
-                        bgcolor: 'white',
-                        '& .MuiFilledInput-root': {
-                          bgcolor: '#fafafa',
+                        bgcolor: "white",
+                        "& .MuiFilledInput-root": {
+                          bgcolor: "#fafafa",
                         },
-                        '& .Mui-focused': { bgcolor: '#fafafa' },
+                        "& .Mui-focused": { bgcolor: "#fafafa" },
                       }}
                       error={
                         Formik.touched.AdminEdit?.Firstname &&
@@ -134,16 +128,16 @@ const EditAccount: React.FC = () => {
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <FormLabel
-                    sx={{ textTransform: 'uppercase', color: grey[800] }}
+                    sx={{ textTransform: "uppercase", color: grey[800] }}
                   >
                     lastname
                   </FormLabel>
                   <Box
                     sx={{
-                      color: 'text.secondary',
-                      textTransform: 'capitalize',
+                      color: "text.secondary",
+                      textTransform: "capitalize",
                     }}
                   >
                     <TextField
@@ -156,11 +150,11 @@ const EditAccount: React.FC = () => {
                       onChange={Formik.handleChange}
                       fullWidth
                       sx={{
-                        bgcolor: 'white',
-                        '& .MuiFilledInput-root': {
-                          bgcolor: '#fafafa',
+                        bgcolor: "white",
+                        "& .MuiFilledInput-root": {
+                          bgcolor: "#fafafa",
                         },
-                        '& .Mui-focused': { bgcolor: '#fafafa' },
+                        "& .Mui-focused": { bgcolor: "#fafafa" },
                       }}
                       error={
                         Formik.touched.AdminEdit?.Lastname &&
@@ -176,9 +170,9 @@ const EditAccount: React.FC = () => {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <FormLabel
-                  sx={{ textTransform: 'uppercase', color: grey[800] }}
+                  sx={{ textTransform: "uppercase", color: grey[800] }}
                 >
                   email
                 </FormLabel>
@@ -193,11 +187,11 @@ const EditAccount: React.FC = () => {
                     onChange={Formik.handleChange}
                     fullWidth
                     sx={{
-                      bgcolor: 'white',
-                      '& .MuiFilledInput-root': {
-                        bgcolor: '#fafafa',
+                      bgcolor: "white",
+                      "& .MuiFilledInput-root": {
+                        bgcolor: "#fafafa",
                       },
-                      '& .Mui-focused': { bgcolor: '#fafafa' },
+                      "& .Mui-focused": { bgcolor: "#fafafa" },
                     }}
                     error={
                       Formik.touched.AdminEdit?.Email &&
@@ -212,9 +206,9 @@ const EditAccount: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <FormLabel
-                  sx={{ textTransform: 'uppercase', color: grey[800] }}
+                  sx={{ textTransform: "uppercase", color: grey[800] }}
                 >
                   password
                 </FormLabel>
@@ -229,11 +223,11 @@ const EditAccount: React.FC = () => {
                     onChange={Formik.handleChange}
                     fullWidth
                     sx={{
-                      bgcolor: 'white',
-                      '& .MuiFilledInput-root': {
-                        bgcolor: '#fafafa',
+                      bgcolor: "white",
+                      "& .MuiFilledInput-root": {
+                        bgcolor: "#fafafa",
                       },
-                      '& .Mui-focused': { bgcolor: '#fafafa' },
+                      "& .Mui-focused": { bgcolor: "#fafafa" },
                     }}
                     error={
                       Formik.touched.AdminEdit?.Password &&
@@ -248,9 +242,9 @@ const EditAccount: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <FormLabel
-                  sx={{ textTransform: 'uppercase', color: grey[800] }}
+                  sx={{ textTransform: "uppercase", color: grey[800] }}
                 >
                   username
                 </FormLabel>
@@ -265,11 +259,11 @@ const EditAccount: React.FC = () => {
                     onChange={Formik.handleChange}
                     fullWidth
                     sx={{
-                      bgcolor: 'white',
-                      '& .MuiFilledInput-root': {
-                        bgcolor: '#fafafa',
+                      bgcolor: "white",
+                      "& .MuiFilledInput-root": {
+                        bgcolor: "#fafafa",
                       },
-                      '& .Mui-focused': { bgcolor: '#fafafa' },
+                      "& .Mui-focused": { bgcolor: "#fafafa" },
                     }}
                     error={
                       Formik.touched.AdminEdit?.Username &&
@@ -284,9 +278,9 @@ const EditAccount: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <FormLabel
-                  sx={{ textTransform: 'uppercase', color: grey[800] }}
+                  sx={{ textTransform: "uppercase", color: grey[800] }}
                 >
                   statuslevel
                 </FormLabel>
@@ -321,9 +315,9 @@ const EditAccount: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <FormLabel
-                  sx={{ textTransform: 'uppercase', color: grey[800] }}
+                  sx={{ textTransform: "uppercase", color: grey[800] }}
                 >
                   date of birth
                 </FormLabel>
@@ -338,11 +332,11 @@ const EditAccount: React.FC = () => {
                     onChange={Formik.handleChange}
                     fullWidth
                     sx={{
-                      bgcolor: 'white',
-                      '& .MuiFilledInput-root': {
-                        bgcolor: '#fafafa',
+                      bgcolor: "white",
+                      "& .MuiFilledInput-root": {
+                        bgcolor: "#fafafa",
                       },
-                      '& .Mui-focused': { bgcolor: '#fafafa' },
+                      "& .Mui-focused": { bgcolor: "#fafafa" },
                     }}
                     error={
                       Formik.touched.AdminEdit?.DOB &&
@@ -362,7 +356,7 @@ const EditAccount: React.FC = () => {
                 // type="submit"
                 sx={{
                   bgcolor: orange[100],
-                  ':hover': { bgcolor: orange[100] },
+                  ":hover": { bgcolor: orange[100] },
                 }}
                 // onClick={handleRefresh}
                 startIcon={<EditIcon sx={{ color: orange[800] }} />}

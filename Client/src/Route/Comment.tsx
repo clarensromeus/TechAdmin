@@ -1,31 +1,31 @@
-import * as React from 'react';
-import { Box, IconButton, Typography, Avatar } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import grey from '@mui/material/colors/grey';
-import SendIcon from '@mui/icons-material/Send';
+import * as React from "react";
+import { Box, IconButton, Typography, Avatar } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import grey from "@mui/material/colors/grey";
+import SendIcon from "@mui/icons-material/Send";
 import {
   useMutation,
   useQueryClient,
   UseQueryResult,
   useQuery,
   QueryClient,
-} from '@tanstack/react-query';
-import { useNavigate, NavigateFunction, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { produce } from 'immer';
+} from "@tanstack/react-query";
+import { useNavigate, NavigateFunction, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { produce } from "immer";
 // externally crafted imports of ressources
-import { CssTextField } from '../MuiStyles/Auth';
-import { IComment, IGetComment } from '../Interface/Posts';
-import StyledBadge from '../MuiStyles/StyledBadge';
-import useNotification from '../hooks/useNotifications';
-import Context from '../Store/ContextApi';
-import { IAuthState } from '../Interface/GlobalState';
+import { CssTextField } from "../MuiStyles/Auth";
+import { IComment, IGetComment } from "../Interface/Posts";
+import StyledBadge from "../MuiStyles/StyledBadge";
+import useNotification from "../hooks/useNotifications";
+import Context from "../Store/ContextApi";
+import { IAuthState } from "../Interface/GlobalState";
 
-type ScrollBehavior = 'auto' | 'smooth';
+type ScrollBehavior = "auto" | "smooth";
 
 const Comment: React.FC = () => {
   const ContextData = React.useContext(Context);
@@ -55,7 +55,7 @@ const Comment: React.FC = () => {
     IGetComment,
     Error
   >({
-    queryKey: ['Comments', id],
+    queryKey: ["Comments", id],
     queryFn: async ({ queryKey }) => {
       const CommentResponse = await axios.get(
         `http://localhost:4000/home/Post/comments/${queryKey[1]}`
@@ -70,7 +70,7 @@ const Comment: React.FC = () => {
   const CommentsMutation = useMutation({
     mutationFn: async (Comments) => {
       const res = await axios.post(
-        'http://localhost:4000/home/posts/comments',
+        "http://localhost:4000/home/posts/comments",
         Comments
       );
 
@@ -78,10 +78,10 @@ const Comment: React.FC = () => {
     },
     onMutate: async (newComment: IComment) => {
       // cancel any outgoing query, so that they don't overwrite our optimistic update
-      queryClient.cancelQueries({ queryKey: ['Comments', id] });
+      queryClient.cancelQueries({ queryKey: ["Comments", id] });
 
       // snapshot the previous value
-      const previousPosts = queryClient.getQueryData(['Comments', id]);
+      const previousPosts = queryClient.getQueryData(["Comments", id]);
 
       const updateComments = produce(
         previousPosts,
@@ -102,17 +102,20 @@ const Comment: React.FC = () => {
       );
 
       // optimistically update the query
-      queryClient.setQueryData(['Comments', id], updateComments);
+      queryClient.setQueryData(["Comments", id], updateComments);
 
       return { previousPosts };
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
     onError: (err, newTodo, context) => {
-      queryClient.setQueryData(['Comments', id], context?.previousPosts);
+      queryClient.setQueryData(["Comments", id], context?.previousPosts);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['Comments', id] });
+      queryClient.invalidateQueries({ queryKey: ["Comments", id] });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["Posts"] });
     },
   });
 
@@ -120,8 +123,8 @@ const Comment: React.FC = () => {
     (behavior: ScrollBehavior | undefined) => {
       ScrollToTheBottom.current?.scrollIntoView({
         behavior,
-        block: 'start',
-        inline: 'nearest',
+        block: "start",
+        inline: "nearest",
       });
     },
     [id]
@@ -129,51 +132,51 @@ const Comment: React.FC = () => {
 
   React.useEffect(() => {
     // scroll to the bottom of the list of comments
-    ScrollFunc('smooth');
+    ScrollFunc("smooth");
   }, [id, data?.doc.Comments.length]);
 
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          position: 'fixed',
-          bgcolor: 'rgb(0,0,0,0.8)',
-          top: '0%',
-          left: '0%',
-          width: '100%',
-          height: '100%',
+          position: "fixed",
+          bgcolor: "rgb(0,0,0,0.8)",
+          top: "0%",
+          left: "0%",
+          width: "100%",
+          height: "100%",
         }}
       >
         <Box
           sx={{
             width: 640,
-            height: { xs: 'inherit', sm: 'inherit', md: 600, lg: 600 },
-            bgcolor: '#fafafa',
+            height: { xs: "inherit", sm: "inherit", md: 600, lg: 600 },
+            bgcolor: "#fafafa",
           }}
         >
           <Box
             sx={{
               gap: 2,
-              position: 'fixed',
-              width: 'inherit',
+              position: "fixed",
+              width: "inherit",
               height: 70,
-              backdropFilter: 'blur(5px)',
+              backdropFilter: "blur(5px)",
               zIndex: 4,
               borderBottom: `1px solid ${grey[200]}`,
             }}
           >
             <Box
               sx={{
-                display: 'flex',
-                height: 'inherit',
-                alignItems: 'center',
+                display: "flex",
+                height: "inherit",
+                alignItems: "center",
               }}
             >
-              <IconButton onClick={() => navigate('..')}>
+              <IconButton onClick={() => navigate("..")}>
                 <ArrowForwardIcon />
               </IconButton>
               <Box>
@@ -185,7 +188,7 @@ const Comment: React.FC = () => {
                 <Typography
                   fontWeight="italic"
                   fontSize=".9rem"
-                  sx={{ color: 'green' }}
+                  sx={{ color: "green" }}
                 >
                   {data?.doc.Comments.length}
                 </Typography>
@@ -194,11 +197,11 @@ const Comment: React.FC = () => {
           </Box>
           <Box
             sx={{
-              height: 'calc(100% - 75px)',
-              overflowY: 'auto',
+              height: "calc(100% - 75px)",
+              overflowY: "auto",
             }}
           >
-            <Box mx={2} pt={10} sx={{ maxHeight: 'inherit', m1: 1 }}>
+            <Box mx={2} pt={10} sx={{ maxHeight: "inherit", m1: 1 }}>
               {data?.doc.Comments.map((value) => {
                 const {
                   Body,
@@ -210,10 +213,10 @@ const Comment: React.FC = () => {
                   <Box
                     sx={{
                       pl: 1,
-                      display: 'flex',
-                      flexDirection: 'row',
+                      display: "flex",
+                      flexDirection: "row",
                       gap: 1,
-                      borderBox: 'box-sizing',
+                      borderBox: "box-sizing",
                     }}
                   >
                     <Box>
@@ -223,8 +226,8 @@ const Comment: React.FC = () => {
                     </Box>
                     <Box
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                        display: "flex",
+                        flexDirection: "column",
                         maxWidth: 270,
                       }}
                     >
@@ -232,13 +235,13 @@ const Comment: React.FC = () => {
                         sx={{
                           bgcolor: grey[300],
                           borderRadius: 2,
-                          AlignText: 'center',
+                          AlignText: "center",
                         }}
                         p={1}
                       >
                         <Typography fontWeight="bold">{Body}</Typography>
                       </Box>
-                      <Box sx={{ alignSelf: 'flex-end' }}>
+                      <Box sx={{ alignSelf: "flex-end" }}>
                         <Typography
                           variant="body1"
                           color="text.secondary"
@@ -255,7 +258,7 @@ const Comment: React.FC = () => {
             <Box
               component="div"
               ref={ScrollToTheBottom}
-              sx={{ bgcolor: 'red' }}
+              sx={{ bgcolor: "red" }}
             />
           </Box>
           <form
@@ -273,21 +276,21 @@ const Comment: React.FC = () => {
                 NotiId: `${nanoid()}`,
                 Sender: `${AuthInfo.Payload?._id}`,
                 SendingStatus: false,
-                NotiReference: 'comments',
+                NotiReference: "comments",
                 AlertText: `${data?.doc.Title}`,
                 User: `${AuthInfo.Payload?._id}`,
               });
               // reset textfield value
-              setText('');
+              setText("");
             }}
           >
             <Box
               sx={{
-                height: '75px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                position: 'relative',
+                height: "75px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                position: "relative",
                 gap: 1,
                 mx: 1,
                 borderTop: `1px solid ${grey[200]}`,
@@ -295,7 +298,7 @@ const Comment: React.FC = () => {
             >
               <StyledBadge
                 overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant="dot"
               >
                 <Avatar

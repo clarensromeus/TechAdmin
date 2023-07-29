@@ -209,7 +209,7 @@ const DeletePost = async (req: Request<IDelete>, res: Response) => {
     const Customizer = (value: number, otherValue: number) => {
       return value === otherValue;
     };
-    const { _id, PostId, Image }: IDelete = await req.params;
+    const { _id, Image }: IDelete = await req.params;
 
     // retrieving specific image name to delete related to the deleted post
     const MatchedImage = Image.match(/Images\/(?<originalName>[\d]+\.[\w]+)/);

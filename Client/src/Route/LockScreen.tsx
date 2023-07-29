@@ -1,22 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useRecoilValue } from 'recoil';
-import Button from '@mui/material/Button';
-import { InputAdornment, Typography } from '@mui/material';
-import red from '@mui/material/colors/red';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
-import bcryptjs from 'bcryptjs';
-import { CommentTextField } from '../MuiStyles/Auth';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useRecoilValue } from "recoil";
+import Button from "@mui/material/Button";
+import { InputAdornment, Typography } from "@mui/material";
+import red from "@mui/material/colors/red";
+import { useNavigate, NavigateFunction } from "react-router-dom";
+import bcryptjs from "bcryptjs";
+import { CommentTextField } from "../MuiStyles/Auth";
 // external imports of ressources
-import { IAuthState } from '../Interface/GlobalState';
-import Context from '../Store/ContextApi';
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
 
 const LockScreen: React.FC = () => {
   const ContextData = React.useContext(Context);
-  const [value, setValue] = React.useState<string>();
+  const [value, setValue] = React.useState<string>("");
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
@@ -64,32 +64,32 @@ const LockScreen: React.FC = () => {
       <Box
         pt={10}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
         }}
       >
         <form onSubmit={handleSubmit}>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               gap: 1,
             }}
           >
             <Box>
               <HttpsOutlinedIcon
-                sx={{ fontSize: '5em', color: 'text.secondary' }}
+                sx={{ fontSize: "5em", color: "text.secondary" }}
               />
             </Box>
             <Box>enter your password to unlock</Box>
-            <Box pt={1} sx={{ width: 300, alignSelf: 'center' }}>
+            <Box pt={1} sx={{ width: 300, alignSelf: "center" }}>
               <CommentTextField
                 variant="outlined"
-                type={visible.showPassw ? 'text' : 'password'}
+                type={visible.showPassw ? "text" : "password"}
                 size="small"
                 fullWidth
                 value={value}
@@ -103,9 +103,9 @@ const LockScreen: React.FC = () => {
                         disableElevation
                         onClick={handleShowPass}
                         sx={{
-                          fontWeight: 'bold',
-                          '&:hover': {
-                            textDecoration: 'underline',
+                          fontWeight: "bold",
+                          "&:hover": {
+                            textDecoration: "underline",
                           },
                         }}
                       >
@@ -121,12 +121,12 @@ const LockScreen: React.FC = () => {
               />
             </Box>
             {isOk && (
-              <Box sx={{ textAlign: 'start' }}>
+              <Box sx={{ textAlign: "start" }}>
                 <Typography
                   sx={{
                     color: red[600],
-                    fontStyle: 'italic',
-                    fontSize: '0.8em',
+                    fontStyle: "italic",
+                    fontSize: "0.8em",
                   }}
                 >
                   passwrod is incorrect

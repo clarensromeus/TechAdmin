@@ -188,6 +188,8 @@ const Postcard: React.FC<IPostCard> = ({ _id, Firstname, Lastname }) => {
                 <Card
                   sx={{
                     width: "inherit",
+                    boxShadow: "none",
+                    border: `1px solid ${grey[100]}`,
                   }}
                 >
                   <PostActions {...PostAction} />
