@@ -62,7 +62,7 @@ with an unpaid and free account that enables only the registered number to recei
 
 ## Note
 this project is created within time average of three months and it is well-built dynamic and responsive
-click here for further view on screenshots of the project
+click [here](https://github.com/clarensromeus/TechAdmin/tree/master/ScreenShots) for further view on screenshots of the project
 
 
 
