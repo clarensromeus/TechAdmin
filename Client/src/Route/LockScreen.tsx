@@ -9,7 +9,7 @@ import { InputAdornment, Typography } from "@mui/material";
 import red from "@mui/material/colors/red";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 import bcryptjs from "bcryptjs";
-import { CommentTextField } from "../MuiStyles/Auth";
+import { CommentTextField } from "../MuiStyles/TextFieldStyle";
 // external imports of ressources
 import { IAuthState } from "../Interface/GlobalState";
 import Context from "../Store/ContextApi";

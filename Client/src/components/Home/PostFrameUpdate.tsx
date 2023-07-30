@@ -1,29 +1,29 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import Box from "@mui/material/Box";
 import {
   Typography,
   IconButton,
   TextareaAutosize,
   Button,
-} from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import green from '@mui/material/colors/green';
-import blue from '@mui/material/colors/blue';
-import grey from '@mui/material/colors/grey';
-import { useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
-import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
-import __ from 'lodash';
+} from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import green from "@mui/material/colors/green";
+import blue from "@mui/material/colors/blue";
+import grey from "@mui/material/colors/grey";
+import { useNavigate } from "react-router-dom";
+import { nanoid } from "nanoid";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import __ from "lodash";
 // external imports of ressources
-import { SearchTextField } from '../../MuiStyles/Auth';
-import { IPostFrameUpdate } from '../../Interface/Posts';
+import { SearchTextField } from "../../MuiStyles/TextFieldStyle";
+import { IPostFrameUpdate } from "../../Interface/Posts";
 
 interface IUpdatePostResponse {
   message: string;
@@ -37,11 +37,11 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
   _id,
   PostId,
   Title,
-  Image
+  Image,
 }) => {
   const [file, setFile] = React.useState<any>();
   const [PreviewImage, setPreviewImage] = React.useState<any>();
-  const [title, setTitle] = React.useState<string>('');
+  const [title, setTitle] = React.useState<string>("");
 
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
 
   const UpdatePost = useMutation<IUpdatePostResponse, Error, any>({
     mutationFn: async (data: any) => {
-      return axios.patch('http://localhost:4000/home/post/update', data);
+      return axios.patch("http://localhost:4000/home/post/update", data);
     },
   });
 
@@ -110,8 +110,8 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
               e.preventDefault();
               const formData = new FormData();
 
-              await formData.append('file', file);
-              await formData.append('PostId', `${nanoid()}`);
+              await formData.append("file", file);
+              await formData.append("PostId", `${nanoid()}`);
             } catch (error) {
               throw new Error(`${error}`);
             }
@@ -119,22 +119,22 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
         >
           <DialogTitle
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: '1.5em',
-              color: 'text.secondary',
+              display: "flex",
+              flexDirection: "column",
+              fontSize: "1.5em",
+              color: "text.secondary",
             }}
           >
             <Box>
               <IconButton onClick={handleCloseDialogUpdate}>
-                <ArrowForwardIcon sx={{ color: 'black' }} />
+                <ArrowForwardIcon sx={{ color: "black" }} />
               </IconButton>
             </Box>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
               <Typography fontSize="1em">Pick, add a post...</Typography>
@@ -157,9 +157,9 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
             sx={{
               width: 450,
               height: 270,
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
             }}
           >
             {__.isUndefined(getFile.PreviewImage) && (
@@ -197,11 +197,11 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
             )}
           </DialogContent>
           <DialogActions>
-            <Box pr={2} sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+            <Box pr={2} sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
               <Button
                 variant="outlined"
                 onClick={() => {
-                  navigate('posts');
+                  navigate("posts");
                   setOpenDialogUpdate(false);
                 }}
                 sx={{
@@ -217,7 +217,7 @@ const PostFrameUpdate: React.FC<IPostFrameUpdate> = ({
                 type="submit"
                 sx={{
                   bgcolor: green[800],
-                  ':hover': { bgcolor: green[700] },
+                  ":hover": { bgcolor: green[700] },
                   borderRadius: 40,
                 }}
               >

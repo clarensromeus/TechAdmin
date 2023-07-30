@@ -1,44 +1,44 @@
 // internal imports of ressources
-import * as React from 'react';
+import * as React from "react";
 // external imports of ressources
-import { FC, useId } from 'react';
-import { Box, Typography, Button, Checkbox } from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
-import Grid from '@mui/material/Grid';
-import { NavigateFunction, Link as RRDLink } from 'react-router-dom';
-import Link from '@mui/material/Link';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormLabel from '@mui/material/FormLabel';
-import grey from '@mui/material/colors/grey';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Alert from '@mui/material/Alert';
-import { useFormik, FormikHelpers } from 'formik';
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { PulseLoader } from 'react-spinners';
-import __ from 'lodash';
+import { FC, useId } from "react";
+import { Box, Typography, Button, Checkbox } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import Grid from "@mui/material/Grid";
+import { NavigateFunction, Link as RRDLink } from "react-router-dom";
+import Link from "@mui/material/Link";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormLabel from "@mui/material/FormLabel";
+import grey from "@mui/material/colors/grey";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
+import { useFormik, FormikHelpers } from "formik";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { PulseLoader } from "react-spinners";
+import __ from "lodash";
 // internal crafted imports of sources
-import { Validate_Register } from '../../utils/validationSchema';
-import { TextFieldStyle } from '../../MuiStyles/Nav';
-import { IAuthState } from '../../Interface/GlobalState';
-import { AdminRegisterType } from '../../Store/globalStoreTypes';
-import useData from '../DataInfo';
-import Context from '../../Store/ContextApi';
+import { Validate_Register } from "../../utils/validationSchema";
+import { TextFieldStyle } from "../../MuiStyles/TextFieldStyle2";
+import { IAuthState } from "../../Interface/GlobalState";
+import { AdminRegisterType } from "../../Store/globalStoreTypes";
+import useData from "../DataInfo";
+import Context from "../../Store/ContextApi";
 import {
   DataInfo,
   IState,
   studentInfo,
   IValidation,
   IResponse,
-} from '../../Interface/Register';
-import { isValidatedRegister } from '../isValidated';
+} from "../../Interface/Register";
+import { isValidatedRegister } from "../isValidated";
 
 interface IUserEmail {
   UsernameorEmail: string;
@@ -50,7 +50,7 @@ interface IPasscode {
 
 /* eslint no-redeclare: "off" */
 const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
-  const newLine: string = ' ';
+  const newLine: string = " ";
 
   const ContextData = React.useContext(Context);
   const Administrator = ContextData?.GetAuthInfo;
@@ -63,7 +63,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
 
   const [state, setState] = React.useState<IState>({
     open: false,
-    message: '',
+    message: "",
   });
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(Administrator);
@@ -77,7 +77,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
     reason?: string
   ) => {
     // clickaway event won't close the snackbar
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -86,21 +86,21 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
   };
 
   const isAdmin: boolean =
-    __.isEqual('admin', AuthInfo?.status) &&
+    __.isEqual("admin", AuthInfo?.status) &&
     __.isEqual(AdminRegisterType, AuthInfo?.type);
 
   const validationSchema: IValidation = {
-    message: UsernameorEmail === 'top' ? 'email' : 'username',
+    message: UsernameorEmail === "top" ? "email" : "username",
     validation:
-      UsernameorEmail === 'top'
-        ? 'enter a valid email'
-        : 'enter a valid username',
+      UsernameorEmail === "top"
+        ? "enter a valid email"
+        : "enter a valid username",
     matching:
-      UsernameorEmail === 'top'
+      UsernameorEmail === "top"
         ? /^\b[\w-.]+@([\w-]+\.)+[\w-]{2,4}\b$/g
         : /^[a-z]+\s[a-z]+$/g,
-    ClassOrpromocode: isAdmin ? 'enter promo code' : 'select a class',
-    LevelOrLevelstatus: isAdmin ? 'select a level status' : 'select a class',
+    ClassOrpromocode: isAdmin ? "enter promo code" : "select a class",
+    LevelOrLevelstatus: isAdmin ? "select a level status" : "select a class",
   };
 
   /* eslint implicit-arrow-linebreak: ["off", "beside"] */
@@ -110,13 +110,13 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
   const Formik = useFormik({
     initialValues: {
       StudentRegisteration: {
-        Firstname: '',
-        Lastname: '',
-        EmailorUsername: '',
-        ClassOrpromocode: '',
-        LevelOrLevelstatus: '',
-        Password: '',
-        PasswordConfirmation: '',
+        Firstname: "",
+        Lastname: "",
+        EmailorUsername: "",
+        ClassOrpromocode: "",
+        LevelOrLevelstatus: "",
+        Password: "",
+        PasswordConfirmation: "",
       },
     },
     validationSchema: Validate_Register(
@@ -146,7 +146,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
       // declare the url
       const Url: string = `http://localhost:4000/register/${AuthInfo.status}`;
       const response = await axios.post<IResponse>(Url, Data, {
-        headers: { 'Content-type': 'application/json' },
+        headers: { "Content-type": "application/json" },
       });
       return response.data;
     },
@@ -154,8 +154,8 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
       if (newData.success === true && newData.code) {
         setState({ ...state, open: true });
         if (!__.isNil(newData.token)) {
-          window.localStorage.setItem('TOKEN', JSON.stringify(newData.token));
-          navigate('/home/dashboard', { replace: true });
+          window.localStorage.setItem("TOKEN", JSON.stringify(newData.token));
+          navigate("/home/dashboard", { replace: true });
         }
       } else {
         setState({ ...state, open: true, message: newData.message });
@@ -168,21 +168,21 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
   return (
     <Box pt={2}>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={state.open}
         autoHideDuration={6000}
         onClose={handleClose}
         color="success"
-        sx={{ color: '#fafafa', width: 372 }}
+        sx={{ color: "#fafafa", width: 372 }}
         action={
           <React.Fragment>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ color: '#fafafa' }} />
+              <CloseIcon sx={{ color: "#fafafa" }} />
             </IconButton>
           </React.Fragment>
         }
       >
-        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
           <Typography fontWeight="bold"> {state.message}</Typography>
         </Alert>
       </Snackbar>
@@ -248,9 +248,9 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 onChange={Formik.handleChange}
                 fullWidth
                 placeholder={
-                  UsernameorEmail === 'top'
-                    ? 'enter your Email'
-                    : 'enter your username'
+                  UsernameorEmail === "top"
+                    ? "enter your Email"
+                    : "enter your username"
                 }
                 error={
                   Formik.touched.StudentRegisteration?.EmailorUsername &&
@@ -265,7 +265,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
           </Grid>
           <Grid item xs={10}>
             <TextFieldStyle
-              type={visible.showPassw ? 'text' : 'password'}
+              type={visible.showPassw ? "text" : "password"}
               variant="outlined"
               size="small"
               id={`${ID}_Password`}
@@ -275,11 +275,11 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
               fullWidth
               placeholder="enter your password.."
               sx={{
-                '& .MuiFilledInput-root': {
-                  bgcolor: '#fafafa',
+                "& .MuiFilledInput-root": {
+                  bgcolor: "#fafafa",
                 },
-                '& .Mui-focused': {
-                  bgcolor: '#fafafa',
+                "& .Mui-focused": {
+                  bgcolor: "#fafafa",
                 },
               }}
               InputProps={{
@@ -292,7 +292,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                         disableElevation
                         onClick={handleShowPass}
                       >
-                        {visible.showPassw ? 'hide' : 'show'}
+                        {visible.showPassw ? "hide" : "show"}
                       </Button>
                     </Typography>
                   </InputAdornment>
@@ -314,13 +314,13 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 {!isAdmin ? (
                   <Select
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     value={
@@ -339,8 +339,8 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>
-                            {isAdmin ? 'select a status' : 'select a level'}
+                          <em style={{ color: "grey" }}>
+                            {isAdmin ? "select a status" : "select a level"}
                           </em>
                         );
                       }
@@ -364,13 +364,13 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 ) : (
                   <Select
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     value={
@@ -389,14 +389,14 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>select a status</em>
+                          <em style={{ color: "grey" }}>select a status</em>
                         );
                       }
                       return selected;
                     }}
                   >
                     <MenuItem disabled value="">
-                      <em>{isAdmin ? 'select a status' : 'select a level'}</em>
+                      <em>{isAdmin ? "select a status" : "select a level"}</em>
                     </MenuItem>
                     <MenuItem value="Secondary">Secondary</MenuItem>
                     <MenuItem value="Kindergaten">Kindergaten</MenuItem>
@@ -405,7 +405,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 )}
 
                 <FormLabel
-                  sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                  sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                 >
                   {Formik.touched.StudentRegisteration?.LevelOrLevelstatus &&
                     Formik.errors.StudentRegisteration?.LevelOrLevelstatus}
@@ -441,13 +441,13 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 <FormControl fullWidth>
                   <Select
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     value={Formik.values.StudentRegisteration?.ClassOrpromocode}
@@ -463,7 +463,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                     }
                     renderValue={(selected) => {
                       if (selected.length === 0) {
-                        return <em style={{ color: 'grey' }}>Select class</em>;
+                        return <em style={{ color: "grey" }}>Select class</em>;
                       }
                       return selected;
                     }}
@@ -480,7 +480,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                     <MenuItem value="7st grade">6th grade</MenuItem>
                   </Select>
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     {Formik.touched.StudentRegisteration?.ClassOrpromocode &&
                       Formik.errors.StudentRegisteration?.ClassOrpromocode}
@@ -519,10 +519,10 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                   <Checkbox
                     size="small"
                     sx={{
-                      color: '#fafafa',
+                      color: "#fafafa",
 
-                      '&.Mui-checked': {
-                        color: 'green',
+                      "&.Mui-checked": {
+                        color: "green",
                       },
                     }}
                   />
@@ -531,16 +531,16 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                   <Typography variant="body2" pt={2} pr={2}>
                     if check, you agree with our
                     <span>{newLine}</span>
-                    <Link href="#f" sx={{ color: '#42a5f5' }} underline="hover">
+                    <Link href="#f" sx={{ color: "#42a5f5" }} underline="hover">
                       terms of condition
                     </Link>
-                    {'  '}
+                    {"  "}
                     and our
                     <span style={{}}>
                       {newLine}
                       <Link
                         href="#f"
-                        sx={{ color: '#42a5f5' }}
+                        sx={{ color: "#42a5f5" }}
                         underline="hover"
                       >
                         privacy policy
@@ -555,7 +555,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                 variant="contained"
                 color="primary"
                 type="submit"
-                sx={{ fontWeight: 'bold', boxShadow: 'none' }}
+                sx={{ fontWeight: "bold", boxShadow: "none" }}
                 onClick={() => {
                   const Customizer = (
                     Firstvalue: string,
@@ -566,7 +566,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                   // check if student or admin wants to register with email or username
                   const isEmailorUsername: boolean = __.isEqualWith(
                     UsernameorEmail,
-                    'top',
+                    "top",
                     Customizer
                   );
 
@@ -582,21 +582,21 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                       Password: Formik.values.StudentRegisteration.Password,
                       ConfirmPassword:
                         Formik.values.StudentRegisteration.PasswordConfirmation,
-                      Image: '',
+                      Image: "",
                       Class:
                         Formik.values.StudentRegisteration.ClassOrpromocode,
                       PromoCode:
                         Formik.values.StudentRegisteration.ClassOrpromocode,
                       SchoolLevel:
                         Formik.values.StudentRegisteration.LevelOrLevelstatus,
-                      Classname: '',
+                      Classname: "",
                       StatusLevel:
                         Formik.values.StudentRegisteration.LevelOrLevelstatus,
                     },
                   });
 
                   if (
-                    AuthInfo.status === 'Who are you?' &&
+                    AuthInfo.status === "Who are you?" &&
                     !isValidatedRegister(
                       Formik.isValid,
                       Formik.touched,
@@ -606,7 +606,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                     setState({
                       ...state,
                       open: true,
-                      message: 'Sorry! select who you are first?',
+                      message: "Sorry! select who you are first?",
                     });
                   }
 
@@ -616,7 +616,7 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                       Formik.touched,
                       Formik.touched.constructor
                     ) &&
-                    AuthInfo.status !== 'Who are you?'
+                    AuthInfo.status !== "Who are you?"
                   ) {
                     Mutation.mutate(Data);
                   }
@@ -634,22 +634,22 @@ const RegisterForm: FC<IUserEmail> = ({ UsernameorEmail }) => {
                       data-testid="loader"
                     />
                   ) : (
-                    'Register'
+                    "Register"
                   )}
                 </Typography>
               </Button>
             </Box>
-            <Box sx={{ textAlign: 'left' }} pl={16}>
-              <Typography sx={{ color: '#000000' }} variant="body2">
+            <Box sx={{ textAlign: "left" }} pl={16}>
+              <Typography sx={{ color: "#000000" }} variant="body2">
                 already registered?
-                <RRDLink to="/login" style={{ color: '#42a5f5' }}>
+                <RRDLink to="/login" style={{ color: "#42a5f5" }}>
                   Login
                 </RRDLink>
               </Typography>
             </Box>
           </Grid>
         </Grid>
-        <Box sx={{ visibility: 'hidden' }}>...</Box>
+        <Box sx={{ visibility: "hidden" }}>...</Box>
       </form>
     </Box>
   );

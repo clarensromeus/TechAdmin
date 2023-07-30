@@ -1,15 +1,15 @@
-import * as React from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import __ from 'lodash';
+import * as React from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import __ from "lodash";
 // exteral imports of ressources
-import * as MuiStyles from '../MuiStyles/Nav';
-import { ISearchProps } from '../Interface/GlobalState';
-import SearchInfo from './Search';
+import * as MuiStyles from "../MuiStyles/TextFieldStyle2";
+import { ISearchProps } from "../Interface/GlobalState";
+import SearchInfo from "./Search";
 
 interface ISearchBarProps {}
 
 const SearchBar: React.FC<ISearchBarProps> = () => {
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const [anchorElSearch, setAnchorElSearch] = React.useState<any | null>(null);
 
@@ -50,7 +50,7 @@ const SearchBar: React.FC<ISearchBarProps> = () => {
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          inputProps={{ 'aria-label': 'search' }}
+          inputProps={{ "aria-label": "search" }}
           onChange={debounceResult}
           onClick={handleFocus}
         />

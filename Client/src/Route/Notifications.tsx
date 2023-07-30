@@ -1,21 +1,21 @@
-import { Box, Typography, Avatar } from '@mui/material';
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import grey from '@mui/material/colors/grey';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import { useRecoilValue } from 'recoil';
-import __ from 'lodash';
+import { Box, Typography, Avatar } from "@mui/material";
+import * as React from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import grey from "@mui/material/colors/grey";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import { useRecoilValue } from "recoil";
+import __ from "lodash";
 // internally crafted imports of ressources
-import useNotification from '../hooks/useNotifications';
-import { IAuthState } from '../Interface/GlobalState';
-import Context from '../Store/ContextApi';
-import useWindowSize from '../hooks/useWindowSize';
+import useNotification from "../hooks/useNotifications";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
+import useWindowSize from "../hooks/useWindowSize";
 
 interface INoti {
   _id: string;
@@ -35,9 +35,7 @@ const Notification: React.FC = () => {
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
-  const { GetNotifications, DeleteNotifications } = useNotification(
-    `${AuthInfo.Payload?._id}`
-  );
+  const { GetNotifications, DeleteNotifications } = useNotification();
   const data = GetNotifications();
   const { width }: { width?: number } = useWindowSize();
   return (
@@ -46,15 +44,15 @@ const Notification: React.FC = () => {
         pt={1}
         pl={{ md: 2, lg: 2 }}
         sx={{
-          width: width && width <= 700 ? '100%' : 700,
-          display: 'flex',
-          flexDirection: 'column',
+          width: width && width <= 700 ? "100%" : 700,
+          display: "flex",
+          flexDirection: "column",
           gap: 2,
         }}
       >
         <Box>
           <List
-            sx={{ width: '100%', maxWidth: 695, bgcolor: 'background.paper' }}
+            sx={{ width: "100%", maxWidth: 695, bgcolor: "background.paper" }}
           >
             {data?.Notifications.map((notiData) => {
               const {
@@ -70,21 +68,21 @@ const Notification: React.FC = () => {
                   alignItems="flex-start"
                   secondaryAction={
                     <>
-                      {__.isEqual(NotiReference, 'follow') ? (
+                      {__.isEqual(NotiReference, "follow") ? (
                         <Box
                           sx={{
-                            display: 'flex',
+                            display: "flex",
                             gap: { xs: 1, sm: 2, md: 2, lg: 2 },
                           }}
                         >
                           <Button
                             variant="text"
                             sx={{
-                              boxShadow: 'none',
-                              fontWeight: 'bold',
+                              boxShadow: "none",
+                              fontWeight: "bold",
                             }}
                           >
-                            {width && width <= 700 ? 'follow' : 'follow back'}
+                            {width && width <= 700 ? "follow" : "follow back"}
                           </Button>
                           <IconButton
                             sx={{ bgcolor: grey[300] }}
@@ -96,7 +94,7 @@ const Notification: React.FC = () => {
                               });
                             }}
                           >
-                            <CloseIcon sx={{ color: 'black' }} />
+                            <CloseIcon sx={{ color: "black" }} />
                           </IconButton>
                         </Box>
                       ) : (
@@ -110,7 +108,7 @@ const Notification: React.FC = () => {
                             });
                           }}
                         >
-                          <CloseIcon sx={{ color: 'black' }} />
+                          <CloseIcon sx={{ color: "black" }} />
                         </IconButton>
                       )}
                     </>
@@ -124,38 +122,38 @@ const Notification: React.FC = () => {
                     primary={
                       <Typography
                         fontWeight="bold"
-                        sx={{ textTransform: 'capitalize' }}
+                        sx={{ textTransform: "capitalize" }}
                       >
                         {__.isEqual(Firstname, AuthInfo.Payload?.Firstname) &&
                         __.isEqual(Lastname, AuthInfo.Payload?.Lastname)
-                          ? 'You'
+                          ? "You"
                           : ` ${Firstname} ${Lastname}`}
                       </Typography>
                     }
                     secondary={
                       <Typography
-                        sx={{ display: 'inline' }}
+                        sx={{ display: "inline" }}
                         component="span"
                         variant="body2"
                       >
-                        {__.isEqual(NotiReference, 'likes') ||
-                        __.isEqual(NotiReference, 'dislikes')
+                        {__.isEqual(NotiReference, "likes") ||
+                        __.isEqual(NotiReference, "dislikes")
                           ? `${NotiReference} your post `
-                          : __.isEqual(NotiReference, 'messaged')
-                          ? 'messaged you'
-                          : __.isEqual(NotiReference, 'comments')
-                          ? 'comments on your post '
-                          : __.isEqual(NotiReference, 'shares')
-                          ? 'shares your post'
-                          : __.isEqual(NotiReference, 'Retweeted')
-                          ? 'Retweeted your post '
-                          : __.isEqual(NotiReference, 'unfollow')
-                          ? 'unfollows you'
-                          : 'follows you '}
+                          : __.isEqual(NotiReference, "messaged")
+                          ? "messaged you"
+                          : __.isEqual(NotiReference, "comments")
+                          ? "comments on your post "
+                          : __.isEqual(NotiReference, "shares")
+                          ? "shares your post"
+                          : __.isEqual(NotiReference, "Retweeted")
+                          ? "Retweeted your post "
+                          : __.isEqual(NotiReference, "unfollow")
+                          ? "unfollows you"
+                          : "follows you "}
                         <Typography color="text.secondary" component="span">
-                          {__.isEqual(NotiReference, 'follow') ||
-                          __.isEqual(NotiReference, 'unfollow')
-                            ? ''
+                          {__.isEqual(NotiReference, "follow") ||
+                          __.isEqual(NotiReference, "unfollow")
+                            ? ""
                             : ` " ${AlertText} "`}
                         </Typography>
                       </Typography>

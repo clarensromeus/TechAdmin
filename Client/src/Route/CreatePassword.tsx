@@ -1,16 +1,16 @@
 // internal imports of sources
-import * as React from 'react';
+import * as React from "react";
 // external imports of sources
-import { Box, Typography, Button } from '@mui/material';
-import FormLabel from '@mui/material/FormLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import grey from '@mui/material/colors/grey';
-import { useFormik, FormikHelpers } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import __ from 'lodash';
+import { Box, Typography, Button } from "@mui/material";
+import FormLabel from "@mui/material/FormLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import grey from "@mui/material/colors/grey";
+import { useFormik, FormikHelpers } from "formik";
+import { useNavigate } from "react-router-dom";
+import __ from "lodash";
 // internal crafted imports of sources
-import { Validate_Password } from '../utils/validationSchema';
-import { CssTextField } from '../MuiStyles/Auth';
+import { Validate_Password } from "../utils/validationSchema";
+import { CssTextField } from "../MuiStyles/TextFieldStyle";
 
 type CredentialsType = {
   Password: string;
@@ -34,7 +34,7 @@ const CreatePassword: React.FC = () => {
     new Promise((resolve) => setTimeout(resolve, time));
   // using useFormik helper function to create form with formik and Mui fields.
   const Formik = useFormik({
-    initialValues: { Password: '' },
+    initialValues: { Password: "" },
     validationSchema: Validate_Password,
     onSubmit: async (
       values: CredentialsType,
@@ -51,9 +51,9 @@ const CreatePassword: React.FC = () => {
     const student: boolean =
       __.isNil(Password) === false && Password.length > 7 && Formik.isValid;
     if (student) {
-      navigate('/confirmation', {
+      navigate("/confirmation", {
         replace: true,
-        state: { passCode: Formik.values.Password, status: 'createPass' },
+        state: { passCode: Formik.values.Password, status: "createPass" },
       });
     }
   };
@@ -70,13 +70,13 @@ const CreatePassword: React.FC = () => {
         <Box
           sx={{
             width: { xs: 320, sm: 320, lg: 460 },
-            textAlign: { xs: 'start', sm: 'start', lg: 'center' },
+            textAlign: { xs: "start", sm: "start", lg: "center" },
           }}
         >
           <Typography
             fontWeight="bold"
             fontFamily="Courier New Monospace"
-            fontSize={{ xs: '1em', sm: '1.3em', xl: '1.6em' }}
+            fontSize={{ xs: "1em", sm: "1.3em", xl: "1.6em" }}
             sx={{ color: grey[900], lineHeight: (theme) => theme.spacing(3) }}
           >
             in order to continue with the registeration process
@@ -84,21 +84,21 @@ const CreatePassword: React.FC = () => {
         </Box>
         <Box pt={{ xs: 1, sm: 1, lg: 2 }}>
           <form onSubmit={Formik.handleSubmit}>
-            <Box display="flex" flexDirection="column" sx={{ width: '320px' }}>
+            <Box display="flex" flexDirection="column" sx={{ width: "320px" }}>
               <Box>
-                <FormLabel sx={{ textAlign: 'start' }}>
+                <FormLabel sx={{ textAlign: "start" }}>
                   <Typography
                     sx={{
-                      fontSize: '0.9rem',
+                      fontSize: "0.9rem",
                       color: `${grey[700]}`,
-                      textTransform: 'capitalize',
+                      textTransform: "capitalize",
                     }}
                   >
                     enter your password
                   </Typography>
                 </FormLabel>
                 <CssTextField
-                  type={visible.showPassw ? 'text' : 'password'}
+                  type={visible.showPassw ? "text" : "password"}
                   variant="outlined"
                   size="small"
                   id={`${ID}_password`}
@@ -119,13 +119,13 @@ const CreatePassword: React.FC = () => {
                           disableElevation
                           onClick={handleShowPass}
                           sx={{
-                            fontWeight: 'bold',
-                            '&:hover': {
-                              textDecoration: 'underline',
+                            fontWeight: "bold",
+                            "&:hover": {
+                              textDecoration: "underline",
                             },
                           }}
                         >
-                          {visible.showPassw ? 'hide' : 'show'}
+                          {visible.showPassw ? "hide" : "show"}
                         </Button>
                       </InputAdornment>
                     ),

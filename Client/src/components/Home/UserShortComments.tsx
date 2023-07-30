@@ -1,28 +1,28 @@
-import * as React from 'react';
+import * as React from "react";
 // external imports of ressources
 import {
   useMutation,
   useQueryClient,
   QueryClient,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import { produce } from 'immer';
-import { useRecoilValue } from 'recoil';
+} from "@tanstack/react-query";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import { produce } from "immer";
+import { useRecoilValue } from "recoil";
 // externally crafted imports of ressources
-import { CommentTextField } from '../../MuiStyles/Auth';
-import useNotification from '../../hooks/useNotifications';
-import { IComment, IPost } from '../../Interface/Posts';
-import { ShortCommentProps } from '../../Interface/Posts';
-import { IAuthState } from '../../Interface/GlobalState';
-import Context from '../../Store/ContextApi';
+import { CommentTextField } from "../../MuiStyles/TextFieldStyle";
+import useNotification from "../../hooks/useNotifications";
+import { IComment, IPost } from "../../Interface/Posts";
+import { ShortCommentProps } from "../../Interface/Posts";
+import { IAuthState } from "../../Interface/GlobalState";
+import Context from "../../Store/ContextApi";
 
-const UserShortComment: React.FC<ShortCommentProps['info']> = ({
+const UserShortComment: React.FC<ShortCommentProps["info"]> = ({
   PostInfo: { Post, PostId, Identifier, User, ReceiverId, Title },
 }) => {
   const ContextData = React.useContext(Context);
 
-  const [value, setValue] = React.useState<string>('');
+  const [value, setValue] = React.useState<string>("");
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
@@ -39,17 +39,17 @@ const UserShortComment: React.FC<ShortCommentProps['info']> = ({
   const ShortCommentMutation = useMutation({
     mutationFn: async (comment: IComment) => {
       const response = await axios.post(
-        'http://localhost:4000/home/posts/comments',
+        "http://localhost:4000/home/posts/comments",
         comment
       );
       return response.data;
     },
     onMutate: async (newComment: IComment) => {
       // cancel any outgoing query, so that they don't overwrite our optimistic update
-      queryClient.cancelQueries({ queryKey: ['UserPosts'] });
+      queryClient.cancelQueries({ queryKey: ["UserPosts"] });
 
       // snapshot the previous value
-      const previousPosts = queryClient.getQueryData(['UserPosts']);
+      const previousPosts = queryClient.getQueryData(["UserPosts"]);
 
       const updateComments = produce(previousPosts, (draftData: IPost) => {
         draftData.doc.map((posts) => {
@@ -71,17 +71,17 @@ const UserShortComment: React.FC<ShortCommentProps['info']> = ({
       });
 
       // optimistically update the query
-      queryClient.setQueryData(['UserPosts'], updateComments);
+      queryClient.setQueryData(["UserPosts"], updateComments);
 
       return { previousPosts };
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
     onError: (err, newTodo, context) => {
-      queryClient.setQueryData(['UserPosts'], context?.previousPosts);
+      queryClient.setQueryData(["UserPosts"], context?.previousPosts);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['UserPosts'] });
+      queryClient.invalidateQueries({ queryKey: ["UserPosts"] });
     },
   });
 
@@ -105,12 +105,12 @@ const UserShortComment: React.FC<ShortCommentProps['info']> = ({
               NotiId: `${nanoid()}`,
               Sender: Identifier,
               SendingStatus: false,
-              NotiReference: 'comments',
+              NotiReference: "comments",
               AlertText: `${Title}`,
               User: Identifier,
             });
             // reset the textfield value
-            setValue('');
+            setValue("");
           } catch (error) {
             throw new Error(`${error}`);
           }

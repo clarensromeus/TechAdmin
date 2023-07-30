@@ -38,7 +38,7 @@ import { useRecoilValue } from "recoil";
 import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
 import TeachersForm from "../components/Home/teachersForm";
 import { IdeleteResponse, Idelete, Idata } from "../Interface/teacher";
-import { TextFieldTable } from "../MuiStyles/Nav";
+import { TextFieldTable } from "../MuiStyles/TextFieldStyle2";
 import { Iteachers } from "../Interface/teacher";
 import useWindowSize from "../hooks/useWindowSize";
 import { IWindow } from "../Interface/student";

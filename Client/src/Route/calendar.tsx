@@ -41,7 +41,7 @@ import {
 import CalendarICon from "../images/static/coursesCalendar.png";
 import useWindowSize from "../hooks/useWindowSize";
 import { IWindow } from "../Interface/student";
-import { TextFieldTable } from "../MuiStyles/Nav";
+import { TextFieldTable } from "../MuiStyles/TextFieldStyle2";
 import { IAuthState } from "../Interface/GlobalState";
 import Context from "../Store/ContextApi";
 

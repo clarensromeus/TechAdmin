@@ -1,31 +1,31 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import Box from "@mui/material/Box";
 import {
   Typography,
   IconButton,
   TextareaAutosize,
   Button,
-} from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import green from '@mui/material/colors/green';
-import blue from '@mui/material/colors/blue';
-import grey from '@mui/material/colors/grey';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
-import { nanoid } from 'nanoid';
-import { ClipLoader } from 'react-spinners';
-import __ from 'lodash';
+} from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import green from "@mui/material/colors/green";
+import blue from "@mui/material/colors/blue";
+import grey from "@mui/material/colors/grey";
+import { useNavigate, NavigateFunction } from "react-router-dom";
+import { nanoid } from "nanoid";
+import { ClipLoader } from "react-spinners";
+import __ from "lodash";
 // external imports of ressources
-import usePost from '../../hooks/usePost';
-import { SearchTextField } from '../../MuiStyles/Auth';
-import { IPostFrame } from '../../Interface/Posts';
-import useWindowSize from '../../hooks/useWindowSize';
-import UploadFile from './UploadFile';
+import usePost from "../../hooks/usePost";
+import { SearchTextField } from "../../MuiStyles/TextFieldStyle";
+import { IPostFrame } from "../../Interface/Posts";
+import useWindowSize from "../../hooks/useWindowSize";
+import UploadFile from "./UploadFile";
 
 const PostFrame: React.FC<IPostFrame> = ({
   OpenDialog,
@@ -34,7 +34,7 @@ const PostFrame: React.FC<IPostFrame> = ({
   UserId,
 }) => {
   const [file, setFile] = React.useState<any>();
-  const [title, setTitle] = React.useState<string>('');
+  const [title, setTitle] = React.useState<string>("");
 
   const navigate: NavigateFunction = useNavigate();
 
@@ -80,14 +80,14 @@ const PostFrame: React.FC<IPostFrame> = ({
               e.preventDefault();
               const formData = new FormData();
 
-              await formData.append('file', file);
-              await formData.append('PostId', `${nanoid()}`);
-              await formData.append('Title', title);
-              await formData.append('User', UserId);
-              await formData.append('MakerId', UserId);
+              await formData.append("file", file);
+              await formData.append("PostId", `${nanoid()}`);
+              await formData.append("Title", title);
+              await formData.append("User", UserId);
+              await formData.append("MakerId", UserId);
 
               await CreatePost(formData);
-              setTitle('');
+              setTitle("");
             } catch (error) {
               throw new Error(`${error}`);
             }
@@ -95,22 +95,22 @@ const PostFrame: React.FC<IPostFrame> = ({
         >
           <DialogTitle
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: '1.5em',
-              color: 'text.secondary',
+              display: "flex",
+              flexDirection: "column",
+              fontSize: "1.5em",
+              color: "text.secondary",
             }}
           >
             <Box>
               <IconButton onClick={handleCloseDialog}>
-                <ArrowForwardIcon sx={{ color: 'black' }} />
+                <ArrowForwardIcon sx={{ color: "black" }} />
               </IconButton>
             </Box>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
               <Typography fontSize="1em">Pick, add a post...</Typography>
@@ -130,13 +130,13 @@ const PostFrame: React.FC<IPostFrame> = ({
             </Box>
           </DialogTitle>
           <DialogContent
-            style={{ overflowY: 'clip' }}
+            style={{ overflowY: "clip" }}
             sx={{
               width: 457,
               height: 270,
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
             }}
           >
             {__.isUndefined(PreviewImage) && (
@@ -182,11 +182,11 @@ const PostFrame: React.FC<IPostFrame> = ({
             )}
           </DialogContent>
           <DialogActions>
-            <Box pr={2} sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+            <Box pr={2} sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
               <Button
                 variant="outlined"
                 onClick={() => {
-                  navigate('posts');
+                  navigate("posts");
                   setOpenDialog(false);
                 }}
                 sx={{
@@ -202,7 +202,7 @@ const PostFrame: React.FC<IPostFrame> = ({
                 type="submit"
                 sx={{
                   bgcolor: green[800],
-                  ':hover': { bgcolor: green[700] },
+                  ":hover": { bgcolor: green[700] },
                   borderRadius: 40,
                 }}
               >
@@ -215,7 +215,7 @@ const PostFrame: React.FC<IPostFrame> = ({
                     data-testid="loader"
                   />
                 ) : (
-                  'post'
+                  "post"
                 )}
               </Button>
             </Box>

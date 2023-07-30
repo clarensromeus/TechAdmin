@@ -37,7 +37,7 @@ import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
 import AdminForm from "../components/Home/adminForm";
 import { Idata, Idelete, IdeleteResponse, Iadmin } from "../Interface/admin";
 import useWindowSize from "../hooks/useWindowSize";
-import { TextFieldTable } from "../MuiStyles/Nav";
+import { TextFieldTable } from "../MuiStyles/TextFieldStyle2";
 import { IWindow } from "../Interface/student";
 import { IHistory } from "../Interface/History";
 import useHistory from "../hooks/useHistory";

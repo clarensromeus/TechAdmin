@@ -1,38 +1,38 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Checkbox from '@mui/material/Checkbox';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import { useRecoilValue } from 'recoil';
-import __ from 'lodash';
-import { ClipLoader } from 'react-spinners';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Checkbox from "@mui/material/Checkbox";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import { useRecoilValue } from "recoil";
+import __ from "lodash";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import {
   useMutation,
   UseMutationResult,
   useQuery,
   UseQueryResult,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
 // external imports of ressources
-import { CssTextField } from '../../MuiStyles/Auth';
-import { IShareProps, IShare } from '../../Interface/Posts';
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
-import useNotification from '../../hooks/useNotifications';
-import useWindowSize from '../../hooks/useWindowSize';
+import { CssTextField } from "../../MuiStyles/TextFieldStyle";
+import { IShareProps, IShare } from "../../Interface/Posts";
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
+import useNotification from "../../hooks/useNotifications";
+import useWindowSize from "../../hooks/useWindowSize";
 
 interface IData<S> {
   doc: {
@@ -59,7 +59,7 @@ const Share: React.FC<IShareProps> = ({
 
   const [checked, setChecked] = React.useState<number[]>([]);
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
@@ -79,7 +79,7 @@ const Share: React.FC<IShareProps> = ({
   // it allows to have access to actual date from dayjs
   dayjs.extend(LocalizedFormat);
 
-  const { CreateNotifications } = useNotification('', true);
+  const { CreateNotifications } = useNotification();
   const { width }: { width?: number } = useWindowSize();
 
   const handleChangeEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,10 +97,10 @@ const Share: React.FC<IShareProps> = ({
   const {
     data,
   }: UseQueryResult<IData<string>, Error> = useQuery<IData<string>, Error>({
-    queryKey: ['Share'],
+    queryKey: ["Share"],
     queryFn: async () => {
       // declare the url
-      const Url: string = 'http://localhost:4000/home/students/suggestion';
+      const Url: string = "http://localhost:4000/home/students/suggestion";
       const response = await axios.get<IData<string>>(Url);
       return response.data;
     },
@@ -114,7 +114,7 @@ const Share: React.FC<IShareProps> = ({
   >({
     mutationFn: async (sharedata: IShare) => {
       const response = axios.post(
-        'http://localhost:4000/home/post/share',
+        "http://localhost:4000/home/post/share",
         sharedata
       );
       return (await response).data;
@@ -122,8 +122,8 @@ const Share: React.FC<IShareProps> = ({
   });
 
   React.useEffect(() => {
-    if (MutationShare.status === 'success') {
-      setShare('none');
+    if (MutationShare.status === "success") {
+      setShare("none");
     }
   }, [MutationShare.status]);
 
@@ -139,39 +139,39 @@ const Share: React.FC<IShareProps> = ({
       <Box
         sx={{
           display: share,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
-          bgcolor: 'rgba(0,0,0,0.6)',
-          position: 'fixed',
-          top: '0%',
-          left: '0%',
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          bgcolor: "rgba(0,0,0,0.6)",
+          position: "fixed",
+          top: "0%",
+          left: "0%",
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
         <Box
           sx={{
-            bgcolor: '#fafafa',
-            width: width && width <= 700 ? '100%' : 620,
-            height: width && width <= 700 ? '100%' : 558,
+            bgcolor: "#fafafa",
+            width: width && width <= 700 ? "100%" : 620,
+            height: width && width <= 700 ? "100%" : 558,
           }}
         >
           <Box
             p={2}
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            <Box sx={{ alignSelf: 'center', fontSize: '1.3em' }}>
+            <Box sx={{ alignSelf: "center", fontSize: "1.3em" }}>
               Share the post with Friends
             </Box>
             <Box pl={20}>
               <IconButton
                 onClick={() => {
-                  setShare('none');
+                  setShare("none");
                 }}
               >
                 <CloseIcon sx={{ fontSize: 30 }} />
@@ -198,10 +198,10 @@ const Share: React.FC<IShareProps> = ({
           <Box
             p={2}
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               gap: 1,
-              width: 'inherit',
+              width: "inherit",
             }}
           >
             <Box>
@@ -211,17 +211,17 @@ const Share: React.FC<IShareProps> = ({
               <List
                 dense
                 sx={{
-                  width: '100%',
-                  position: 'relative',
-                  overflow: 'auto',
+                  width: "100%",
+                  position: "relative",
+                  overflow: "auto",
                   maxHeight: 250,
-                  maxWidth: width && width <= 700 ? '91%' : 580,
-                  bgcolor: 'background.paper',
+                  maxWidth: width && width <= 700 ? "91%" : 580,
+                  bgcolor: "background.paper",
                 }}
               >
                 {data?.doc
                   .filter((student) =>
-                    search.toLowerCase() === ''
+                    search.toLowerCase() === ""
                       ? student
                       : student.Firstname.toLowerCase().includes(
                           search.toLowerCase()
@@ -265,7 +265,7 @@ const Share: React.FC<IShareProps> = ({
           <Box
             py={2}
             px={{ xs: 1, sm: 2, md: 2, lg: 2 }}
-            sx={{ width: width && width <= 700 ? '95%' : 590 }}
+            sx={{ width: width && width <= 700 ? "95%" : 590 }}
           >
             <Button
               variant="contained"
@@ -289,7 +289,7 @@ const Share: React.FC<IShareProps> = ({
                     NotiId: `${nanoid()}`,
                     Sender: `${AuthInfo.Payload?._id}`,
                     SendingStatus: false,
-                    NotiReference: 'shares',
+                    NotiReference: "shares",
                     AlertText: Title,
                     User: `${AuthInfo.Payload?._id}`,
                   });
@@ -307,7 +307,7 @@ const Share: React.FC<IShareProps> = ({
                   data-testid="loader"
                 />
               ) : (
-                'share'
+                "share"
               )}
             </Button>
           </Box>

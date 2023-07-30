@@ -30,6 +30,7 @@ import {
   useMutation,
   UseMutationResult,
   useQueryClient,
+  QueryClient,
 } from "@tanstack/react-query";
 import { FadeLoader } from "react-spinners";
 import { nanoid } from "nanoid";
@@ -46,7 +47,7 @@ import {
   IWindow,
 } from "../Interface/student";
 import useWindowSize from "../hooks/useWindowSize";
-import { TextFieldTable } from "../MuiStyles/Nav";
+import { TextFieldTable } from "../MuiStyles/TextFieldStyle2";
 import GraduatedHot from "../images/static/students.png";
 import Context from "../Store/ContextApi";
 import useHistory from "../hooks/useHistory";
@@ -78,7 +79,7 @@ const StudentsInfo: React.FC = () => {
     setState({ ...state, open: false });
   };
 
-  const queryClient = useQueryClient();
+  const queryClient: QueryClient = useQueryClient();
 
   const [editdata, setEditData] = React.useState<editData>({
     _id: "",

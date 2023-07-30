@@ -35,7 +35,7 @@ import { useRecoilValue } from "recoil";
 // internally crafted imports of ressources
 import { StyledTableCell, StyledTableRow } from "../MuiStyles/table";
 import PaymentForm from "../components/Home/PaymentForm";
-import { TextFieldTable } from "../MuiStyles/Nav";
+import { TextFieldTable } from "../MuiStyles/TextFieldStyle2";
 import {
   IPayResponse,
   IGetPayment,

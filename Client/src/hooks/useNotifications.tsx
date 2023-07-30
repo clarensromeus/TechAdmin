@@ -4,22 +4,22 @@ import {
   UseQueryResult,
   useMutation,
   UseMutationResult,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import __ from 'lodash';
-import { decodeToken } from 'react-jwt';
+} from "@tanstack/react-query";
+import axios from "axios";
+import __ from "lodash";
+import { decodeToken } from "react-jwt";
 // internally crafted imports of ressources
 import {
   INotifications,
   IGetNotifications,
   IDelete,
-} from '../Interface/Notifications';
-import isAuthenticated from '../utils/isAuthenticated';
+} from "../Interface/Notifications";
+import isAuthenticated from "../utils/isAuthenticated";
 
-const useNotification = (id?: string, isNoti?: boolean) => {
+const useNotification = () => {
   const isAuth: boolean = isAuthenticated();
   const tokenInfo: any = decodeToken(
-    `${window.localStorage.getItem('TOKEN') || ''}`
+    `${window.localStorage.getItem("TOKEN") || ""}`
   );
   // create Mutation
   const Notifications: UseMutationResult<
@@ -29,7 +29,7 @@ const useNotification = (id?: string, isNoti?: boolean) => {
   > = useMutation<INotifications, Error, INotifications>({
     mutationFn: async (NotiData: INotifications) => {
       try {
-        const url: string = 'http://localhost:4000/home/student/Notifications';
+        const url: string = "http://localhost:4000/home/student/Notifications";
         const res = await axios.post(url, NotiData);
         return res.data;
       } catch (error) {
@@ -53,7 +53,7 @@ const useNotification = (id?: string, isNoti?: boolean) => {
     IGetNotifications,
     Error
   >({
-    queryKey: ['Notifications'],
+    queryKey: ["Notifications"],
     queryFn: async () => {
       // get user token first before notifications
       const Url: string = `http://localhost:4000/home/students/getNotifications/${tokenInfo._id}`;
@@ -61,7 +61,7 @@ const useNotification = (id?: string, isNoti?: boolean) => {
       const res = await axios.get(Url);
       return res.data;
     },
-    enabled: isAuth && __.isEqual(tokenInfo.PersonStatus, 'Student'),
+    enabled: isAuth && __.isEqual(tokenInfo.PersonStatus, "Student"),
     // refetch query after every 1 second
     refetchInterval: 1000,
     // refetch query in background mode

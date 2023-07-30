@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { produce } from "immer";
 // externally crafted imports of ressources
-import { CssTextField } from "../MuiStyles/Auth";
+import { CssTextField } from "../MuiStyles/TextFieldStyle";
 import { IComment, IGetComment } from "../Interface/Posts";
 import StyledBadge from "../MuiStyles/StyledBadge";
 import useNotification from "../hooks/useNotifications";

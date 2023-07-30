@@ -1,40 +1,40 @@
-import * as React from 'react';
-import { useId } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import FormLabel from '@mui/material/FormLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import { useFormik, FormikHelpers } from 'formik';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import EditIcon from '@mui/icons-material/Edit';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import MenuItem from '@mui/material/MenuItem';
-import orange from '@mui/material/colors/orange';
-import grey from '@mui/material/colors/grey';
-import Divider from '@mui/material/Divider';
-import Paper from '@mui/material/Paper';
-import axios from 'axios';
-import isEqual from 'lodash/isEqual';
-import { useSnackbar } from 'notistack';
+import * as React from "react";
+import { useId } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import FormLabel from "@mui/material/FormLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useFormik, FormikHelpers } from "formik";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import MenuItem from "@mui/material/MenuItem";
+import orange from "@mui/material/colors/orange";
+import grey from "@mui/material/colors/grey";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import axios from "axios";
+import isEqual from "lodash/isEqual";
+import { useSnackbar } from "notistack";
 import {
   useMutation,
   UseMutationResult,
   useQueryClient,
   QueryClient,
-} from '@tanstack/react-query';
-import { ClipLoader } from 'react-spinners';
-import { useRecoilValue } from 'recoil';
-import { nanoid } from 'nanoid';
+} from "@tanstack/react-query";
+import { ClipLoader } from "react-spinners";
+import { useRecoilValue } from "recoil";
+import { nanoid } from "nanoid";
 // internal crafted imports of ressources
-import { Validate_AdminForm } from '../../utils/validationSchema';
-import { TextFieldStyle } from '../../MuiStyles/Nav';
-import { IdataForm, AdminInfo, EditAdmin } from '../../Interface/admin';
-import useHistory from '../../hooks/useHistory';
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
-import { IHistory } from '../../Interface/History';
-import { isValidated } from '../isValidated';
+import { Validate_AdminForm } from "../../utils/validationSchema";
+import { TextFieldStyle } from "../../MuiStyles/TextFieldStyle2";
+import { IdataForm, AdminInfo, EditAdmin } from "../../Interface/admin";
+import useHistory from "../../hooks/useHistory";
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
+import { IHistory } from "../../Interface/History";
+import { isValidated } from "../isValidated";
 
 type Response = {
   message: string;
@@ -104,12 +104,12 @@ const AdminForm: React.FC<IdataForm> = ({
   const mutation: UseMutationResult<
     Response,
     Error,
-    AdminInfo<string>['AdminRegisteration']
-  > = useMutation<Response, Error, AdminInfo<string>['AdminRegisteration']>({
-    mutationFn: async (Data: AdminInfo<string>['AdminRegisteration']) => {
+    AdminInfo<string>["AdminRegisteration"]
+  > = useMutation<Response, Error, AdminInfo<string>["AdminRegisteration"]>({
+    mutationFn: async (Data: AdminInfo<string>["AdminRegisteration"]) => {
       try {
         const res = await axios.post(
-          'http://localhost:4000/home/administrators/create',
+          "http://localhost:4000/home/administrators/create",
           Data
         );
 
@@ -120,19 +120,19 @@ const AdminForm: React.FC<IdataForm> = ({
     },
     onSuccess: (create: Response) => {
       queryClient.invalidateQueries({
-        queryKey: ['administrators'],
+        queryKey: ["administrators"],
         exact: true,
       });
       enqueueSnackbar(
-        <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+        <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
           {create.message}
         </Typography>,
         {
           anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           },
-          variant: isEqual(create.success, true) ? 'success' : 'error',
+          variant: isEqual(create.success, true) ? "success" : "error",
           preventDuplicate: true, // prevent noti with the same message to display multiple times
         }
       );
@@ -142,7 +142,7 @@ const AdminForm: React.FC<IdataForm> = ({
   const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     // data for creating administrators
-    const formData: Omit<IdataForm, '_id' | '_ID_User'> = {
+    const formData: Omit<IdataForm, "_id" | "_ID_User"> = {
       Firstname: Formik.values.AdminRegisteration.Firstname,
       Lastname: Formik.values.AdminRegisteration.Lastname,
       Email: Formik.values.AdminRegisteration.Email,
@@ -159,14 +159,14 @@ const AdminForm: React.FC<IdataForm> = ({
       ActionPerformer: `${AuthInfo.Payload?._id}`,
       NotiId: `${nanoid()}`,
       ActionCreator: {
-        Status: 'administrator',
+        Status: "administrator",
         Firstname: Formik.values.AdminRegisteration.Firstname,
         Lastname: Formik.values.AdminRegisteration.Lastname,
-        Image: '',
+        Image: "",
       },
-      NotiReference: 'registered',
-      AlertText: ' is registered by ',
-      User: '64bb0a381e5ce1722e328401', // the platform administrator id
+      NotiReference: "registered",
+      AlertText: " is registered by ",
+      User: "64bb0a381e5ce1722e328401", // the platform administrator id
     };
     CreateHistory(HistoryData);
   };
@@ -176,7 +176,7 @@ const AdminForm: React.FC<IdataForm> = ({
     useMutation<IResponse, Error, EditAdmin>({
       mutationFn: async (editData: EditAdmin) => {
         const res = await axios.put(
-          'http://localhost:4000/home/administrators/edit',
+          "http://localhost:4000/home/administrators/edit",
           editData
         );
         return res.data;
@@ -184,16 +184,16 @@ const AdminForm: React.FC<IdataForm> = ({
       onSuccess: (edit: IResponse) => {
         // invalidate and refetch the query
         queryClient.invalidateQueries({
-          queryKey: ['administrators'],
+          queryKey: ["administrators"],
           exact: true,
         });
 
         enqueueSnackbar(`${edit.message}`, {
           anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           },
-          variant: 'success',
+          variant: "success",
           preventDuplicate: true, // prevent noti with the same message to display multiple times
         });
       },
@@ -295,7 +295,7 @@ const AdminForm: React.FC<IdataForm> = ({
               </Grid>
               <Grid item xs={10}>
                 <TextFieldStyle
-                  type={visible.showPassw ? 'text' : 'password'}
+                  type={visible.showPassw ? "text" : "password"}
                   variant="outlined"
                   size="small"
                   id={`${ID}_Password`}
@@ -314,13 +314,13 @@ const AdminForm: React.FC<IdataForm> = ({
                             disableElevation
                             onClick={handleShowPass}
                             sx={{
-                              fontWeight: 'bold',
-                              '&:hover': {
-                                textDecoration: 'underline',
+                              fontWeight: "bold",
+                              "&:hover": {
+                                textDecoration: "underline",
                               },
                             }}
                           >
-                            {visible.showPassw ? 'hide' : 'show'}
+                            {visible.showPassw ? "hide" : "show"}
                           </Button>
                         </Typography>
                       </InputAdornment>
@@ -367,20 +367,20 @@ const AdminForm: React.FC<IdataForm> = ({
                     size="small"
                     displayEmpty
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     onChange={Formik.handleChange}
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>Select a status</em>
+                          <em style={{ color: "grey" }}>Select a status</em>
                         );
                       }
                       return selected;
@@ -403,7 +403,7 @@ const AdminForm: React.FC<IdataForm> = ({
                     <MenuItem value="Adjoint">Adjoint</MenuItem>
                   </Select>
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     {Formik.touched.AdminRegisteration?.StatusLevel &&
                       Formik.errors.AdminRegisteration?.StatusLevel}
@@ -437,20 +437,20 @@ const AdminForm: React.FC<IdataForm> = ({
                 <Box
                   sx={{
                     border: `1px solid ${grey[400]}`,
-                    width: 'inherit',
+                    width: "inherit",
                     height: 39,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: '3%',
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderRadius: "3%",
                   }}
                 >
                   <FormLabel
                     sx={{
                       pl: 2,
-                      height: '100%',
+                      height: "100%",
                       width: 94,
-                      bgcolor: '#E8F0FE',
+                      bgcolor: "#E8F0FE",
                     }}
                     htmlFor="upload-file"
                   >
@@ -473,9 +473,9 @@ const AdminForm: React.FC<IdataForm> = ({
                 <Box
                   pt={1}
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
                   }}
                 >
                   <Box pr={1}>
@@ -493,7 +493,7 @@ const AdminForm: React.FC<IdataForm> = ({
                             aria-label="Loading Spinner"
                           />
                         ) : (
-                          <PersonAddIcon sx={{ color: '#fafafa' }} />
+                          <PersonAddIcon sx={{ color: "#fafafa" }} />
                         )
                       }
                       disableRipple
@@ -522,7 +522,7 @@ const AdminForm: React.FC<IdataForm> = ({
                       }}
                       sx={{
                         bgcolor: orange[100],
-                        ':hover': { bgcolor: orange[100] },
+                        ":hover": { bgcolor: orange[100] },
                       }}
                       startIcon={
                         EditMutation.isLoading ? (

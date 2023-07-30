@@ -1,54 +1,54 @@
-import * as React from 'react';
+import * as React from "react";
 // external imports  of ressources
-import { useRecoilValue } from 'recoil';
-import Typography from '@mui/material/Typography';
-import grey from '@mui/material/colors/grey';
-import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, List, ListItemText } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItem from '@mui/material/ListItem';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Badge, { BadgeProps } from '@mui/material/Badge';
-import { useNavigate } from 'react-router-dom';
-import MailIcon from '@mui/icons-material/Mail';
-import { styled } from '@mui/material/styles';
-import __ from 'lodash';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { useRecoilValue } from "recoil";
+import Typography from "@mui/material/Typography";
+import grey from "@mui/material/colors/grey";
+import EditIcon from "@mui/icons-material/Edit";
+import { IconButton, List, ListItemText } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItem from "@mui/material/ListItem";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Badge, { BadgeProps } from "@mui/material/Badge";
+import { useNavigate, NavigateFunction } from "react-router-dom";
+import MailIcon from "@mui/icons-material/Mail";
+import { styled } from "@mui/material/styles";
+import __ from "lodash";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 // internally crafted imports of ressources
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
-import useNotification from '../../hooks/useNotifications';
-import { CssTextField } from '../../MuiStyles/Auth';
-import { ISidechat, IseenMessage } from '../../Interface/Chat';
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
+import useNotification from "../../hooks/useNotifications";
+import { CssTextField } from "../../MuiStyles/TextFieldStyle";
+import { ISidechat, IseenMessage } from "../../Interface/Chat";
 
 const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
   const ContextData = React.useContext(Context);
 
   const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
 
-  const { GetNotifications } = useNotification(`${AuthInfo.Payload?._id}`);
+  const { GetNotifications } = useNotification();
   const dataNoti = GetNotifications();
 
   const [selected, setselected] = React.useState<{ indexLink: number }>({
     indexLink: 0,
   });
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-    '& .MuiBadge-badge': {
+    "& .MuiBadge-badge": {
       right: -3,
       top: 13,
       border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
+      padding: "0 4px",
     },
   }));
 
@@ -56,7 +56,7 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
     mutationFn: async (newData: IseenMessage) => {
       try {
         const seenMessages = await axios.patch(
-          'http://localhost:4000/home/chat/isSeen',
+          "http://localhost:4000/home/chat/isSeen",
           newData
         );
 
@@ -82,30 +82,30 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
     <>
       <Box
         sx={{
-          height: '100%',
-          maxWidth: '100%',
+          height: "100%",
+          maxWidth: "100%",
           border: `1px solid ${grey[300]}`,
-          borderTop: 'none',
+          borderTop: "none",
         }}
       >
         <Box
           sx={{
-            position: 'relative',
+            position: "relative",
             top: 0,
-            left: '0',
-            width: 'inherit',
-            height: '11vh',
+            left: "0",
+            width: "inherit",
+            height: "11vh",
           }}
         >
           <Box
             py={1}
             pl={1}
             sx={{
-              width: '98%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
+              width: "98%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
             <Box>
@@ -113,7 +113,7 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
                 <StyledBadge
                   badgeContent={
                     dataNoti?.Notifications?.filter(
-                      (val) => val.NotiReference === 'messaged'
+                      (val) => val.NotiReference === "messaged"
                     )?.length
                   }
                   color="primary"
@@ -129,7 +129,7 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
             </Box>
             <Box>
               <IconButton>
-                <EditIcon sx={{ color: 'green' }} />
+                <EditIcon sx={{ color: "green" }} />
               </IconButton>
             </Box>
           </Box>
@@ -137,14 +137,14 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
         <Divider />
         <Box
           sx={{
-            position: 'relative',
+            position: "relative",
             top: 0,
-            left: '0',
-            width: 'inherit',
-            height: '10vh',
+            left: "0",
+            width: "inherit",
+            height: "10vh",
           }}
         >
-          <Box pt="12px" pl={1} sx={{ width: '94%' }}>
+          <Box pt="12px" pl={1} sx={{ width: "94%" }}>
             <CssTextField
               variant="outlined"
               size="small"
@@ -164,22 +164,22 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
         <Divider />
         <Box
           sx={{
-            position: 'relative',
-            width: 'inherit',
-            height: 'calc(100vh - 31.7vh)',
-            overflowY: 'auto',
-            boxSizing: 'border-box',
+            position: "relative",
+            width: "inherit",
+            height: "calc(100vh - 31.7vh)",
+            overflowY: "auto",
+            boxSizing: "border-box",
           }}
         >
-          <Box sx={{ maxHeight: 'inherit' }}>
+          <Box sx={{ maxHeight: "inherit" }}>
             <List
               sx={{
-                overflowY: 'auto',
-                maxHeight: 'inherit',
+                overflowY: "auto",
+                maxHeight: "inherit",
               }}
             >
               {Friends.filter((friend) =>
-                search.toLowerCase() === ''
+                search.toLowerCase() === ""
                   ? friend
                   : friend.User.Firstname.toLowerCase().includes(search)
               ).map((val, ind) => {
@@ -213,8 +213,8 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
                           }
                           color="primary"
                           anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
+                            vertical: "bottom",
+                            horizontal: "right",
                           }}
                         >
                           <Avatar alt="image" src={Image}>
@@ -233,9 +233,9 @@ const SideChat: React.FC<ISidechat> = ({ Friends, Chat }) => {
                             <span>{`${Firstname} ${Lastname}`}</span>
                             <span
                               style={{
-                                color: 'green',
-                                fontStyle: 'italic',
-                                fontSize: '0.8em',
+                                color: "green",
+                                fontStyle: "italic",
+                                fontSize: "0.8em",
                               }}
                             >
                               online

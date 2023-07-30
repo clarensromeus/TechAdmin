@@ -21,7 +21,7 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { useRecoilValue } from "recoil";
 // external crafted imports of ressources
-import { CommentTextField } from "../MuiStyles/Auth";
+import { CommentTextField } from "../MuiStyles/TextFieldStyle";
 import { IFriend } from "../Interface/Posts";
 import { IAuthState } from "../Interface/GlobalState";
 import Context from "../Store/ContextApi";

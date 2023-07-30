@@ -1,4 +1,4 @@
-// internal crafted imports of sources
+// internally crafted imports of sources
 import {
   IDelete,
   IUpdateAdmin,
@@ -34,10 +34,12 @@ import consola from "consola";
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import jwt from "jsonwebtoken";
-import __ from "lodash";
 import { Types } from "mongoose";
 import { promisify } from "util";
 import isNil from "lodash/isNil";
+import isEqual from "lodash/isEqual";
+import isError from "lodash/isError";
+import isEqualWith from "lodash/isEqualWith";
 
 const { info, success } = consola;
 
@@ -188,7 +190,7 @@ export const StudentAdminRegister = async (
         credentials["DataStudent"]
       );
       // check if fields validation are ok
-      if (Is_valid) {
+      if (!isError(Is_valid)) {
         const { value }: { value?: any } = Is_valid;
         const {
           Firstname,
@@ -238,14 +240,14 @@ export const StudentAdminRegister = async (
 
     if (isAdmin({ __status: `${statusKey}`, Info: AdminInfo })) {
       // validate students credentials
-      const Is_Valid = await AdminRegisterValidation(credentials["DataAdmin"]);
+      const Is_valid = await AdminRegisterValidation(credentials["DataAdmin"]);
 
       const randomAdmin = await UseRandomAdmin();
       // console.log(randomAdmin);
 
       // check whether fields validation is ok
-      if (Is_Valid) {
-        const { value }: { value?: any } = Is_Valid;
+      if (!isError(Is_valid)) {
+        const { value }: { value?: any } = Is_valid;
 
         const {
           Firstname,
@@ -269,7 +271,7 @@ export const StudentAdminRegister = async (
             success: false,
             exists: true,
           });
-        } else if (!__.isEqual("Admin124", PromoCode)) {
+        } else if (!isEqual("Admin124", PromoCode)) {
           res.status(200).json({
             message: "PROMO CODE is incorrect",
             code: false,
@@ -334,7 +336,7 @@ export const StudentAdminLogin = async (
 
         const name: string[] | undefined = username?.split(" ");
 
-        if (Is_valid) {
+        if (!isError(Is_valid)) {
           const doc = await RegisterModelStudent.findOne({
             Firstname: name[0],
             Lastname: name[1],
@@ -387,7 +389,7 @@ export const StudentAdminLogin = async (
 
         // const rs = await UseRandomStudent();
 
-        if (Is_valid) {
+        if (!isError(Is_valid)) {
           const { value }: { value?: string } = Is_valid;
           const doc = await RegisterModelStudent.findOne({
             Email: email,
@@ -398,7 +400,7 @@ export const StudentAdminLogin = async (
             `${doc?.Password}`
           );
 
-          const Email: boolean = __.isEqual(email, doc?.Email);
+          const Email: boolean = isEqual(email, doc?.Email);
 
           if (doc && COMPARE_HASH && Email) {
             const TokenIssuer = doc?.Email?.match(/([a-zA-Z])+@ /g);
@@ -437,7 +439,7 @@ export const StudentAdminLogin = async (
 
         const name: string[] = username.split(" ");
         // check if admin fields are validated
-        if (Is_valid) {
+        if (!isError(Is_valid)) {
           // const rs = await UseRandomStudent();
           const doc = await RegisterModelAdmin.findOne({
             Firstname: name[0],
@@ -497,7 +499,7 @@ export const StudentAdminLogin = async (
             `${doc?.Password}`
           );
 
-          const Email: boolean = __.isEqual(email, doc?.Email);
+          const Email: boolean = isEqual(email, doc?.Email);
           if (doc && COMPARE_HASH && Email) {
             const TokenIssuer: RegExpMatchArray | null | undefined =
               doc?.Email?.match(/([a-zA-Z])+@ /g);
@@ -649,7 +651,7 @@ export const CreateStudent = async (
     });
 
     // verify if all fields are validate
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
       // first check if student already exists
       const doc = await RegisterModelStudent.findOne()
@@ -729,7 +731,7 @@ export const EditStudent = async (req: Request, res: Response) => {
     });
 
     // verify if all fields are validated
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
 
       const doc = await RegisterModelStudent.findOneAndUpdate(value).where({
@@ -793,10 +795,7 @@ export const DeleteStudent = async (req: Request<IDelete>, res: Response) => {
     _ID_User: id_user,
   });
   // check if student deletes
-  if (
-    doc.acknowledged &&
-    __.isEqualWith(doc.deletedCount, 1, CustomizerStudent)
-  ) {
+  if (doc.acknowledged && isEqualWith(doc.deletedCount, 1, CustomizerStudent)) {
     res
       .status(200)
       .json({ message: "student deleted with success", success: true });
@@ -867,7 +866,7 @@ export const CreateAdmin = async (req: Request, res: Response) => {
     });
 
     // verify if all fields are validate
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
       // first check if student already exists
       const doc = await RegisterModelAdmin.findOne()
@@ -944,7 +943,7 @@ export const EditAdmin = async (req: Request, res: Response) => {
     });
 
     // verify if all fields are validated
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
       // update students in the doc
       const doc = await RegisterModelAdmin.findOneAndUpdate(value).where({
@@ -975,7 +974,7 @@ export const DeleteAdmin = async (req: Request<IDelete>, res: Response) => {
     _ID_User: id_user,
   });
   // check if admin deleted
-  if (doc.acknowledged && __.isEqualWith(doc.deletedCount, 1, Customizer)) {
+  if (doc.acknowledged && isEqualWith(doc.deletedCount, 1, Customizer)) {
     res
       .status(200)
       .json({ message: "administrator deleted with success", success: true });

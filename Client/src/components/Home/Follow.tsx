@@ -1,21 +1,21 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import InputAdornment from '@mui/material/InputAdornment';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
-import grey from '@mui/material/colors/grey';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import InputAdornment from "@mui/material/InputAdornment";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import SearchIcon from "@mui/icons-material/Search";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import grey from "@mui/material/colors/grey";
 import {
   useQuery,
   UseQueryResult,
@@ -23,18 +23,18 @@ import {
   UseMutationResult,
   QueryClient,
   useQueryClient,
-} from '@tanstack/react-query';
-import { FadeLoader } from 'react-spinners';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import { useRecoilValue } from 'recoil';
+} from "@tanstack/react-query";
+import { FadeLoader } from "react-spinners";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import { useRecoilValue } from "recoil";
 // internal crafted imports of ressources
-import { CssTextField } from '../../MuiStyles/Auth';
-import { IFriend } from '../../Interface/Posts';
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
-import { Iunfollow, IunfollowResponse } from '../../Interface/student';
-import useNotification from '../../hooks/useNotifications';
+import { CssTextField } from "../../MuiStyles/TextFieldStyle";
+import { IFriend } from "../../Interface/Posts";
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
+import { Iunfollow, IunfollowResponse } from "../../Interface/student";
+import useNotification from "../../hooks/useNotifications";
 
 interface User {
   _id: string;
@@ -79,7 +79,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
     mutationFn: async (Friends: IFriend) => {
       try {
         const res = await axios.post(
-          'http://localhost:4000/home/students/friends',
+          "http://localhost:4000/home/students/friends",
           Friends
         );
 
@@ -90,7 +90,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['StudentsSuggestion'],
+        queryKey: ["StudentsSuggestion"],
       });
     },
   });
@@ -113,7 +113,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['StudentsSuggestion'],
+        queryKey: ["StudentsSuggestion"],
       });
     },
   });
@@ -125,17 +125,17 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
     IstudentData<string>,
     Error
   >({
-    queryKey: ['StudentsSuggestion'],
+    queryKey: ["StudentsSuggestion"],
     queryFn: async () => {
       // declare the url
-      const Url: string = 'http://localhost:4000/home/students/suggestion';
+      const Url: string = "http://localhost:4000/home/students/suggestion";
       const response = await axios.get<IstudentData<string>>(Url);
       return response.data;
     },
     retry: 2, // retry twice if query errored out
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['StudentsSugestion'],
+        queryKey: ["StudentsSugestion"],
       });
     },
   });
@@ -152,22 +152,22 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
           <form>
             <DialogTitle
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                fontSize: '1.5em',
-                color: 'text.secondary',
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "1.5em",
+                color: "text.secondary",
               }}
             >
               <Box>
                 <IconButton onClick={CloseDialog}>
-                  <ArrowForwardIcon sx={{ color: 'black' }} />
+                  <ArrowForwardIcon sx={{ color: "black" }} />
                 </IconButton>
               </Box>
               <Box
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
                 <CssTextField
@@ -189,9 +189,9 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
               sx={{
                 width: 600,
                 height: 400,
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
               }}
             >
               {isLoading ? (
@@ -235,9 +235,9 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
                             primary={
                               <Box
                                 sx={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  boxSizing: 'border-box',
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  boxSizing: "border-box",
                                 }}
                               >
                                 <Typography
@@ -250,7 +250,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
                                 </Typography>
                                 <Button
                                   variant={
-                                    isFollowed ? 'outlined' : 'contained'
+                                    isFollowed ? "outlined" : "contained"
                                   }
                                   onClick={async () => {
                                     try {
@@ -260,7 +260,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
                                             User: `${AuthInfo.Payload?._id}`,
                                           })
                                         : Mutation.mutate({
-                                            status: 'student',
+                                            status: "student",
                                             FriendId: `${nanoid()}`,
                                             Identifier: val._id,
                                             User: `${AuthInfo.Payload?._id}`,
@@ -270,12 +270,12 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
                                         ReceiverId: val._id,
                                         NotiId: `${nanoid()}`,
                                         NotiReference: isFollowed
-                                          ? 'unfollow'
-                                          : 'follow',
+                                          ? "unfollow"
+                                          : "follow",
                                         Sender: `${AuthInfo.Payload?._id}`,
                                         AlertText: isFollowed
-                                          ? 'unfollow'
-                                          : 'follow',
+                                          ? "unfollow"
+                                          : "follow",
                                         SendingStatus: false,
                                         User: `${AuthInfo.Payload?._id}`,
                                       });
@@ -284,7 +284,7 @@ const Follow: React.FC<IDrawer> = ({ DialogOpen, CloseDialog }) => {
                                     }
                                   }}
                                 >
-                                  {isFollowed ? 'unfollow' : 'follow'}
+                                  {isFollowed ? "unfollow" : "follow"}
                                 </Button>
                               </Box>
                             }

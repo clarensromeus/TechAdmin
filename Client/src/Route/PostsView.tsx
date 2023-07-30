@@ -14,7 +14,7 @@ import StudentsSugestion from "../components/StudentsSugestion";
 import { IAuthState } from "../Interface/GlobalState";
 import Context from "../Store/ContextApi";
 import useWindowSize from "../hooks/useWindowSize";
-import { PostTextField } from "../MuiStyles/Auth";
+import { PostTextField } from "../MuiStyles/TextFieldStyle";
 import { IPostCard } from "../Interface/Posts";
 
 const PostsView: React.FC = () => {

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { RegisterModelStudent, RegisterModelAdmin } from "../models";
+import isNil from "lodash/isNil";
 
 type UserInfo = {
   _id: string;
@@ -19,16 +20,16 @@ const GetUserInfo = async (
       const student = await RegisterModelStudent.findOne({ _id }).select(
         "-Notifications -Friends -Chat"
       );
-      if (student) {
+      if (!isNil(student)) {
         res.status(200).json({ Data: student });
         next();
-      } else {
-        // if authentication is made by an administrator retrieve administrator-only data
-        const admin = await RegisterModelAdmin.findOne({ _id });
-        if (admin) {
-          res.status(200).json({ Data: admin });
-          next();
-        }
+      }
+    } else {
+      // if authentication is made by an administrator retrieve administrator-only data
+      const admin = await RegisterModelAdmin.findOne({ _id });
+      if (!isNil(admin)) {
+        res.status(200).json({ Data: admin });
+        next();
       }
     }
   } catch (error) {

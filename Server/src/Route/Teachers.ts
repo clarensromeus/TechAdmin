@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import isNil from "lodash/isNil";
 import isEqualWith from "lodash/isEqualWith";
+import isError from "lodash/isError";
 // internal crafted imports of ressources
 import { RegisterModelTeacher } from "../models/index";
 import { TeacherRegisterValidation } from "../utils/index";
@@ -61,7 +62,7 @@ export const CreateTeacher = async (
     });
 
     // verify if all fields are validated
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
 
       const doc = await RegisterModelTeacher.findOne({

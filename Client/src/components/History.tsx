@@ -1,30 +1,31 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import { Avatar, Typography, IconButton } from '@mui/material';
-import grey from '@mui/material/colors/grey';
-import red from '@mui/material/colors/red';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useRecoilValue } from 'recoil';
-import { ClipLoader } from 'react-spinners';
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import { Avatar, Typography, IconButton } from "@mui/material";
+import grey from "@mui/material/colors/grey";
+import red from "@mui/material/colors/red";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useRecoilValue } from "recoil";
+import uniqueId from "lodash/uniqueId";
+import { ClipLoader } from "react-spinners";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 // externally crafted imports of ressources
-import { IHistoryProps } from '../Interface/GlobalState';
-import useHistory from '../hooks/useHistory';
-import Context from '../Store/ContextApi';
-import { IAuthState } from '../Interface/GlobalState';
-import { IGetHistory, IActionPerformer } from '../Interface/History';
-import useWindowSize from '../hooks/useWindowSize';
-import { IWindow } from '../Interface/student';
+import { IHistoryProps } from "../Interface/GlobalState";
+import useHistory from "../hooks/useHistory";
+import Context from "../Store/ContextApi";
+import { IAuthState } from "../Interface/GlobalState";
+import { IGetHistory, IActionPerformer } from "../Interface/History";
+import useWindowSize from "../hooks/useWindowSize";
+import { IWindow } from "../Interface/student";
 
 const History: React.FC<IHistoryProps> = ({ state, setState }) => {
   dayjs.extend(LocalizedFormat);
@@ -36,9 +37,9 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
       ) {
         return;
       }
@@ -53,7 +54,7 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
     mutationFn: async () => {
       try {
         const response = await axios.delete(
-          'http://localhost:4000/home/histories/deleteall'
+          "http://localhost:4000/home/histories/deleteall"
         );
         return response.data;
       } catch (error) {
@@ -69,7 +70,7 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
       <React.Fragment>
         <Drawer
           PaperProps={{
-            sx: { width: width && width < 700 ? '100%' : 350 },
+            sx: { width: width && width < 700 ? "100%" : 350 },
           }}
           anchor="right"
           open={state}
@@ -79,7 +80,7 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
             pt={10}
             px={2}
             pb={1}
-            sx={{ display: 'flex', justifyContent: 'space-between' }}
+            sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <Box pt={1}>
               <Typography fontWeight="bold" textTransform="capitalize">
@@ -92,7 +93,7 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
                   deleteAll.mutate();
                 }}
                 variant="text"
-                sx={{ textTransform: 'lowercase' }}
+                sx={{ textTransform: "lowercase" }}
               >
                 {deleteAll.isLoading ? (
                   <ClipLoader
@@ -103,7 +104,7 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
                     data-testid="loader"
                   />
                 ) : (
-                  'clear'
+                  "clear"
                 )}
               </Button>
             </Box>
@@ -112,9 +113,9 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
           <Box>
             <List
               sx={{
-                width: '100%',
-                position: 'relative',
-                overflow: 'auto',
+                width: "100%",
+                position: "relative",
+                overflow: "auto",
                 maxHeight: 500,
                 maxWidth: 360,
               }}
@@ -123,7 +124,10 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
                 const { _id, Firstname, Lastname, Image }: IActionPerformer =
                   histories.ActionPerformer;
                 return (
-                  <ListItem key={_id} alignItems="flex-start">
+                  <ListItem
+                    key={uniqueId(`${Firstname}_`)}
+                    alignItems="flex-start"
+                  >
                     <ListItemAvatar>
                       <Avatar alt={_id} src={Image} />
                     </ListItemAvatar>
@@ -131,12 +135,12 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
                       primary={
                         <Box
                           sx={{
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            justifyContent: 'space-between',
+                            display: "flex",
+                            alignItems: "flex-start",
+                            justifyContent: "space-between",
                           }}
                         >
-                          <span style={{ marginTop: '5px' }}>
+                          <span style={{ marginTop: "5px" }}>
                             {Firstname} {Lastname}
                           </span>
                           {isLoading ? (
@@ -169,12 +173,12 @@ const History: React.FC<IHistoryProps> = ({ state, setState }) => {
                       secondary={
                         <React.Fragment>
                           <Typography
-                            sx={{ display: 'inline' }}
+                            sx={{ display: "inline" }}
                             component="span"
                             variant="body2"
                             color="text.primary"
                           >
-                            {dayjs(histories.createdAt).format('LLL')}
+                            {dayjs(histories.createdAt).format("LLL")}
                           </Typography>
                           {` ${histories.ActionCreator.Status} ${histories.ActionCreator.Firstname} ${histories.ActionCreator.Lastname} ${histories.AlertText} `}
                           <strong>

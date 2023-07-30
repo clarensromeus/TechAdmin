@@ -1,42 +1,42 @@
-import * as React from 'react';
-import { useId } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { useFormik, FormikHelpers } from 'formik';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import grey from '@mui/material/colors/grey';
-import EditIcon from '@mui/icons-material/Edit';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import MenuItem from '@mui/material/MenuItem';
-import orange from '@mui/material/colors/orange';
-import Paper from '@mui/material/Paper';
-import PhoneInput from 'react-phone-input-2';
-import Divider from '@mui/material/Divider';
-import 'react-phone-input-2/lib/style.css';
-import { enqueueSnackbar } from 'notistack';
-import { ClipLoader } from 'react-spinners';
+import * as React from "react";
+import { useId } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { useFormik, FormikHelpers } from "formik";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import grey from "@mui/material/colors/grey";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import MenuItem from "@mui/material/MenuItem";
+import orange from "@mui/material/colors/orange";
+import Paper from "@mui/material/Paper";
+import PhoneInput from "react-phone-input-2";
+import Divider from "@mui/material/Divider";
+import "react-phone-input-2/lib/style.css";
+import { enqueueSnackbar } from "notistack";
+import { ClipLoader } from "react-spinners";
 import {
   useMutation,
   UseMutationResult,
   useQueryClient,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import isEqual from 'lodash/isEqual';
-import { useRecoilValue } from 'recoil';
-import { nanoid } from 'nanoid';
+} from "@tanstack/react-query";
+import axios from "axios";
+import isEqual from "lodash/isEqual";
+import { useRecoilValue } from "recoil";
+import { nanoid } from "nanoid";
 // internal crafted imports of ressources
-import { Validate_TeacherForm } from '../../utils/validationSchema';
-import { Idata, Icreate, IEditTeacher } from '../../Interface/teacher';
-import isPhoneValidation from '../../utils/PhoneValidation';
-import { TextFieldStyle } from '../../MuiStyles/Nav';
-import { IResponse, teacherInfo } from '../../Interface/teacher';
-import { IHistory } from '../../Interface/History';
-import useHistory from '../../hooks/useHistory';
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
-import { isValidatedTeacher } from '../isValidated';
+import { Validate_TeacherForm } from "../../utils/validationSchema";
+import { Idata, Icreate, IEditTeacher } from "../../Interface/teacher";
+import isPhoneValidation from "../../utils/PhoneValidation";
+import { TextFieldStyle } from "../../MuiStyles/TextFieldStyle2";
+import { IResponse, teacherInfo } from "../../Interface/teacher";
+import { IHistory } from "../../Interface/History";
+import useHistory from "../../hooks/useHistory";
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
+import { isValidatedTeacher } from "../isValidated";
 
 const TeacherForm: React.FC<Idata> = ({
   _id,
@@ -91,7 +91,7 @@ const TeacherForm: React.FC<Idata> = ({
     mutationFn: async (Data: Icreate) => {
       try {
         const res = await axios.post(
-          'http://localhost:4000/home/teachers/create',
+          "http://localhost:4000/home/teachers/create",
           Data
         );
         return res.data;
@@ -101,20 +101,20 @@ const TeacherForm: React.FC<Idata> = ({
     },
     onSuccess: (create: IResponse) => {
       queryClient.invalidateQueries({
-        queryKey: ['teachers'],
+        queryKey: ["teachers"],
         exact: true,
       });
 
       enqueueSnackbar(
-        <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+        <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
           {create.message}
         </Typography>,
         {
           anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           },
-          variant: isEqual(create.success, true) ? 'success' : 'error',
+          variant: isEqual(create.success, true) ? "success" : "error",
           preventDuplicate: true, // prevent noti with the same message to display multiple times
         }
       );
@@ -123,13 +123,13 @@ const TeacherForm: React.FC<Idata> = ({
 
   const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const Data: Omit<Idata, '_id' | '_ID_User'> = {
+    const Data: Omit<Idata, "_id" | "_ID_User"> = {
       Firstname: Formik.values.TeacherRegisteration.Firstname,
       Lastname: Formik.values.TeacherRegisteration.Lastname,
       Email: Formik.values.TeacherRegisteration.Email,
       HoursPerWeek: Formik.values.TeacherRegisteration.HoursPerWeek,
       PhoneNumber: Phone,
-      Image: '',
+      Image: "",
     };
 
     mutation.mutate(Data);
@@ -138,14 +138,14 @@ const TeacherForm: React.FC<Idata> = ({
       ActionPerformer: `${AuthInfo.Payload?._id}`,
       NotiId: `${nanoid()}`,
       ActionCreator: {
-        Status: 'Teacher',
+        Status: "Teacher",
         Firstname: Formik.values.TeacherRegisteration.Firstname,
         Lastname: Formik.values.TeacherRegisteration.Lastname,
-        Image: '',
+        Image: "",
       },
-      NotiReference: 'registered',
-      AlertText: ' is registered by ',
-      User: '64bb0a381e5ce1722e328401', // the platform administrator id
+      NotiReference: "registered",
+      AlertText: " is registered by ",
+      User: "64bb0a381e5ce1722e328401", // the platform administrator id
     };
     CreateHistory(HistoryData);
   };
@@ -154,12 +154,12 @@ const TeacherForm: React.FC<Idata> = ({
   const EditMutation: UseMutationResult<
     IResponse,
     Error,
-    IEditTeacher['Edit']
-  > = useMutation<IResponse, Error, IEditTeacher['Edit']>({
-    mutationFn: async (editData: IEditTeacher['Edit']) => {
+    IEditTeacher["Edit"]
+  > = useMutation<IResponse, Error, IEditTeacher["Edit"]>({
+    mutationFn: async (editData: IEditTeacher["Edit"]) => {
       try {
         const res = await axios.put(
-          'http://localhost:4000/home/teacher/edit',
+          "http://localhost:4000/home/teacher/edit",
           editData
         );
         return res.data;
@@ -169,21 +169,21 @@ const TeacherForm: React.FC<Idata> = ({
     },
     onSuccess: (edit: IResponse) => {
       enqueueSnackbar(
-        <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+        <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
           {edit.message}
         </Typography>,
         {
           anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           },
-          variant: 'success',
+          variant: "success",
           preventDuplicate: true, // prevent noti with the same message to display multiple times
         }
       );
       // invalidate and refetch the query
       queryClient.invalidateQueries({
-        queryKey: ['teachers'],
+        queryKey: ["teachers"],
         exact: true,
       });
     },
@@ -204,7 +204,7 @@ const TeacherForm: React.FC<Idata> = ({
               personal information
             </Typography>
           </Box>
-          <Divider sx={{ width: 'inherit' }} />
+          <Divider sx={{ width: "inherit" }} />
           <Box pt={2} />
           <form
             onSubmit={
@@ -296,14 +296,14 @@ const TeacherForm: React.FC<Idata> = ({
                   enableSearch
                   searchPlaceholder="search..."
                   country="us"
-                  regions={['north-america', 'carribean', 'south-america']}
-                  buttonStyle={{ backgroundColor: 'white' }}
+                  regions={["north-america", "carribean", "south-america"]}
+                  buttonStyle={{ backgroundColor: "white" }}
                   onChange={(phone) => setPhone(phone)}
-                  inputStyle={{ width: '100%', height: '40px' }}
+                  inputStyle={{ width: "100%", height: "40px" }}
                 />
                 {!isPhoneValidation(Phone) && show && (
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     enter a valid phone number
                   </FormLabel>
@@ -318,20 +318,20 @@ const TeacherForm: React.FC<Idata> = ({
                     size="small"
                     name="TeacherRegisteration.HoursPerWeek"
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     displayEmpty
                     onChange={Formik.handleChange}
                     renderValue={(selected) => {
                       if (selected.length === 0) {
-                        return <em style={{ color: 'grey' }}>Select hours</em>;
+                        return <em style={{ color: "grey" }}>Select hours</em>;
                       }
                       return selected;
                     }}
@@ -350,7 +350,7 @@ const TeacherForm: React.FC<Idata> = ({
                     <MenuItem value="9am-8pm">9am-8pm</MenuItem>
                   </Select>
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     {Formik.touched.TeacherRegisteration?.HoursPerWeek &&
                       Formik.errors.TeacherRegisteration?.HoursPerWeek}
@@ -361,21 +361,21 @@ const TeacherForm: React.FC<Idata> = ({
                 <Box
                   sx={{
                     border: `1px solid ${grey[400]}`,
-                    width: 'inherit',
+                    width: "inherit",
                     height: 39,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: '3%',
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderRadius: "3%",
                   }}
                 >
                   <FormLabel
                     sx={{
                       pl: 2,
 
-                      height: '100%',
+                      height: "100%",
                       width: 94,
-                      bgcolor: '#E8F0FE',
+                      bgcolor: "#E8F0FE",
                     }}
                     htmlFor="upload-file"
                   >
@@ -398,9 +398,9 @@ const TeacherForm: React.FC<Idata> = ({
                 <Box
                   pt={1}
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
                   }}
                 >
                   <Box pr={1}>
@@ -418,7 +418,7 @@ const TeacherForm: React.FC<Idata> = ({
                             aria-label="Loading Spinner"
                           />
                         ) : (
-                          <PersonAddIcon sx={{ color: '#fafafa' }} />
+                          <PersonAddIcon sx={{ color: "#fafafa" }} />
                         )
                       }
                       disableRipple
@@ -432,7 +432,7 @@ const TeacherForm: React.FC<Idata> = ({
                       type="submit"
                       sx={{
                         bgcolor: orange[100],
-                        ':hover': { bgcolor: orange[100] },
+                        ":hover": { bgcolor: orange[100] },
                       }}
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();

@@ -1,22 +1,22 @@
 // internal imports of sources
-import * as React from 'react';
+import * as React from "react";
 // external imports of sources
-import { Box, Typography, Button } from '@mui/material';
-import FormLabel from '@mui/material/FormLabel';
-import grey from '@mui/material/colors/grey';
-import { useFormik, FormikHelpers } from 'formik';
+import { Box, Typography, Button } from "@mui/material";
+import FormLabel from "@mui/material/FormLabel";
+import grey from "@mui/material/colors/grey";
+import { useFormik, FormikHelpers } from "formik";
 import {
   useNavigate,
   NavigateFunction,
   useLocation,
   Location,
-} from 'react-router-dom';
-import red from '@mui/material/colors/red';
-import __ from 'lodash';
+} from "react-router-dom";
+import red from "@mui/material/colors/red";
+import __ from "lodash";
 // internal crafted imports of sources
-import { Validate_Password } from '../utils/validationSchema';
-import { CssTextField } from '../MuiStyles/Auth';
-import { isCodeValid } from '../components/StateFromLocation';
+import { Validate_Password } from "../utils/validationSchema";
+import { CssTextField } from "../MuiStyles/TextFieldStyle";
+import { isCodeValid } from "../components/StateFromLocation";
 
 type CredentialsType = {
   Password: string;
@@ -38,7 +38,7 @@ const ConfirmPassword: React.FC = () => {
     new Promise((resolve) => setTimeout(resolve, time));
   // using useFormik helper method to create form with formik and Mui fields.
   const Formik = useFormik({
-    initialValues: { Password: '' },
+    initialValues: { Password: "" },
     validationSchema: Validate_Password,
     onSubmit: async (
       values: CredentialsType,
@@ -55,7 +55,7 @@ const ConfirmPassword: React.FC = () => {
       const student: boolean =
         __.isNil(Password) === false && Password.length > 5 && Formik.isValid;
       if (student && __.isEqual(code?.Passcode, Formik.values.Password)) {
-        Navigate('/emailverification', {
+        Navigate("/emailverification", {
           replace: true,
           state: { passCode: Formik.values.Password, status: code?.status },
         });
@@ -94,7 +94,7 @@ const ConfirmPassword: React.FC = () => {
           <Typography
             fontWeight="bold"
             fontFamily="Courier New Monospace"
-            fontSize={{ xs: '1em', sm: '1.4em', xl: '1.6em' }}
+            fontSize={{ xs: "1em", sm: "1.4em", xl: "1.6em" }}
             sx={{ color: grey[900], lineHeight: (theme) => theme.spacing(3) }}
           >
             in order to continue with the registeration process
@@ -102,15 +102,15 @@ const ConfirmPassword: React.FC = () => {
         </Box>
         <Box pt={1}>
           <form onSubmit={Formik.handleSubmit}>
-            <Box display="flex" flexDirection="column" sx={{ width: '320px' }}>
+            <Box display="flex" flexDirection="column" sx={{ width: "320px" }}>
               <Box>
-                <FormLabel sx={{ textAlign: 'start' }}>
+                <FormLabel sx={{ textAlign: "start" }}>
                   <Typography
                     sx={{
                       pl: 1,
-                      fontSize: '0.9rem',
+                      fontSize: "0.9rem",
                       color: `${grey[700]}`,
-                      textTransform: 'capitalize',
+                      textTransform: "capitalize",
                     }}
                   >
                     confirm your password
@@ -131,12 +131,12 @@ const ConfirmPassword: React.FC = () => {
                   helperText={Formik.touched.Password && Formik.errors.Password}
                 />
                 {!isValidated && !__.isEqual(code, Formik.values.Password) && (
-                  <Box pl={1} pt={1} sx={{ textAlign: 'start' }}>
+                  <Box pl={1} pt={1} sx={{ textAlign: "start" }}>
                     <Typography
                       sx={{
                         color: red[700],
-                        fontStyle: 'italic',
-                        fontSize: '0.8em',
+                        fontStyle: "italic",
+                        fontSize: "0.8em",
                       }}
                     >
                       passwords do not match

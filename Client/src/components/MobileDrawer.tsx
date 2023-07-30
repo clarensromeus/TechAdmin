@@ -1,30 +1,33 @@
-import * as React from 'react';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import orange from '@mui/material/colors/orange';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
+import * as React from "react";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import orange from "@mui/material/colors/orange";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import {
   AccountCircle,
   LockOpenOutlined,
   SettingsOutlined,
   PowerSettingsNew,
-} from '@mui/icons-material';
-import { decodeToken } from 'react-jwt';
-import __ from 'lodash';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { grey } from '@mui/material/colors';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
+} from "@mui/icons-material";
+import { decodeToken } from "react-jwt";
+import __ from "lodash";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { grey } from "@mui/material/colors";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
 // external imports of ressources
-import { IMobileDrawerProps } from '../Interface/Notifications';
+import { IMobileDrawerProps } from "../Interface/Notifications";
+import { IAuthState } from "../Interface/GlobalState";
+import Context from "../Store/ContextApi";
+import { useRecoilValue } from "recoil";
 
 interface IDest {
   destination: string;
@@ -42,8 +45,12 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
   const TokenInfo: any = decodeToken(
-    `${window.localStorage.getItem('TOKEN') || ''}`
+    `${window.localStorage.getItem("TOKEN") || ""}`
   );
+
+  const ContextData = React.useContext(Context);
+
+  const AuthInfo = useRecoilValue<Partial<IAuthState>>(ContextData.GetAuthInfo);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -58,37 +65,37 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
 
   const Destinations: IDest[] = [
     {
-      destination: 'Teacher',
+      destination: "Teacher",
       Icon: <PeopleAltIcon />,
-      path: '/home/teachers',
+      path: "/home/teachers",
     },
     {
-      destination: 'Calendar',
+      destination: "Calendar",
       Icon: <BookmarksIcon />,
-      path: '/home/calendar',
+      path: "/home/calendar",
     },
   ];
 
   const Profile: IDest[] = [
     {
-      destination: 'Profile',
+      destination: "Profile",
       Icon: <AccountCircle sx={{ color: orange[700] }} />,
-      path: `/home/profile/${TokenInfo.PersonStatus}/${TokenInfo._id}`,
+      path: `/home/profile/${AuthInfo.Payload?.PersonStatus}/${AuthInfo.Payload?._id}`,
     },
     {
-      destination: 'Lock',
+      destination: "Lock",
       Icon: <LockOpenOutlined sx={{ color: orange[700] }} />,
-      path: '/lockscreen',
+      path: "/lockscreen",
     },
     {
-      destination: 'Settings',
+      destination: "Settings",
       Icon: <SettingsOutlined sx={{ color: orange[700] }} />,
-      path: '/home/settings',
+      path: "/home/settings",
     },
     {
-      destination: 'LogOut',
+      destination: "LogOut",
       Icon: <PowerSettingsNew sx={{ color: orange[700] }} />,
-      path: '/login',
+      path: "/login",
     },
   ];
 
@@ -100,10 +107,10 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
         anchor="top"
         open={openMoDrawer}
         onClose={handleCloseDrawerClose}
-        sx={{ height: '100%' }}
+        sx={{ height: "100%" }}
       >
-        <Box pt={7} sx={{ width: '100%' }}>
-          <Box sx={{ display: 'flex', gap: 2 }} p={2}>
+        <Box pt={7} sx={{ width: "100%" }}>
+          <Box sx={{ display: "flex", gap: 2 }} p={2}>
             <Box>
               <Avatar alt="profile" src={Image} />
             </Box>
@@ -115,10 +122,10 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
           </Box>
         </Box>
         <Divider />
-        <Box sx={{ bgcolor: grey[100], width: 'inherit' }} px={2} py={1}>
+        <Box sx={{ bgcolor: grey[100], width: "inherit" }} px={2} py={1}>
           <Typography>See navigations</Typography>
         </Box>
-        <Box sx={{ width: 'inherit' }}>
+        <Box sx={{ width: "inherit" }}>
           <List component="nav" aria-label="main mailbox folders">
             {Destinations.map((dest, index) => {
               const { destination, Icon, path }: IDest = dest;
@@ -126,8 +133,8 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
                 <ListItem key={index}>
                   <ListItemButton
                     onClick={() => {
-                      if (__.isEqual('/login', path)) {
-                        window.localStorage.removeItem('TOKEN');
+                      if (__.isEqual("/login", path)) {
+                        window.localStorage.removeItem("TOKEN");
                         navigate(path);
                       }
                       navigate(path);
@@ -142,10 +149,10 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({
             })}
           </List>
         </Box>
-        <Box sx={{ bgcolor: grey[100], width: 'inherit' }} px={2} py={1}>
+        <Box sx={{ bgcolor: grey[100], width: "inherit" }} px={2} py={1}>
           <Typography>User related go-to</Typography>
         </Box>
-        <Box sx={{ width: 'inherit' }}>
+        <Box sx={{ width: "inherit" }}>
           <List component="nav" aria-label="main mailbox folders">
             {Profile.map((dest, index) => {
               const { destination, Icon, path }: IDest = dest;

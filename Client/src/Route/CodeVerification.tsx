@@ -125,7 +125,7 @@ const CodeVerification: React.FC = () => {
         }
       }
     },
-    []
+    [result]
   );
 
   React.useEffect(() => {

@@ -1,39 +1,39 @@
-import * as React from 'react';
-import { useId } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import FormLabel from '@mui/material/FormLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import { useFormik, FormikHelpers } from 'formik';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import EditIcon from '@mui/icons-material/Edit';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import MenuItem from '@mui/material/MenuItem';
-import grey from '@mui/material/colors/grey';
-import orange from '@mui/material/colors/orange';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import axios from 'axios';
-import isEqual from 'lodash/isEqual';
-import { ClipLoader } from 'react-spinners';
-import { useRecoilValue } from 'recoil';
-import { nanoid } from 'nanoid';
+import * as React from "react";
+import { useId } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import FormLabel from "@mui/material/FormLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useFormik, FormikHelpers } from "formik";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import MenuItem from "@mui/material/MenuItem";
+import grey from "@mui/material/colors/grey";
+import orange from "@mui/material/colors/orange";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import axios from "axios";
+import isEqual from "lodash/isEqual";
+import { ClipLoader } from "react-spinners";
+import { useRecoilValue } from "recoil";
+import { nanoid } from "nanoid";
 import {
   useMutation,
   useQueryClient,
   UseMutationResult,
   QueryClient,
-} from '@tanstack/react-query';
-import { enqueueSnackbar } from 'notistack';
+} from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 // internal crafted imports of ressources
-import { Validate_StudentsForm } from '../../utils/validationSchema';
-import { TextFieldStyle } from '../../MuiStyles/Nav';
-import { editData, ICreateStudent } from '../../Interface/student';
-import useHistory from '../../hooks/useHistory';
-import { IHistory } from '../../Interface/History';
-import Context from '../../Store/ContextApi';
-import { IAuthState } from '../../Interface/GlobalState';
+import { Validate_StudentsForm } from "../../utils/validationSchema";
+import { TextFieldStyle } from "../../MuiStyles/TextFieldStyle2";
+import { editData, ICreateStudent } from "../../Interface/student";
+import useHistory from "../../hooks/useHistory";
+import { IHistory } from "../../Interface/History";
+import Context from "../../Store/ContextApi";
+import { IAuthState } from "../../Interface/GlobalState";
 
 type IStudentData<T> = {
   StudentsRegisteration: {
@@ -117,7 +117,7 @@ const StudentsForm: React.FC<editData> = ({
     mutationFn: async (Data: ICreateStudent<string>) => {
       try {
         const res = await axios.post(
-          'http://localhost:4000/home/student/create',
+          "http://localhost:4000/home/student/create",
           Data
         );
 
@@ -129,19 +129,19 @@ const StudentsForm: React.FC<editData> = ({
     onSuccess: (create: Response) => {
       // invalidate and refetching the query to be always providing fresh data
       queryClient.invalidateQueries({
-        queryKey: ['students'],
+        queryKey: ["students"],
       });
 
       enqueueSnackbar(
-        <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+        <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
           {create.message}
         </Typography>,
         {
           anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           },
-          variant: isEqual(create.success, true) ? 'success' : 'error',
+          variant: isEqual(create.success, true) ? "success" : "error",
           preventDuplicate: true, // prevent noti with the same message to display multiple times
         }
       );
@@ -157,7 +157,7 @@ const StudentsForm: React.FC<editData> = ({
       Email: Formik.values.StudentsRegisteration.Email,
       Password: Formik.values.StudentsRegisteration.Password,
       ConfirmPassword: Formik.values.StudentsRegisteration.ConfirmPassword,
-      Image: '',
+      Image: "",
       Class: Formik.values.StudentsRegisteration.Class,
       ClassName: Formik.values.StudentsRegisteration.ClassName,
       SchoolLevel: Formik.values.StudentsRegisteration.SchoolLevel,
@@ -168,14 +168,14 @@ const StudentsForm: React.FC<editData> = ({
       ActionPerformer: `${AuthInfo.Payload?._id}`,
       NotiId: `${nanoid()}`,
       ActionCreator: {
-        Status: 'Student',
+        Status: "Student",
         Firstname: Formik.values.StudentsRegisteration.Firstname,
         Lastname: Formik.values.StudentsRegisteration.Lastname,
-        Image: '',
+        Image: "",
       },
-      NotiReference: 'registered',
-      AlertText: ' is registered by ',
-      User: '64bb0a381e5ce1722e328401', // the platform administrator id
+      NotiReference: "registered",
+      AlertText: " is registered by ",
+      User: "64bb0a381e5ce1722e328401", // the platform administrator id
     };
     CreateHistory(HistoryData);
   };
@@ -186,7 +186,7 @@ const StudentsForm: React.FC<editData> = ({
       mutationFn: async (newData: editData) => {
         try {
           const res = await axios.put(
-            'http://localhost:4000/home/student/edit',
+            "http://localhost:4000/home/student/edit",
             newData
           );
           return res.data;
@@ -197,19 +197,19 @@ const StudentsForm: React.FC<editData> = ({
       onSuccess: (edit: Response) => {
         // invalidate and refetch the query
         queryClient.invalidateQueries({
-          queryKey: ['students'],
+          queryKey: ["students"],
         });
 
         enqueueSnackbar(
-          <Typography sx={{ color: grey[600], fontSeize: '0.6rem' }}>
+          <Typography sx={{ color: grey[600], fontSeize: "0.6rem" }}>
             {edit.message}
           </Typography>,
           {
             anchorOrigin: {
-              vertical: 'top',
-              horizontal: 'center',
+              vertical: "top",
+              horizontal: "center",
             },
-            variant: 'success',
+            variant: "success",
             preventDuplicate: true, // prevent noti with the same message to display multiple times
           }
         );
@@ -232,7 +232,7 @@ const StudentsForm: React.FC<editData> = ({
               personal information
             </Typography>
           </Box>
-          <Divider sx={{ width: 'inherit' }} />
+          <Divider sx={{ width: "inherit" }} />
           <Box pt={1} />
           <form onSubmit={!isValidated ? onSubmit : Formik.handleSubmit}>
             <Grid container justifyContent="center" spacing={2}>
@@ -309,7 +309,7 @@ const StudentsForm: React.FC<editData> = ({
               </Grid>
               <Grid item xs={10}>
                 <TextFieldStyle
-                  type={visible.showPassw ? 'text' : 'password'}
+                  type={visible.showPassw ? "text" : "password"}
                   variant="outlined"
                   size="small"
                   id={`${ID}_Password`}
@@ -328,13 +328,13 @@ const StudentsForm: React.FC<editData> = ({
                             disableElevation
                             onClick={handleShowPass}
                             sx={{
-                              fontWeight: 'bold',
-                              '&:hover': {
-                                textDecoration: 'underline',
+                              fontWeight: "bold",
+                              "&:hover": {
+                                textDecoration: "underline",
                               },
                             }}
                           >
-                            {visible.showPassw ? 'hide' : 'show'}
+                            {visible.showPassw ? "hide" : "show"}
                           </Button>
                         </Typography>
                       </InputAdornment>
@@ -377,13 +377,13 @@ const StudentsForm: React.FC<editData> = ({
                 <FormControl fullWidth>
                   <Select
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     labelId="schoolLevel"
@@ -396,7 +396,7 @@ const StudentsForm: React.FC<editData> = ({
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>
+                          <em style={{ color: "grey" }}>
                             Select a school level
                           </em>
                         );
@@ -412,7 +412,7 @@ const StudentsForm: React.FC<editData> = ({
                     <MenuItem value="secondary">Secondary</MenuItem>
                   </Select>
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     {Formik.touched.StudentsRegisteration?.SchoolLevel &&
                       Formik.errors.StudentsRegisteration?.SchoolLevel}
@@ -428,13 +428,13 @@ const StudentsForm: React.FC<editData> = ({
                     name="StudentsRegisteration.Class"
                     size="small"
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     displayEmpty
@@ -442,7 +442,7 @@ const StudentsForm: React.FC<editData> = ({
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>Select a class</em>
+                          <em style={{ color: "grey" }}>Select a class</em>
                         );
                       }
                       return selected;
@@ -460,7 +460,7 @@ const StudentsForm: React.FC<editData> = ({
                     <MenuItem value="7st grade">6th grade</MenuItem>
                   </Select>
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     {Formik.touched.StudentsRegisteration?.Class &&
                       Formik.errors.StudentsRegisteration?.Class}
@@ -493,20 +493,20 @@ const StudentsForm: React.FC<editData> = ({
                 <Box
                   sx={{
                     border: `1px solid ${grey[400]}`,
-                    width: 'inherit',
+                    width: "inherit",
                     height: 39,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: '3%',
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderRadius: "3%",
                   }}
                 >
                   <FormLabel
                     sx={{
                       pl: 2,
-                      height: '100%',
+                      height: "100%",
                       width: 94,
-                      bgcolor: '#E8F0FE',
+                      bgcolor: "#E8F0FE",
                     }}
                     htmlFor="upload-file"
                   >
@@ -529,9 +529,9 @@ const StudentsForm: React.FC<editData> = ({
                 <Box
                   pt={1}
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
                   }}
                 >
                   <Box pr={1}>
@@ -548,7 +548,7 @@ const StudentsForm: React.FC<editData> = ({
                             aria-label="Loading Spinner"
                           />
                         ) : (
-                          <PersonAddIcon sx={{ color: '#fafafa' }} />
+                          <PersonAddIcon sx={{ color: "#fafafa" }} />
                         )
                       }
                       disableRipple
@@ -582,7 +582,7 @@ const StudentsForm: React.FC<editData> = ({
                       }}
                       sx={{
                         bgcolor: orange[100],
-                        ':hover': { bgcolor: orange[100] },
+                        ":hover": { bgcolor: orange[100] },
                       }}
                       startIcon={
                         EditMutation.isLoading ? (

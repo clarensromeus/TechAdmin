@@ -1,35 +1,35 @@
-import * as React from 'react';
-import { useId } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { useFormik, FormikHelpers } from 'formik';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import grey from '@mui/material/colors/grey';
-import EditIcon from '@mui/icons-material/Edit';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import MenuItem from '@mui/material/MenuItem';
-import orange from '@mui/material/colors/orange';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import { ClipLoader } from 'react-spinners';
-import axios from 'axios';
-import isEqual from 'lodash/isEqual';
+import * as React from "react";
+import { useId } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { useFormik, FormikHelpers } from "formik";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import grey from "@mui/material/colors/grey";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import MenuItem from "@mui/material/MenuItem";
+import orange from "@mui/material/colors/orange";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import FormLabel from "@mui/material/FormLabel";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
+import isEqual from "lodash/isEqual";
 import {
   useMutation,
   UseMutationResult,
   useQueryClient,
-} from '@tanstack/react-query';
-import { enqueueSnackbar } from 'notistack';
+} from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 // internal crafted imports of ressources
-import { Validate_CalendarForm } from '../../utils/validationSchema';
-import { TextFieldStyle } from '../../MuiStyles/Nav';
-import isPhoneValidation from '../../utils/PhoneValidation';
-import { IEditCalendar, Icreate, Idata } from '../../Interface/Calendar';
-import { isValidatedCalendar } from '../isValidated';
+import { Validate_CalendarForm } from "../../utils/validationSchema";
+import { TextFieldStyle } from "../../MuiStyles/TextFieldStyle2";
+import isPhoneValidation from "../../utils/PhoneValidation";
+import { IEditCalendar, Icreate, Idata } from "../../Interface/Calendar";
+import { isValidatedCalendar } from "../isValidated";
 
 type CalendarInfo<T> = {
   CalendarRegisteration: {
@@ -97,7 +97,7 @@ const CalendarForm: React.FC<Idata<string>> = ({
     mutationFn: async (Data: Icreate<string>) => {
       try {
         const res = await axios.post(
-          'http://localhost:4000/home/calendar/create',
+          "http://localhost:4000/home/calendar/create",
           Data
         );
         return res.data;
@@ -107,16 +107,16 @@ const CalendarForm: React.FC<Idata<string>> = ({
     },
     onSuccess: (create: IResponse) => {
       queryClient.invalidateQueries({
-        queryKey: ['calendar'],
+        queryKey: ["calendar"],
         exact: true,
       });
 
       enqueueSnackbar(`${create.message}`, {
         anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         },
-        variant: isEqual(create.success, true) ? 'success' : 'error',
+        variant: isEqual(create.success, true) ? "success" : "error",
         preventDuplicate: true, // prevent noti with the same message to display multiple times
       });
     },
@@ -140,12 +140,12 @@ const CalendarForm: React.FC<Idata<string>> = ({
   const EditMutation: UseMutationResult<
     IResponse,
     Error,
-    IEditCalendar['Edit']
-  > = useMutation<IResponse, Error, IEditCalendar['Edit']>({
-    mutationFn: async (editData: IEditCalendar['Edit']) => {
+    IEditCalendar["Edit"]
+  > = useMutation<IResponse, Error, IEditCalendar["Edit"]>({
+    mutationFn: async (editData: IEditCalendar["Edit"]) => {
       try {
         const res = await axios.put(
-          'http://localhost:4000/home/calendar/edit',
+          "http://localhost:4000/home/calendar/edit",
           editData
         );
         return res.data;
@@ -156,15 +156,15 @@ const CalendarForm: React.FC<Idata<string>> = ({
     onSuccess: (editData: IResponse) => {
       // invalidate and refetch the query to be always having fresh data
       queryClient.invalidateQueries({
-        queryKey: ['calendar'],
+        queryKey: ["calendar"],
       });
 
       enqueueSnackbar(`${editData.message}`, {
         anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         },
-        variant: 'success',
+        variant: "success",
         preventDuplicate: true, // prevent noti with the same message to display multiple times
       });
     },
@@ -277,14 +277,14 @@ const CalendarForm: React.FC<Idata<string>> = ({
                   enableSearch
                   searchPlaceholder="search..."
                   country="us"
-                  regions={['north-america', 'carribean', 'south-america']}
-                  buttonStyle={{ backgroundColor: 'white' }}
+                  regions={["north-america", "carribean", "south-america"]}
+                  buttonStyle={{ backgroundColor: "white" }}
                   onChange={(phone) => setPhone(phone)}
-                  inputStyle={{ width: '100%', height: '40px' }}
+                  inputStyle={{ width: "100%", height: "40px" }}
                 />
                 {!isPhoneValidation(Phone) && show && (
                   <FormLabel
-                    sx={{ fontSize: '0.8em', color: 'red', bgcolor: '#fafafa' }}
+                    sx={{ fontSize: "0.8em", color: "red", bgcolor: "#fafafa" }}
                   >
                     enter a valid phone number
                   </FormLabel>
@@ -298,20 +298,20 @@ const CalendarForm: React.FC<Idata<string>> = ({
                     name="CalendarRegisteration.Day"
                     size="small"
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     displayEmpty
                     onChange={Formik.handleChange}
                     renderValue={(selected) => {
                       if (selected.length === 0) {
-                        return <em style={{ color: 'grey' }}>Select a Day</em>;
+                        return <em style={{ color: "grey" }}>Select a Day</em>;
                       }
                       return selected;
                     }}
@@ -335,13 +335,13 @@ const CalendarForm: React.FC<Idata<string>> = ({
                     name="CalendarRegisteration.Class"
                     size="small"
                     sx={{
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: grey[400],
-                        borderWidth: '1px',
+                        borderWidth: "1px",
                       },
                     }}
                     displayEmpty
@@ -349,7 +349,7 @@ const CalendarForm: React.FC<Idata<string>> = ({
                     renderValue={(selected) => {
                       if (selected.length === 0) {
                         return (
-                          <em style={{ color: 'grey' }}>Select a Class</em>
+                          <em style={{ color: "grey" }}>Select a Class</em>
                         );
                       }
                       return selected;
@@ -370,9 +370,9 @@ const CalendarForm: React.FC<Idata<string>> = ({
                 <Box
                   pt={1}
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
                   }}
                 >
                   <Box pr={1}>
@@ -390,7 +390,7 @@ const CalendarForm: React.FC<Idata<string>> = ({
                             aria-label="Loading Spinner"
                           />
                         ) : (
-                          <PersonAddIcon sx={{ color: '#fafafa' }} />
+                          <PersonAddIcon sx={{ color: "#fafafa" }} />
                         )
                       }
                       disableRipple
@@ -403,7 +403,7 @@ const CalendarForm: React.FC<Idata<string>> = ({
                       variant="contained"
                       sx={{
                         bgcolor: orange[100],
-                        ':hover': { bgcolor: orange[100] },
+                        ":hover": { bgcolor: orange[100] },
                       }}
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();

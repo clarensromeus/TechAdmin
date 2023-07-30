@@ -1,23 +1,23 @@
-import * as React from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Button, Divider, Fade, Paper } from '@mui/material';
-import Popper, { PopperPlacementType } from '@mui/material/Popper';
-import { nanoid } from 'nanoid';
-import axios from 'axios';
+import * as React from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { Button, Divider, Fade, Paper } from "@mui/material";
+import Popper, { PopperPlacementType } from "@mui/material/Popper";
+import { nanoid } from "nanoid";
+import axios from "axios";
 import {
   useMutation,
   UseMutationResult,
   useQueryClient,
-} from '@tanstack/react-query';
-import { ClipLoader } from 'react-spinners';
+} from "@tanstack/react-query";
+import { ClipLoader } from "react-spinners";
 // external imports of ressources
-import { IRetweetData, IRetweet } from '../../Interface/Posts';
-import { CssTextField } from '../../MuiStyles/Auth';
-import usePost from '../../hooks/usePost';
-import useNotification from '../../hooks/useNotifications';
+import { IRetweetData, IRetweet } from "../../Interface/Posts";
+import { CssTextField } from "../../MuiStyles/TextFieldStyle";
+import usePost from "../../hooks/usePost";
+import useNotification from "../../hooks/useNotifications";
 
 interface IRetweetResponse {
   message: string;
@@ -29,7 +29,7 @@ const Retweet: React.FC<IRetweet> = ({
   anchorElPopper,
   Data: { _id, PostId, UserRetweetId, TweetOwnerId, UserId, MakerId, Title },
 }) => {
-  const [text, setText] = React.useState<string>('');
+  const [text, setText] = React.useState<string>("");
 
   const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target as typeof event.target & {
@@ -47,17 +47,17 @@ const Retweet: React.FC<IRetweet> = ({
   const RetweetMutation: UseMutationResult<
     IRetweetResponse,
     Error,
-    Omit<IRetweetData, 'UserId' | 'MakerId' | 'Title'>
+    Omit<IRetweetData, "UserId" | "MakerId" | "Title">
   > = useMutation<
     IRetweetResponse,
     Error,
-    Omit<IRetweetData, 'UserId' | 'MakerId' | 'Title'>
+    Omit<IRetweetData, "UserId" | "MakerId" | "Title">
   >({
     mutationFn: async (
-      RetweetData: Omit<IRetweetData, 'UserId' | 'MakerId' | 'Title'>
+      RetweetData: Omit<IRetweetData, "UserId" | "MakerId" | "Title">
     ) => {
       const res = await axios.post(
-        'http://localhost:4000/home/posts/retweet',
+        "http://localhost:4000/home/posts/retweet",
         RetweetData
       );
 
@@ -66,13 +66,13 @@ const Retweet: React.FC<IRetweet> = ({
     onSuccess: () => {
       // invalidate and refetch the query for fresh data
       queryClient.invalidateQueries({
-        queryKey: ['Posts'],
+        queryKey: ["Posts"],
       });
     },
   });
 
   React.useEffect(() => {
-    if (RetweetMutation.status === 'success') {
+    if (RetweetMutation.status === "success") {
       // Notify the Retweeted post author
     }
   }, [RetweetMutation.status]);
@@ -105,12 +105,12 @@ const Retweet: React.FC<IRetweet> = ({
 
                       const formData = new FormData();
 
-                      await formData.append('PostId', `${nanoid()}`);
-                      await formData.append('Title', text);
-                      await formData.append('User', `${UserId}`);
-                      await formData.append('MakerId', `${MakerId}`);
-                      await formData.append('Reweeted', `${true}`);
-                      await formData.append('RetweetedPost', `${_id}`);
+                      await formData.append("PostId", `${nanoid()}`);
+                      await formData.append("Title", text);
+                      await formData.append("User", `${UserId}`);
+                      await formData.append("MakerId", `${MakerId}`);
+                      await formData.append("Reweeted", `${true}`);
+                      await formData.append("RetweetedPost", `${_id}`);
 
                       await CreatePost(formData);
                       await CreateNotifications({
@@ -118,7 +118,7 @@ const Retweet: React.FC<IRetweet> = ({
                         NotiId: `${nanoid()}`,
                         Sender: UserId,
                         SendingStatus: false,
-                        NotiReference: 'Retweeted',
+                        NotiReference: "Retweeted",
                         AlertText: Title,
                         User: UserId,
                       });
@@ -130,10 +130,10 @@ const Retweet: React.FC<IRetweet> = ({
                   <Box
                     p={1}
                     sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
+                      display: "flex",
+                      flexDirection: "column",
                       gap: 1,
-                      textAlign: 'center',
+                      textAlign: "center",
                     }}
                   >
                     <Typography textTransform="uppercase">
@@ -162,7 +162,7 @@ const Retweet: React.FC<IRetweet> = ({
                             data-testid="loader"
                           />
                         ) : (
-                          'Retweet'
+                          "Retweet"
                         )}
                       </Typography>
                     </Button>

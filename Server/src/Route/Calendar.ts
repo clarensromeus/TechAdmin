@@ -4,6 +4,7 @@ import { RegisterModelCalendar } from "../models/index";
 import { CalendarValidation } from "../utils/index";
 import { ICalendar } from "../Interface/interface";
 import __ from "lodash";
+import isError from "lodash";
 
 export const GetAllSchedules = async (
   req: Request<{ limit: number }>,
@@ -46,7 +47,7 @@ export const CreateSchedule = async (req: Request, res: Response) => {
     });
 
     // verify if all fields are validated
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
       // first check if student already exists
       const getStudentData = await RegisterModelCalendar.findOne().where({
@@ -93,7 +94,7 @@ export const EditSchedule = async (req: Request, res: Response) => {
     });
 
     // verify if all fields are validated
-    if (Is_valid) {
+    if (!isError(Is_valid)) {
       const { value }: { value?: any } = await Is_valid;
       // update courses in the db
       const Data = await RegisterModelCalendar.findOneAndUpdate(value).where({
