@@ -63,7 +63,7 @@ root.render(
           </BrowserRouter>
         </RecoilRoot>
       </SnackbarProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   </ThemeProvider>
 );

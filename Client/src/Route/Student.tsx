@@ -1,40 +1,40 @@
-import * as React from 'react';
-import { Box, Typography, Grid } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Paper from '@mui/material/Paper';
+import * as React from "react";
+import { Box, Typography, Grid } from "@mui/material";
+import { useParams } from "react-router-dom";
+import Paper from "@mui/material/Paper";
 import {
   useQuery,
   UseQueryResult,
   useMutation,
   UseMutationResult,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import blue from '@mui/material/colors/blue';
-import grey from '@mui/material/colors/grey';
-import red from '@mui/material/colors/red';
-import { useNavigate } from 'react-router-dom';
-import SchoolIcon from '@mui/icons-material/School';
-import PrintIcon from '@mui/icons-material/Print';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Alert from '@mui/material/Alert';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { FadeLoader } from 'react-spinners';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+} from "@tanstack/react-query";
+import axios from "axios";
+import blue from "@mui/material/colors/blue";
+import grey from "@mui/material/colors/grey";
+import red from "@mui/material/colors/red";
+import { useNavigate } from "react-router-dom";
+import SchoolIcon from "@mui/icons-material/School";
+import PrintIcon from "@mui/icons-material/Print";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { FadeLoader } from "react-spinners";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 // external imports of ressources
-import PDFDocument from '../components/PDFfile';
+import PDFDocument from "../components/PDFfile";
 import {
   IInfo,
   IcardInfo,
   IdeleteResponse,
   Idelete,
-} from '../Interface/student';
-import CardStudents from '../components/Cardstudents';
-import useWindowSize from '../hooks/useWindowSize';
+} from "../Interface/student";
+import CardStudents from "../components/Cardstudents";
+import useWindowSize from "../hooks/useWindowSize";
 
 interface IState {
   message: string;
@@ -46,7 +46,7 @@ const Student: React.FC = () => {
 
   const [state, setState] = React.useState<IState>({
     open: false,
-    message: '',
+    message: "",
   });
 
   const handleClose = (
@@ -54,7 +54,7 @@ const Student: React.FC = () => {
     reason?: string
   ) => {
     // clickaway event won't close the snackbar
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -65,7 +65,7 @@ const Student: React.FC = () => {
   const { data, isLoading }: UseQueryResult<IInfo<string>> = useQuery<
     IInfo<string>
   >({
-    queryKey: ['Student'],
+    queryKey: ["Student"],
     queryFn: async () => {
       const response = await axios.get(
         `http://localhost:4000/home/students/${params.id}`
@@ -97,7 +97,7 @@ const Student: React.FC = () => {
     Lastname: `${data?.doc.Lastname}`,
   };
 
-  const PDFinfo: Omit<IInfo<string>['doc'], 'Password' | 'ConfirmPassword'> = {
+  const PDFinfo: Omit<IInfo<string>["doc"], "Password" | "ConfirmPassword"> = {
     _id: `${data?.doc._id}`,
     _ID_User: `${data?.doc._ID_User}`,
     Firstname: `${data?.doc.Firstname}`,
@@ -112,34 +112,34 @@ const Student: React.FC = () => {
   return (
     <div>
       <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={state.open}
         autoHideDuration={6000}
         onClose={handleClose}
         color="success"
-        sx={{ color: '#fafafa' }}
+        sx={{ color: "#fafafa" }}
         action={
           <React.Fragment>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ color: '#fafafa' }} />
+              <CloseIcon sx={{ color: "#fafafa" }} />
             </IconButton>
           </React.Fragment>
         }
       >
         <Alert
           onClose={handleClose}
-          severity={deleteStudent.isSuccess ? 'success' : 'error'}
-          sx={{ width: '100%' }}
+          severity={deleteStudent.isSuccess ? "success" : "error"}
+          sx={{ width: "100%" }}
         >
           <Typography fontWeight="bold">
             {deleteStudent.isSuccess
               ? `${data?.doc.Firstname} ${data?.doc.Lastname} deleted with success`
-              : 'sorry student cannot delete, an error occured'}
+              : "sorry student cannot delete, an error occured"}
           </Typography>
         </Alert>
       </Snackbar>
       {isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', pt: 20 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", pt: 20 }}>
           <FadeLoader
             color="hsla(0, 0%, 80%)"
             loading={isLoading}
@@ -150,9 +150,9 @@ const Student: React.FC = () => {
       ) : (
         <Box
           py={width && width < 700 ? 0 : 2}
-          sx={{ width: 'max(100%, 20%)', pt: 1 }}
+          sx={{ width: "max(100%, 20%)", pt: 1 }}
         >
-          <Grid container xs={12} sm={12} rowSpacing={2}>
+          <Grid container rowSpacing={2}>
             <Grid item xs={12} sm={8} md={4} lg={4}>
               <Box px={width && width < 700 ? 0 : 2}>
                 <CardStudents {...CardInfo} />
@@ -169,11 +169,11 @@ const Student: React.FC = () => {
               <Grid xs={12} sm={12} item>
                 <Paper
                   elevation={0}
-                  sx={{ px: width && width < 700 ? 0 : 2, border: 'none' }}
+                  sx={{ px: width && width < 700 ? 0 : 2, border: "none" }}
                 >
                   <Box sx={{ bgcolor: blue[200] }}>
-                    <Box p={1} sx={{ display: 'flex', gap: 2 }}>
-                      <SchoolIcon sx={{ pt: '6px' }} />
+                    <Box p={1} sx={{ display: "flex", gap: 2 }}>
+                      <SchoolIcon sx={{ pt: "6px" }} />
                       <Typography fontSize="1.5em" textTransform="capitalize">
                         Student Informations
                       </Typography>
@@ -182,18 +182,18 @@ const Student: React.FC = () => {
                   <Box py={2}>
                     <Box
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                        display: "flex",
+                        flexDirection: "column",
                         gap: 2,
-                        '& > .info': {
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                        "& > .info": {
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
                           bgcolor: grey[100],
-                          '& .th': {
+                          "& .th": {
                             width: {
-                              lg: 'max(400px, 200px)',
-                              md: 'max(400px, 200px)',
+                              lg: "max(400px, 200px)",
+                              md: "max(400px, 200px)",
                             },
                           },
                         },
@@ -267,9 +267,9 @@ const Student: React.FC = () => {
                 <Box
                   pt={2}
                   sx={{
-                    width: 'inherit',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
+                    width: "inherit",
+                    display: "flex",
+                    justifyContent: "flex-end",
                     px: width && width < 700 ? 0 : 2,
                   }}
                 >
@@ -277,9 +277,9 @@ const Student: React.FC = () => {
                     <Button
                       variant="text"
                       startIcon={<ArrowBackIosIcon />}
-                      sx={{ textTransform: 'capitalize' }}
+                      sx={{ textTransform: "capitalize" }}
                       onClick={() => {
-                        navigate('../');
+                        navigate("../");
                       }}
                     >
                       back
@@ -294,11 +294,11 @@ const Student: React.FC = () => {
                         });
                       }}
                       sx={{
-                        textTransform: 'capitalize',
+                        textTransform: "capitalize",
                         bgcolor: red[100],
                         color: red[700],
-                        boxShadow: 'none',
-                        ':hover': {
+                        boxShadow: "none",
+                        ":hover": {
                           bgcolor: red[100],
                           color: red[700],
                         },
@@ -316,8 +316,8 @@ const Student: React.FC = () => {
                             variant="contained"
                             startIcon={<PrintIcon />}
                             sx={{
-                              textTransform: 'capitalize',
-                              boxShadow: 'none',
+                              textTransform: "capitalize",
+                              boxShadow: "none",
                             }}
                           >
                             loading...
@@ -327,8 +327,8 @@ const Student: React.FC = () => {
                             variant="contained"
                             startIcon={<PrintIcon />}
                             sx={{
-                              textTransform: 'capitalize',
-                              boxShadow: 'none',
+                              textTransform: "capitalize",
+                              boxShadow: "none",
                             }}
                           >
                             print
